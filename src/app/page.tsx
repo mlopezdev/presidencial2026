@@ -33,6 +33,12 @@ export default function Home() {
             </a>{" "}
             center.
           </p>
+          <button
+            type="button"
+            className="inline-flex h-12 w-fit items-center justify-center rounded-full bg-red-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black"
+          >
+            Ilych
+          </button>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
