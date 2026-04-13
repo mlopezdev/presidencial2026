@@ -58,6 +58,12 @@ export default function Home() {
           >
             Documentation
           </a>
+          <button
+            className="flex h-12 w-full items-center justify-center rounded-full bg-pink-500 px-5 text-white transition-colors hover:bg-pink-600 md:w-[158px]"
+            type="button"
+          >
+            kerent
+          </button>
         </div>
       </main>
     </div>
