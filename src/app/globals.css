@@ -179,6 +179,107 @@ a {
   animation: rise-in 420ms ease-out both;
 }
 
+.candidate-selector {
+  margin-bottom: 0.9rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 1rem;
+  background: linear-gradient(150deg, rgba(28, 28, 28, 0.94), rgba(11, 12, 12, 0.94));
+  padding: 0.8rem;
+}
+
+.selector-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.selector-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.selector-reset {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 140, 66, 0.45);
+  background: rgba(232, 101, 26, 0.12);
+  color: #f7c7aa;
+  padding: 0.33rem 0.68rem;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.selector-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.picker-chip {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(255, 140, 66, 0.3);
+  border-radius: 0.85rem;
+  background: rgba(232, 101, 26, 0.08);
+  color: #fee5d6;
+  padding: 0.52rem 0.68rem;
+  font-size: 0.82rem;
+  transition: all 180ms ease;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.picker-chip:hover {
+  transform: translateY(-1px);
+  background: rgba(232, 101, 26, 0.2);
+}
+
+.picker-chip.is-picked {
+  border-color: rgba(255, 140, 66, 0.95);
+  background: linear-gradient(160deg, var(--orange-soft), var(--civic-orange));
+  color: #261107;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(232, 101, 26, 0.3);
+}
+
+.chip-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: rgba(13, 13, 13, 0.4);
+  font-size: 0.72rem;
+}
+
+.chip-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.chip-copy strong {
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+
+.chip-copy small {
+  font-size: 0.72rem;
+  opacity: 0.84;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 .profile-shell {
   border: 1px solid var(--line-soft);
   border-radius: 1.2rem;
@@ -300,6 +401,10 @@ a {
   border-color: rgba(255, 140, 66, 0.35);
 }
 
+.choose-candidate {
+  margin-top: 0.8rem;
+}
+
 .candidate-panel h3 {
   margin: 0;
   color: var(--editorial-ivory);
@@ -408,6 +513,10 @@ a {
 }
 
 @media (max-width: 960px) {
+  .selector-list {
+    grid-template-columns: 1fr;
+  }
+
   .candidate-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
