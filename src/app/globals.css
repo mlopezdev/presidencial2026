@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink-primary: #24303d;
+  --blue-institutional: #2f6b8a;
+  --steel-gray: #9aa8b5;
+  --blue-secondary: #5b7f95;
+  --background: #f6f8fb;
+  --surface: #ffffff;
+  --text-secondary: #6e7d8c;
+  --line-soft: rgba(36, 48, 61, 0.14);
+  --shadow-soft: 0 20px 50px -35px rgba(24, 39, 52, 0.42);
+}
+
+[data-theme="dark"] {
+  --background: #102030;
+  --surface: #173043;
+  --surface-strong: #1f3a4e;
+  --ink-primary: #e6f0f8;
+  --text-secondary: #aec2d3;
+  --line-soft: rgba(230, 240, 248, 0.17);
+  --shadow-soft: 0 28px 56px -34px rgba(3, 9, 15, 0.85);
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-foreground: var(--ink-primary);
+  --font-sans: var(--font-ibm-plex-sans);
+  --font-serif: var(--font-ibm-plex-serif);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink-primary);
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+p,
+span,
+li,
+button,
+summary {
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--blue-institutional) 24%, white);
+  color: var(--ink-primary);
+}
+
+@keyframes slide-left-right {
+  0% {
+    transform: translateX(-18px);
+  }
+  50% {
+    transform: translateX(18px);
+  }
+  100% {
+    transform: translateX(-18px);
+  }
+}
+
+.heading-slide {
+  display: inline-block;
+  width: 100%;
+  animation: slide-left-right 3.2s ease-in-out infinite;
 }
