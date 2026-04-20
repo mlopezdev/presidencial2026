@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
+import ThemeToggle from "./theme-toggle";
 
-const editorial = Cormorant_Garamond({
-  variable: "--font-editorial",
+const display = IBM_Plex_Serif({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["600", "700"],
 });
 
-const uiSans = Plus_Jakarta_Sans({
-  variable: "--font-ui",
+const bodySans = IBM_Plex_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${editorial.variable} ${uiSans.variable} h-full antialiased`}
+      className={`${display.variable} ${bodySans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <header className="site-header">
@@ -45,6 +47,8 @@ export default function RootLayout({
             <Link href="/compara">Compara</Link>
             <Link href="/contactanos">Contactanos</Link>
           </nav>
+
+          <ThemeToggle />
         </header>
 
         <main className="site-main">{children}</main>
