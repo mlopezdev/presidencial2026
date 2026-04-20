@@ -1,0 +1,20 @@
+<svg width="640" height="800" viewBox="0 0 640 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Retrato de Andres Valencia</title>
+  <desc id="desc">Ilustracion academica de candidato presidencial.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4a2b1c"/>
+      <stop offset="100%" stop-color="#1a0f0a"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#bg)"/>
+  <ellipse cx="320" cy="790" rx="300" ry="80" fill="#000" opacity="0.25"/>
+  <circle cx="320" cy="250" r="128" fill="#e7be97"/>
+  <rect x="210" y="360" width="220" height="280" rx="34" fill="#e9edf1"/>
+  <path d="M200 430 C255 395 385 395 440 430 L440 640 L200 640 Z" fill="#542f20"/>
+  <path d="M206 190 C236 92 404 92 434 190 C395 128 245 128 206 190Z" fill="#23170e"/>
+  <circle cx="275" cy="250" r="12" fill="#2e211c"/>
+  <circle cx="365" cy="250" r="12" fill="#2e211c"/>
+  <path d="M286 316 C303 334 337 334 354 316" stroke="#755040" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <text x="50%" y="725" text-anchor="middle" fill="#f8fafc" font-size="34" font-family="Georgia, serif" letter-spacing="1.2">Andres Valencia</text>
+</svg>
