@@ -1,77 +1,172 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import ThemeToggle from "./theme-toggle";
+
+type Candidate = {
+  id: string;
+  name: string;
+  movement: string;
+  city: string;
+  age: number;
+  slogan: string;
+  profile: string;
+  image: string;
+  proposals: string[];
+};
+
+const candidates: Candidate[] = [
+  {
+    id: "serrano",
+    name: "Mariana Serrano",
+    movement: "Acuerdo Ciudadano",
+    city: "Bogota",
+    age: 47,
+    slogan: "Instituciones fuertes, crecimiento con equidad.",
+    profile:
+      "Economista y ex ministra de Hacienda. Su plataforma combina disciplina fiscal, inversion social y reforma territorial.",
+    image: "/candidates/serrano.svg",
+    proposals: [
+      "Reforma tributaria progresiva para financiar educacion superior publica.",
+      "Pacto nacional para infraestructura de agua potable en municipios intermedios.",
+      "Estrategia de empleo juvenil con incentivos para mipymes tecnicas.",
+    ],
+  },
+  {
+    id: "rios",
+    name: "Tomas Rios",
+    movement: "Futuro Productivo",
+    city: "Medellin",
+    age: 52,
+    slogan: "Seguridad juridica para innovar y producir.",
+    profile:
+      "Ingeniero industrial y ex gobernador. Propone una agenda de competitividad regional y seguridad urbana basada en datos.",
+    image: "/candidates/rios.svg",
+    proposals: [
+      "Red de distritos industriales con energia limpia y logistica multimodal.",
+      "Sistema de alertas tempranas para delitos de alto impacto.",
+      "Becas duales empresa-universidad para carreras STEM.",
+    ],
+  },
+  {
+    id: "cardenas",
+    name: "Laura Cardenas",
+    movement: "Pacto Verde Social",
+    city: "Cali",
+    age: 44,
+    slogan: "Bienestar territorial y transicion ecologica real.",
+    profile:
+      "Abogada ambiental y ex alcaldesa. Enfoca su programa en salud preventiva, adaptacion climatica y economia del cuidado.",
+    image: "/candidates/cardenas.svg",
+    proposals: [
+      "Sistema nacional de cuidados con cobertura para hogares vulnerables.",
+      "Plan de restauracion de cuencas y reforestacion comunitaria.",
+      "Meta de transporte publico electrico en capitales departamentales.",
+    ],
+  },
+  {
+    id: "valencia",
+    name: "Andres Valencia",
+    movement: "Unidad Federal",
+    city: "Barranquilla",
+    age: 50,
+    slogan: "Estado cercano, regiones protagonistas.",
+    profile:
+      "Administrador publico y ex senador. Defiende un modelo de descentralizacion con autonomia presupuestal y rendicion de cuentas.",
+    image: "/candidates/valencia.svg",
+    proposals: [
+      "Fondo de autonomia regional con control ciudadano trimestral.",
+      "Reforma a la justicia local con jueces itinerantes rurales.",
+      "Plan nacional de conectividad universitaria en zonas apartadas.",
+    ],
+  },
+];
 
 export default function Home() {
+  const [selectedId, setSelectedId] = useState(candidates[0].id);
+
+  const selectedCandidate = useMemo(
+    () => candidates.find((candidate) => candidate.id === selectedId) ?? candidates[0],
+    [selectedId],
+  );
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="presidential-shell">
+      <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-10 md:px-10 lg:py-14">
+        <header className="space-y-6">
+          <div className="toolbar">
+            <div className="pill-nav" aria-label="Secciones principales">
+              <span className="pill-item is-active">Candidatos</span>
+              <span className="pill-item">Propuestas</span>
+              <span className="pill-item">Analisis</span>
+            </div>
+            <ThemeToggle />
+          </div>
+
+          <div className="space-y-3">
+          <p className="kicker">Observatorio electoral</p>
+          <h1 className="headline">Candidaturas Presidenciales Colombia 2026</h1>
+          <p className="lede max-w-3xl">
+            Borrador interactivo con una vitrina tipo puerta giratoria 360 grados.
+            Cada fotografia funciona como boton de seleccion para explorar el perfil
+            academico y las propuestas del candidato.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <button
-            type="button"
-            className="flex h-12 w-full items-center justify-center rounded-full bg-blue-600 px-5 text-white transition-colors hover:bg-blue-700 md:w-[158px]"
-          >
-            Miguel
-          </button>
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-          <button
-            type="button"
-            className="h-12 w-full rounded-full bg-red-600 px-5 text-white transition-colors hover:bg-red-700 md:w-[158px]"
-          >
-            Albarracin
-          </button>
-        </div>
-      </main>
-    </div>
+          </div>
+        </header>
+
+        <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <div className="door-stage rounded-3xl p-6 md:p-10">
+            <div className="door-scene" aria-label="Carrusel giratorio de candidatos">
+              <div className="door-rotor">
+                {candidates.map((candidate, index) => (
+                  <button
+                    key={candidate.id}
+                    type="button"
+                    style={{ transform: `rotateY(${index * 90}deg) translateZ(180px)` }}
+                    className={`door-panel ${
+                      selectedCandidate.id === candidate.id ? "is-active" : ""
+                    }`}
+                    onClick={() => setSelectedId(candidate.id)}
+                    aria-pressed={selectedCandidate.id === candidate.id}
+                    aria-label={`Seleccionar a ${candidate.name}`}
+                  >
+                    <span className="door-photo-wrap">
+                      <Image
+                        src={candidate.image}
+                        alt={`Retrato de ${candidate.name}`}
+                        fill
+                        className="door-photo"
+                        sizes="(max-width: 768px) 220px, 240px"
+                        priority={candidate.id === candidates[0].id}
+                      />
+                    </span>
+                    <span className="door-name">{candidate.name}</span>
+                  </button>
+                ))}
+              </div>
+              <div className="door-column" aria-hidden="true" />
+            </div>
+          </div>
+
+          <article className="candidate-card rounded-3xl p-6 md:p-8">
+            <p className="card-tag">Candidato seleccionado</p>
+            <h2 className="card-title">{selectedCandidate.name}</h2>
+            <p className="card-meta">
+              {selectedCandidate.movement} · {selectedCandidate.city} · {selectedCandidate.age} anos
+            </p>
+            <p className="card-slogan">{selectedCandidate.slogan}</p>
+            <p className="card-profile">{selectedCandidate.profile}</p>
+
+            <h3 className="card-subtitle">Propuestas clave</h3>
+            <ul className="card-list">
+              {selectedCandidate.proposals.map((proposal) => (
+                <li key={proposal}>{proposal}</li>
+              ))}
+            </ul>
+          </article>
+        </section>
+      </section>
+    </main>
   );
 }
