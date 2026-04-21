@@ -64,6 +64,12 @@ export default function Home() {
           >
             Documentation
           </a>
+          <button
+            type="button"
+            className="h-12 w-full rounded-full bg-red-600 px-5 text-white transition-colors hover:bg-red-700 md:w-[158px]"
+          >
+            Boton rojo
+          </button>
         </div>
       </main>
     </div>
