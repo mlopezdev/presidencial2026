@@ -13,13 +13,8 @@ Definir una base visual clara, profesional y consistente para la plataforma, con
 - Texto secundario: `#6E7D8C` (metadatos, labels, ayudas)
 - Linea suave: `rgba(36, 48, 61, 0.14)` (bordes y separadores)
 
-## Paleta Principal (Modo Oscuro)
-- Fondo general: `#102030`
-- Superficie: `#173043`
-- Superficie fuerte: `#1F3A4E`
-- Texto principal: `#E6F0F8`
-- Texto secundario: `#AEC2D3`
-- Linea suave: `rgba(230, 240, 248, 0.17)`
+## Paleta Activa
+- La plataforma opera solo con la paleta clara como base oficial.
 
 ## Tipografias
 - Titulos y jerarquia editorial: IBM Plex Serif
@@ -58,7 +53,7 @@ Definir una base visual clara, profesional y consistente para la plataforma, con
 ## Aplicacion Actual En El Proyecto
 - Tokens y colores: `src/app/globals.css`
 - Tipografias de Google Fonts y variables: `src/app/layout.tsx`
-- Cambio manual de tema claro/oscuro: `src/app/theme-toggle.tsx`
+- Encabezado y navegacion colapsable en scroll: `src/app/site-header.tsx`
 
 ## Regla Rapida Para Futuras Pantallas
 Si un elemento es nuevo y no sabes que color usar:

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
-import ThemeToggle from "./theme-toggle";
+import SiteHeader from "./site-header";
 
 const display = IBM_Plex_Serif({
   variable: "--font-display",
@@ -32,24 +31,7 @@ export default function RootLayout({
       className={`${display.variable} ${bodySans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="site-header">
-          <div className="brand-row">
-            <div className="brand-mark" aria-hidden="true" />
-            <div className="brand-copy">
-              <p className="brand-label">Consultoria Ciudadana</p>
-              <h1 className="brand-name">UPB Presidencial</h1>
-            </div>
-          </div>
-
-          <nav className="main-nav" aria-label="Navegacion principal">
-            <Link href="/">Inicio</Link>
-            <Link href="/candidatos">Candidatos</Link>
-            <Link href="/compara">Compara</Link>
-            <Link href="/contactanos">Contactanos</Link>
-          </nav>
-
-          <ThemeToggle />
-        </header>
+        <SiteHeader />
 
         <main className="site-main">{children}</main>
       </body>
