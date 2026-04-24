@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ALL_CANDIDATES, TOP_CANDIDATES, AXES, COMPARE_DATA,
-  TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX,
+  TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX, getCandidatePhoto,
   type Candidate, type Spectrum,
 } from "@/lib/data";
 import { Avatar } from "@/components/ui/Avatar";
@@ -105,7 +105,7 @@ function SpectrumExplorer({ onPick, onPickAll }: {
             }}
               onClick={() => onPick(c.spectrum)}
             >
-              <Avatar name={c.name} color={c.color} size={36} />
+              <Avatar name={c.name} color={c.color} size={36} photo={getCandidatePhoto(c.name)} />
             </div>
           ))}
         </div>
@@ -151,7 +151,7 @@ function SpectrumExplorer({ onPick, onPickAll }: {
                 {group.slice(0, 5).map((c, i) => (
                   <div key={c.name} style={{ marginLeft: i > 0 ? -10 : 0, zIndex: 5 - i, position: "relative",
                     boxShadow: "0 0 0 2px #fff", borderRadius: "50%" }}>
-                    <Avatar name={c.name} color={c.color} size={32} />
+                    <Avatar name={c.name} color={c.color} size={32} photo={getCandidatePhoto(c.name)} />
                   </div>
                 ))}
                 {group.length > 5 && (
@@ -188,7 +188,7 @@ function SpectrumExplorer({ onPick, onPickAll }: {
           <div style={{ display: "flex" }}>
             {ALL_CANDIDATES.slice(0, 7).map((c, i) => (
               <div key={c.name} style={{ marginLeft: i > 0 ? -10 : 0, boxShadow: "0 0 0 2px #fff", borderRadius: "50%", position: "relative", zIndex: 7 - i }}>
-                <Avatar name={c.name} color={c.color} size={32} />
+                <Avatar name={c.name} color={c.color} size={32} photo={getCandidatePhoto(c.name)} />
               </div>
             ))}
           </div>
@@ -413,15 +413,25 @@ function CandidateGridCard({ candidate: c, index, onPick }: { candidate: Candida
           backdropFilter: "blur(8px)", color: "#fff", letterSpacing: "0.04em" }}>
           {capitalize(c.spectrum)}
         </span>
-        {/* Giant initials */}
-        <div style={{
-          position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "clamp(48px, 8vw, 72px)", fontWeight: 700, color: "rgba(255,255,255,0.9)",
-          letterSpacing: "-0.05em", textShadow: "0 4px 16px rgba(0,0,0,0.2)",
-          transform: hover ? "scale(1.06)" : "scale(1)", transition: "transform 360ms ease",
-        }}>
-          {inits}
-        </div>
+        {/* Photo or Giant initials */}
+        {getCandidatePhoto(c.name) ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={getCandidatePhoto(c.name)} alt={c.name}
+            style={{
+              position: "absolute", inset: 0, width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center top",
+              transform: hover ? "scale(1.06)" : "scale(1)", transition: "transform 360ms ease",
+            }} />
+        ) : (
+          <div style={{
+            position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: "clamp(48px, 8vw, 72px)", fontWeight: 700, color: "rgba(255,255,255,0.9)",
+            letterSpacing: "-0.05em", textShadow: "0 4px 16px rgba(0,0,0,0.2)",
+            transform: hover ? "scale(1.06)" : "scale(1)", transition: "transform 360ms ease",
+          }}>
+            {inits}
+          </div>
+        )}
         {/* bottom fade */}
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%",
           background: "linear-gradient(to top, rgba(0,0,0,0.3), transparent)", pointerEvents: "none" }} />
@@ -471,7 +481,7 @@ function CandidateListRow({ candidate: c, index, onPick }: { candidate: Candidat
       {/* Left spectrum stripe */}
       <div style={{ width: 4, alignSelf: "stretch", borderRadius: 2, background: SPECTRUM_CLR[c.spectrum], flexShrink: 0 }} />
 
-      <Avatar name={c.name} color={c.color} size={44} />
+      <Avatar name={c.name} color={c.color} size={44} photo={getCandidatePhoto(c.name)} />
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2, flexWrap: "wrap" }}>
@@ -583,7 +593,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
             >
               <Chevron dir="left" size={14} />
               <div style={{ boxShadow: `0 0 0 2px ${prevCandidate.color}`, borderRadius: "50%" }}>
-                <Avatar name={prevCandidate.name} color={prevCandidate.color} size={22} />
+                <Avatar name={prevCandidate.name} color={prevCandidate.color} size={22} photo={getCandidatePhoto(prevCandidate.name)} />
               </div>
               <span style={{ display: "none" }}>prev</span>
             </button>
@@ -607,7 +617,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; (e.currentTarget as HTMLElement).style.background = "#fff"; }}
             >
               <div style={{ boxShadow: `0 0 0 2px ${nextCandidate.color}`, borderRadius: "50%" }}>
-                <Avatar name={nextCandidate.name} color={nextCandidate.color} size={22} />
+                <Avatar name={nextCandidate.name} color={nextCandidate.color} size={22} photo={getCandidatePhoto(nextCandidate.name)} />
               </div>
               <Chevron dir="right" size={14} />
             </button>
@@ -641,7 +651,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
         {/* Header overlap */}
         <div style={{ padding: "0 32px", display: "flex", alignItems: "flex-end", gap: 20, marginTop: -60 }}>
           <div style={{ boxShadow: "0 0 0 5px #fff, 0 0 0 6px rgba(0,0,0,0.06)", borderRadius: "50%", flexShrink: 0 }}>
-            <Avatar name={candidate.name} color={candidate.color} size={120} />
+            <Avatar name={candidate.name} color={candidate.color} size={120} photo={getCandidatePhoto(candidate.name)} />
           </div>
           <div style={{ flex: 1, minWidth: 0, paddingBottom: 16 }}>
             <h2 style={{ margin: 0, fontSize: "clamp(24px,3vw,34px)", fontWeight: 600, letterSpacing: "-0.025em",
@@ -940,7 +950,7 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <Avatar name={o.name} color={o.color} size={44} />
+                <Avatar name={o.name} color={o.color} size={44} photo={getCandidatePhoto(o.name)} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)" }}>{o.name}</div>
                   <div style={{ fontSize: 13, color: "var(--ink-3)" }}>{o.party}</div>

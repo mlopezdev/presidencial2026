@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ALL_CANDIDATES, TOP_CANDIDATES, type Candidate } from "@/lib/data";
+import { ALL_CANDIDATES, TOP_CANDIDATES, getCandidatePhoto, type Candidate } from "@/lib/data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
@@ -44,14 +44,19 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
       {/* Avatar + info */}
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <div style={{
-          width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
+          width: 28, height: 28, borderRadius: "50%", flexShrink: 0, overflow: "hidden",
           background: `linear-gradient(135deg, ${color}, ${color}99)`,
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 9, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em",
           boxShadow: hovered ? `0 0 0 2px #fff, 0 0 0 3.5px ${color}` : "none",
           transition: "box-shadow 180ms ease",
+          position: "relative",
         }}>
-          {inits}
+          {getCandidatePhoto(candidate.name) ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={getCandidatePhoto(candidate.name)} alt={candidate.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block", position: "absolute", inset: 0 }} />
+          ) : inits}
         </div>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: "var(--ink)", lineHeight: 1.2, letterSpacing: "-0.01em",
@@ -96,8 +101,9 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
 
 // ─── Tarjetón electoral completo ───
 function BallotCard() {
-  const COLS = 4;
+  const COLS = 3;
   const rows = Math.ceil(ALL_CANDIDATES.length / COLS);
+  // COLS=3 → 14 candidatos → 5 filas (15 celdas, 1 vacía)
   const cells = [...ALL_CANDIDATES, ...Array(COLS * rows - ALL_CANDIDATES.length).fill(null)];
 
   return (
@@ -112,7 +118,7 @@ function BallotCard() {
         boxShadow: "0 4px 0 1px rgba(0,0,0,0.04), 0 24px 60px -20px rgba(13,30,45,0.28), 0 4px 20px -4px rgba(13,30,45,0.12)",
         border: "1px solid rgba(0,0,0,0.10)",
         overflow: "hidden",
-        maxWidth: 520,
+        maxWidth: 420,
         width: "100%",
         userSelect: "none",
       }}
@@ -172,7 +178,7 @@ function BallotCard() {
 function FloatingCardsHero() {
   return (
     <section style={{
-      position: "relative", overflow: "hidden",
+      position: "relative", overflowX: "clip",
       padding: "80px 48px 96px",
       background: "radial-gradient(900px 500px at 20% 50%, rgba(47,107,138,0.08), transparent 65%), radial-gradient(700px 400px at 85% 20%, rgba(30,64,175,0.05), transparent 60%), var(--bg)",
     }}>
@@ -189,7 +195,7 @@ function FloatingCardsHero() {
         position: "relative",
         maxWidth: 1200, margin: "0 auto",
         display: "grid", gridTemplateColumns: "1fr auto",
-        gap: 64, alignItems: "center",
+        gap: 64, alignItems: "flex-start",
       }}>
         {/* ── IZQUIERDA: texto ── */}
         <div>
@@ -374,17 +380,32 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
           border: "2px solid rgba(255,255,255,0.9)",
           boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
         }} />
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "rgba(255,255,255,0.95)",
-          fontSize: "clamp(72px, 14vw, 120px)", fontWeight: 700, letterSpacing: "-0.05em", lineHeight: 1,
-          textShadow: "0 4px 24px rgba(0,0,0,0.25)",
-          transform: hover ? "scale(1.04)" : "scale(1)",
-          transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
-        }}>
-          {inits}
-        </div>
+        {getCandidatePhoto(candidate.name) ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={getCandidatePhoto(candidate.name)}
+            alt={candidate.name}
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center top",
+              transform: hover ? "scale(1.04)" : "scale(1)",
+              transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+            }}
+          />
+        ) : (
+          <div aria-hidden="true" style={{
+            position: "absolute", inset: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "rgba(255,255,255,0.95)",
+            fontSize: "clamp(72px, 14vw, 120px)", fontWeight: 700, letterSpacing: "-0.05em", lineHeight: 1,
+            textShadow: "0 4px 24px rgba(0,0,0,0.25)",
+            transform: hover ? "scale(1.04)" : "scale(1)",
+            transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+          }}>
+            {inits}
+          </div>
+        )}
         <div aria-hidden="true" style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(160deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 40%)",

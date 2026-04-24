@@ -33,6 +33,32 @@ export const OTHER_CANDIDATES: Candidate[] = [
 
 export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDATES];
 
+// Mapa de fotos disponibles en /public/candidates
+export const CANDIDATE_PHOTOS: Record<string, string> = {
+  "Iván Cepeda": "/candidates/cepeda.png",
+  "Luis Gilberto Murillo": "/candidates/Luis_GIlberto_Murillo.png",
+  "Paloma Valencia": "/candidates/Paloma_Valencia.png",
+  "Roy Barreras": "/candidates/Roy_Barreras.png",
+  "Santiago Botero": "/candidates/Santiago_Botero.png",
+  "Sondra Macollins": "/candidates/Sondra.png",
+  "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
+};
+
+const normalizeCandidateName = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+
+const CANDIDATE_PHOTOS_NORMALIZED = Object.fromEntries(
+  Object.entries(CANDIDATE_PHOTOS).map(([name, path]) => [normalizeCandidateName(name), path]),
+);
+
+export function getCandidatePhoto(name: string): string | undefined {
+  return CANDIDATE_PHOTOS[name] ?? CANDIDATE_PHOTOS_NORMALIZED[normalizeCandidateName(name)];
+}
+
 export const AXES = [
   { key: "Salud", desc: "Cobertura, reforma del sistema, prevención y atención rural." },
   { key: "Economía", desc: "Impuestos, productividad, inversión y generación de empleo." },
