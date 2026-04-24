@@ -35,13 +35,20 @@ export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDAT
 
 // Mapa de fotos disponibles en /public/candidates
 export const CANDIDATE_PHOTOS: Record<string, string> = {
+  "Abelardo de la Espriella": "/candidates/Abelardo.png",
+  "Carlos Caicedo": "/candidates/Caicedo.png",
+  "Clara López": "/candidates/Clara Lopez.png",
+  "Claudia López": "/candidates/Clauida Lopez.png",
+  "Gustavo Matamoros": "/candidates/Matamoros.png",
   "Iván Cepeda": "/candidates/cepeda.png",
+  "Miguel Uribe Londoño": "/candidates/Miguel Uribe.png",
   "Luis Gilberto Murillo": "/candidates/Luis_GIlberto_Murillo.png",
+  "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
   "Paloma Valencia": "/candidates/Paloma_Valencia.png",
   "Roy Barreras": "/candidates/Roy_Barreras.png",
   "Santiago Botero": "/candidates/Santiago_Botero.png",
   "Sondra Macollins": "/candidates/Sondra.png",
-  "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
+  "Sergio Fajardo": "/candidates/Fajaro-removebg-preview.png",
 };
 
 const normalizeCandidateName = (value: string) =>
