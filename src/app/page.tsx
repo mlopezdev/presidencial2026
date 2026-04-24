@@ -380,10 +380,10 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
           border: "2px solid rgba(255,255,255,0.9)",
           boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
         }} />
-        {CANDIDATE_PHOTOS[candidate.name] ? (
+        {getCandidatePhoto(candidate.name) ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={CANDIDATE_PHOTOS[candidate.name]}
+            src={getCandidatePhoto(candidate.name)}
             alt={candidate.name}
             style={{
               position: "absolute", inset: 0,
