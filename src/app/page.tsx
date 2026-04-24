@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ALL_CANDIDATES, TOP_CANDIDATES, CANDIDATE_PHOTOS, type Candidate } from "@/lib/data";
+import { ALL_CANDIDATES, TOP_CANDIDATES, getCandidatePhoto, type Candidate } from "@/lib/data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
@@ -52,9 +52,9 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
           transition: "box-shadow 180ms ease",
           position: "relative",
         }}>
-          {CANDIDATE_PHOTOS[candidate.name] ? (
+          {getCandidatePhoto(candidate.name) ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={CANDIDATE_PHOTOS[candidate.name]} alt={candidate.name}
+            <img src={getCandidatePhoto(candidate.name)} alt={candidate.name}
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block", position: "absolute", inset: 0 }} />
           ) : inits}
         </div>
