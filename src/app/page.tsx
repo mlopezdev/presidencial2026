@@ -380,17 +380,32 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
           border: "2px solid rgba(255,255,255,0.9)",
           boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
         }} />
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "rgba(255,255,255,0.95)",
-          fontSize: "clamp(72px, 14vw, 120px)", fontWeight: 700, letterSpacing: "-0.05em", lineHeight: 1,
-          textShadow: "0 4px 24px rgba(0,0,0,0.25)",
-          transform: hover ? "scale(1.04)" : "scale(1)",
-          transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
-        }}>
-          {inits}
-        </div>
+        {CANDIDATE_PHOTOS[candidate.name] ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={CANDIDATE_PHOTOS[candidate.name]}
+            alt={candidate.name}
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center top",
+              transform: hover ? "scale(1.04)" : "scale(1)",
+              transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+            }}
+          />
+        ) : (
+          <div aria-hidden="true" style={{
+            position: "absolute", inset: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "rgba(255,255,255,0.95)",
+            fontSize: "clamp(72px, 14vw, 120px)", fontWeight: 700, letterSpacing: "-0.05em", lineHeight: 1,
+            textShadow: "0 4px 24px rgba(0,0,0,0.25)",
+            transform: hover ? "scale(1.04)" : "scale(1)",
+            transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+          }}>
+            {inits}
+          </div>
+        )}
         <div aria-hidden="true" style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(160deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 40%)",
