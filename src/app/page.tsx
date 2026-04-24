@@ -101,8 +101,9 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
 
 // ─── Tarjetón electoral completo ───
 function BallotCard() {
-  const COLS = 4;
+  const COLS = 3;
   const rows = Math.ceil(ALL_CANDIDATES.length / COLS);
+  // COLS=3 → 14 candidatos → 5 filas (15 celdas, 1 vacía)
   const cells = [...ALL_CANDIDATES, ...Array(COLS * rows - ALL_CANDIDATES.length).fill(null)];
 
   return (
@@ -117,7 +118,7 @@ function BallotCard() {
         boxShadow: "0 4px 0 1px rgba(0,0,0,0.04), 0 24px 60px -20px rgba(13,30,45,0.28), 0 4px 20px -4px rgba(13,30,45,0.12)",
         border: "1px solid rgba(0,0,0,0.10)",
         overflow: "hidden",
-        maxWidth: 520,
+        maxWidth: 420,
         width: "100%",
         userSelect: "none",
       }}
@@ -177,7 +178,7 @@ function BallotCard() {
 function FloatingCardsHero() {
   return (
     <section style={{
-      position: "relative", overflow: "hidden",
+      position: "relative", overflowX: "clip",
       padding: "80px 48px 96px",
       background: "radial-gradient(900px 500px at 20% 50%, rgba(47,107,138,0.08), transparent 65%), radial-gradient(700px 400px at 85% 20%, rgba(30,64,175,0.05), transparent 60%), var(--bg)",
     }}>
@@ -194,7 +195,7 @@ function FloatingCardsHero() {
         position: "relative",
         maxWidth: 1200, margin: "0 auto",
         display: "grid", gridTemplateColumns: "1fr auto",
-        gap: 64, alignItems: "center",
+        gap: 64, alignItems: "flex-start",
       }}>
         {/* ── IZQUIERDA: texto ── */}
         <div>
