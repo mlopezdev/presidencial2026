@@ -8,128 +8,284 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
 
-// ─── Mini card flotante para el hero ───
-function MiniCard({ candidate }: { candidate: Candidate }) {
+// ─── Celda individual del tarjetón ───
+function BallotCell({ candidate, index }: { candidate: Candidate; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const SPECTRUM_CLR: Record<string, string> = { izquierda: "#B3261E", centro: "#2F6B8A", derecha: "#1E40AF" };
+  const color = SPECTRUM_CLR[candidate.spectrum] ?? candidate.color;
+  const inits = candidate.name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+
   return (
-    <div style={{
-      background: "rgba(255,255,255,0.92)",
-      backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
-      border: "1px solid rgba(0,0,0,0.06)", borderRadius: 16,
-      padding: 14, display: "flex", alignItems: "center", gap: 10,
-      boxShadow: "0 20px 40px -24px rgba(13,30,45,0.25)",
-    }}>
-      <Avatar name={candidate.name} color={candidate.color} size={40} />
-      <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", lineHeight: 1.2, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-          {candidate.name}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.88 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.5 + index * 0.05, ease: [0.2, 0.8, 0.2, 1] }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      style={{
+        position: "relative", overflow: "hidden",
+        borderRight: "1px solid rgba(0,0,0,0.07)",
+        borderBottom: "1px solid rgba(0,0,0,0.07)",
+        padding: "10px 10px 10px 12px",
+        background: hovered ? `${color}0C` : "transparent",
+        cursor: "default",
+        transition: "background 180ms ease",
+      }}
+    >
+      {/* Número de candidato */}
+      <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(0,0,0,0.25)", letterSpacing: "0.04em",
+        marginBottom: 6, display: "flex", alignItems: "center", gap: 4 }}>
+        <span style={{ display: "inline-block", width: 16, height: 16, borderRadius: 4,
+          background: "rgba(0,0,0,0.06)", lineHeight: "16px", textAlign: "center" }}>
+          {index + 1}
+        </span>
+      </div>
+
+      {/* Avatar + info */}
+      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
+          background: `linear-gradient(135deg, ${color}, ${color}99)`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 9, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em",
+          boxShadow: hovered ? `0 0 0 2px #fff, 0 0 0 3.5px ${color}` : "none",
+          transition: "box-shadow 180ms ease",
+        }}>
+          {inits}
         </div>
-        <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-          {candidate.party}
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "var(--ink)", lineHeight: 1.2, letterSpacing: "-0.01em",
+            overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+            {candidate.name}
+          </div>
+          <div style={{ fontSize: 9, color: "rgba(0,0,0,0.38)", marginTop: 1, lineHeight: 1.2,
+            overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>
+            {candidate.party}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Línea de marca (donde el votante escribe la X) */}
+      <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 6 }}>
+        <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.12)", borderRadius: 999 }} />
+        <div style={{
+          width: 22, height: 22, borderRadius: 5,
+          border: `1.5px solid ${hovered ? color : "rgba(0,0,0,0.18)"}`,
+          flexShrink: 0, position: "relative", overflow: "hidden",
+          background: hovered ? `${color}0D` : "transparent",
+          transition: "border-color 180ms ease, background 180ms ease",
+        }}>
+          {/* X animada con framer-motion */}
+          <svg viewBox="0 0 24 24" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible" }} fill="none">
+            <motion.path d="M 5,5 L 19,19" stroke={color} strokeWidth="2.2" strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            />
+            <motion.path d="M 19,5 L 5,19" stroke={color} strokeWidth="2.2" strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+              transition={{ duration: 0.18, delay: hovered ? 0.13 : 0, ease: "easeOut" }}
+            />
+          </svg>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
-// ─── Hero con tarjetas flotantes ───
-const SLOTS = [
-  { x: 6,  y: 12, r: -8,  s: 0.92, delay: 0.0, dur: 3.2 },
-  { x: 74, y: 8,  r: 6,   s: 1.0,  delay: 0.3, dur: 4.0 },
-  { x: 2,  y: 54, r: 4,   s: 0.88, delay: 0.6, dur: 3.6 },
-  { x: 80, y: 52, r: -5,  s: 0.95, delay: 0.9, dur: 4.2 },
-  { x: 18, y: 86, r: -3,  s: 0.86, delay: 1.2, dur: 3.8 },
-  { x: 62, y: 90, r: 7,   s: 0.9,  delay: 1.5, dur: 3.4 },
-  { x: 40, y: 96, r: 0,   s: 0.82, delay: 1.8, dur: 4.4 },
-];
+// ─── Tarjetón electoral completo ───
+function BallotCard() {
+  const COLS = 4;
+  const rows = Math.ceil(ALL_CANDIDATES.length / COLS);
+  const cells = [...ALL_CANDIDATES, ...Array(COLS * rows - ALL_CANDIDATES.length).fill(null)];
 
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 40, rotate: 3 }}
+      animate={{ opacity: 1, x: 0, rotate: 2 }}
+      transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ rotate: 0.5, scale: 1.01, transition: { duration: 0.4 } }}
+      style={{
+        background: "#FFFEFB",
+        borderRadius: 16,
+        boxShadow: "0 4px 0 1px rgba(0,0,0,0.04), 0 24px 60px -20px rgba(13,30,45,0.28), 0 4px 20px -4px rgba(13,30,45,0.12)",
+        border: "1px solid rgba(0,0,0,0.10)",
+        overflow: "hidden",
+        maxWidth: 520,
+        width: "100%",
+        userSelect: "none",
+      }}
+    >
+      {/* Header del tarjetón */}
+      <div style={{
+        padding: "14px 20px 12px",
+        borderBottom: "2px solid rgba(0,0,0,0.09)",
+        background: "rgba(0,0,0,0.025)",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}>
+        <div>
+          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.12em", color: "rgba(0,0,0,0.4)",
+            textTransform: "uppercase", marginBottom: 2 }}>
+            Registraduría Nacional del Estado Civil
+          </div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.01em" }}>
+            TARJETA ELECTORAL — PRESIDENCIA 2026
+          </div>
+        </div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(0,0,0,0.3)", textAlign: "right", lineHeight: 1.4 }}>
+          REPÚBLICA<br />DE COLOMBIA
+        </div>
+      </div>
+
+      {/* Instrucción */}
+      <div style={{ padding: "8px 20px", borderBottom: "1px solid rgba(0,0,0,0.06)",
+        fontSize: 9.5, color: "rgba(0,0,0,0.45)", fontStyle: "italic", letterSpacing: "0.01em" }}>
+        Marque con una X en el recuadro del candidato de su preferencia
+      </div>
+
+      {/* Grid de candidatos */}
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${COLS}, 1fr)` }}>
+        {cells.map((c, i) =>
+          c ? (
+            <BallotCell key={c.name} candidate={c} index={i} />
+          ) : (
+            <div key={`empty-${i}`} style={{ borderRight: "1px solid rgba(0,0,0,0.07)", borderBottom: "1px solid rgba(0,0,0,0.07)", background: "repeating-linear-gradient(-45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 8px)" }} />
+          )
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{ padding: "10px 20px", borderTop: "1px solid rgba(0,0,0,0.06)",
+        display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 9, color: "rgba(0,0,0,0.3)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+          Voto en blanco
+        </div>
+        <div style={{ height: 1, flex: 1, margin: "0 10px", background: "rgba(0,0,0,0.1)", borderRadius: 999 }} />
+        <div style={{ width: 18, height: 18, border: "1.5px solid rgba(0,0,0,0.2)", borderRadius: 4, flexShrink: 0 }} />
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Hero split: título izquierda + tarjetón derecha ───
 function FloatingCardsHero() {
   return (
     <section style={{
-      position: "relative", minHeight: 640, overflow: "hidden",
-      padding: "96px 32px 120px",
-      background: "radial-gradient(1200px 600px at 50% -10%, rgba(47,107,138,0.10), transparent 60%), var(--bg)",
+      position: "relative", overflow: "hidden",
+      padding: "80px 48px 96px",
+      background: "radial-gradient(900px 500px at 20% 50%, rgba(47,107,138,0.08), transparent 65%), radial-gradient(700px 400px at 85% 20%, rgba(30,64,175,0.05), transparent 60%), var(--bg)",
     }}>
-      {/* floating cards */}
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-        {TOP_CANDIDATES.map((c, i) => {
-          const slot = SLOTS[i % SLOTS.length];
-          return (
-            <motion.div
-              key={c.name}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, y: [0, -12, 0] }}
-              transition={{
-                opacity: { duration: 0.6, delay: slot.delay },
-                y: { duration: slot.dur, delay: slot.delay, repeat: Infinity, ease: "easeInOut" },
-              }}
-              style={{
-                position: "absolute",
-                left: `calc(${slot.x}% - 110px)`,
-                top: `calc(${slot.y}% - 60px)`,
-                width: 220,
-                transform: `rotate(${slot.r}deg) scale(${slot.s})`,
-              }}
-            >
-              <MiniCard candidate={c} />
-            </motion.div>
-          );
-        })}
-      </div>
+      {/* Grid de fondo sutil */}
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)",
+        backgroundSize: "48px 48px",
+        maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+        WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+      }} />
 
-      {/* center */}
-      <div style={{ position: "relative", maxWidth: 820, margin: "0 auto", textAlign: "center" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            fontSize: 15, fontWeight: 500, color: "var(--ink-2)",
-            marginBottom: 20,
-          }}
-        >
-          <span style={{ width: 8, height: 8, borderRadius: 999, background: "var(--brand)", display: "inline-block" }} />
-          Elecciones Colombia · Mayo 2026
-        </motion.div>
+      <div style={{
+        position: "relative",
+        maxWidth: 1200, margin: "0 auto",
+        display: "grid", gridTemplateColumns: "1fr auto",
+        gap: 64, alignItems: "center",
+      }}>
+        {/* ── IZQUIERDA: texto ── */}
+        <div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 8,
+              fontSize: 14, fontWeight: 600, color: "var(--brand)",
+              background: "rgba(47,107,138,0.08)", border: "1px solid rgba(47,107,138,0.18)",
+              padding: "6px 14px", borderRadius: 999, marginBottom: 28 }}
+          >
+            <motion.span
+              animate={{ scale: [1, 1.4, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              style={{ width: 7, height: 7, borderRadius: 999, background: "var(--brand)", display: "inline-block" }}
+            />
+            Elecciones Colombia · Mayo 2026
+          </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          style={{
-            margin: "0 0 20px",
-            fontSize: "clamp(44px, 6vw, 72px)",
-            fontWeight: 600, letterSpacing: "-0.04em", lineHeight: 1.02,
-            color: "var(--ink)",
-            fontFamily: "var(--font-plex-serif), Georgia, serif",
-          }}
-        >
-          Tu voto,{" "}
-          <span style={{ color: "var(--brand)" }}>bien informado</span>.
-        </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              margin: "0 0 22px",
+              fontSize: "clamp(44px, 5.5vw, 72px)",
+              fontWeight: 700, letterSpacing: "-0.045em", lineHeight: 0.98,
+              color: "var(--ink)",
+              fontFamily: "var(--font-plex-serif), Georgia, serif",
+            }}
+          >
+            Tu voto,{" "}
+            <span style={{
+              color: "transparent",
+              backgroundClip: "text", WebkitBackgroundClip: "text",
+              backgroundImage: "linear-gradient(135deg, var(--brand) 30%, #1E40AF 100%)",
+            }}>
+              bien<br />informado.
+            </span>
+          </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ margin: "0 auto 32px", maxWidth: 620, fontSize: 21, lineHeight: 1.45, color: "var(--ink-2)" }}
-        >
-          Conoce a los 14 candidatos a la Presidencia. Compara propuestas sobre salud, economía, educación y seguridad, con la misma información, lado a lado.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.22 }}
+            style={{ margin: "0 0 36px", maxWidth: 480, fontSize: 19, lineHeight: 1.5, color: "var(--ink-2)" }}
+          >
+            Conoce los {ALL_CANDIDATES.length} candidatos, compara propuestas y decide con la misma información para todos, lado a lado.
+          </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}
-        >
-          <Button variant="primary" onClick={() => { document.getElementById("grid-anchor")?.scrollIntoView({ behavior: "smooth" }); }}>
-            Ver candidatos <Chevron dir="down" />
-          </Button>
-          <Link href="/compara">
-            <Button variant="secondary">Comparar propuestas</Button>
-          </Link>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.34 }}
+            style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
+          >
+            <Link href="/candidatos">
+              <Button variant="primary" style={{ fontSize: 16, padding: "13px 24px" }}>
+                Explorar candidatos
+              </Button>
+            </Link>
+            <Link href="/compara">
+              <Button variant="secondary" style={{ fontSize: 16, padding: "13px 24px" }}>
+                Comparar propuestas
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            style={{ display: "flex", gap: 32, marginTop: 48, flexWrap: "wrap" }}
+          >
+            {[
+              { n: ALL_CANDIDATES.length, label: "candidatos" },
+              { n: "4", label: "ejes temáticos" },
+              { n: "3", label: "espectros" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div style={{ fontSize: 34, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1,
+                  fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
+                  {s.n}
+                </div>
+                <div style={{ fontSize: 14, color: "var(--ink-3)", marginTop: 3 }}>{s.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* ── DERECHA: tarjetón ── */}
+        <div style={{ display: "flex", justifyContent: "center", flexShrink: 0 }}>
+          <BallotCard />
+        </div>
       </div>
     </section>
   );
