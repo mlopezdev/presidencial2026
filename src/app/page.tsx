@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ALL_CANDIDATES, TOP_CANDIDATES, type Candidate } from "@/lib/data";
+import { ALL_CANDIDATES, TOP_CANDIDATES, CANDIDATE_PHOTOS, type Candidate } from "@/lib/data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
@@ -44,14 +44,19 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
       {/* Avatar + info */}
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <div style={{
-          width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
+          width: 28, height: 28, borderRadius: "50%", flexShrink: 0, overflow: "hidden",
           background: `linear-gradient(135deg, ${color}, ${color}99)`,
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 9, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em",
           boxShadow: hovered ? `0 0 0 2px #fff, 0 0 0 3.5px ${color}` : "none",
           transition: "box-shadow 180ms ease",
+          position: "relative",
         }}>
-          {inits}
+          {CANDIDATE_PHOTOS[candidate.name] ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={CANDIDATE_PHOTOS[candidate.name]} alt={candidate.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block", position: "absolute", inset: 0 }} />
+          ) : inits}
         </div>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: "var(--ink)", lineHeight: 1.2, letterSpacing: "-0.01em",

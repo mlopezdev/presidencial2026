@@ -33,6 +33,12 @@ export const OTHER_CANDIDATES: Candidate[] = [
 
 export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDATES];
 
+// Mapa de fotos disponibles: clave = apellido en minúsculas, valor = ruta pública
+export const CANDIDATE_PHOTOS: Record<string, string> = {
+  "Iván Cepeda":     "/candidates/cepeda.png",
+  "Paloma Valencia": "/candidates/valencia.svg",
+};
+
 export const AXES = [
   { key: "Salud", desc: "Cobertura, reforma del sistema, prevención y atención rural." },
   { key: "Economía", desc: "Impuestos, productividad, inversión y generación de empleo." },
