@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Presidencial 2026 — Rediseño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /*EDITMODE-BEGIN*/
+    /* placeholder */
+    /*EDITMODE-END*/
+  }
+  :root {
+    --brand: #2F6B8A;
+    --brand-soft: #5B7F95;
+    --ink: #1D1D1F;
+    --ink-2: #515154;
+    --ink-3: #86868B;
+    --bg: #FBFBFD;
+    --surface: #FFFFFF;
+    --line: rgba(0,0,0,0.08);
+    --radius: 20px;
+    --base-size: 17px;
+  }
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+    font-size: var(--base-size);
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+  }
+  #root { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
+  #root > footer { margin-top: auto; }
+  :focus-visible { outline: 3px solid rgba(47,107,138,0.4); outline-offset: 2px; border-radius: 4px; }
+  button { font-family: inherit; }
+
+  /* Liquid Glass navbar */
+  .liquid-nav-item:not(.is-active):hover {
+    background: rgba(255,255,255,0.55) !important;
+    color: var(--ink) !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 2px 6px -2px rgba(13,30,45,0.12);
+  }
+  .liquid-nav-item:not(.is-active):active {
+    transform: scale(0.97);
+  }
+  .liquid-nav-item.is-active:active {
+    transform: scale(0.97);
+  }
+  /* First page section should start below the floating nav */
+  #root > header + * > :first-child,
+  main:first-of-type {
+    scroll-margin-top: 80px;
+  }
+
+  /* Tweak panel */
+  .tweak-panel {
+    position: fixed; bottom: 24px; right: 24px; z-index: 100;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
+    border: 1px solid var(--line); border-radius: 20px;
+    padding: 20px; width: 300px;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.2);
+    font-size: 14px;
+  }
+  .tweak-panel h4 { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; }
+  .tweak-panel .group { display: grid; gap: 8px; margin-bottom: 16px; }
+  .tweak-panel label { font-size: 14px; color: var(--ink-2); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .tweak-panel .seg { display: flex; gap: 4px; background: #F2F4F7; padding: 3px; border-radius: 10px; }
+  .tweak-panel .seg button {
+    flex: 1; border: 0; background: transparent; padding: 6px 8px; border-radius: 7px;
+    font-size: 13px; font-weight: 500; color: var(--ink-2); cursor: pointer;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .tweak-panel .seg button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+
+  /* variation: warm */
+  body.variant-warm { --brand: #C8553D; --brand-soft: #E07A5F; --bg: #FDFBF8; }
+  /* variation: mono */
+  body.variant-mono { --brand: #1D1D1F; --brand-soft: #515154; --bg: #F5F5F7; }
+
+  /* density */
+  body.density-comfortable { --base-size: 17px; }
+  body.density-spacious { --base-size: 19px; }
+  body.density-xl { --base-size: 21px; }
+
+  h1, h2, h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif; }
+
+  /* ─── Hero animations ─── */
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.92) rotate(var(--r, 0deg)); }
+    to   { opacity: 1; transform: translateY(0) scale(1) rotate(var(--r, 0deg)); }
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50%      { transform: translateY(-10px) rotate(var(--r, 0deg)); }
+  }
+  .floatcard {
+    animation: floatIn 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+  }
+  .floatcard::after {
+    content: none;
+  }
+  .floatcard {
+    will-change: transform, opacity;
+  }
+  /* after entering, apply gentle perpetual float via a second layer */
+  .floatcard > div {
+    animation: floatGentle 5s ease-in-out infinite;
+    animation-delay: inherit;
+  }
+  @keyframes floatGentle {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  @keyframes heroRise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 500; color: var(--ink-2);
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+    animation: heroRise 700ms cubic-bezier(0.2,0.8,0.2,1) both;
+  }
+  .hero-title { animation: heroRise 800ms 120ms cubic-bezier(0.2,0.8,0.2,1) both; }
+  .hero-sub   { animation: heroRise 800ms 220ms cubic-bezier(0.2,0.8,0.2,1) both; }
+  .hero-cta   { animation: heroRise 800ms 320ms cubic-bezier(0.2,0.8,0.2,1) both; }
+
+  /* Marquee */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    animation: marquee 48s linear infinite;
+    width: max-content;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floatcard, .floatcard > div, .marquee-track, .hero-eyebrow, .hero-title, .hero-sub, .hero-cta { animation: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body class="variant-blue density-comfortable">
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script src="components/data.js"></script>
+  <script src="components/compare-questions.js"></script>
+  <script type="text/babel" src="components/ui.jsx"></script>
+  <script type="text/babel" src="components/navbar.jsx"></script>
+  <script type="text/babel" src="components/home.jsx"></script>
+  <script type="text/babel" src="components/demographics.jsx"></script>
+  <script type="text/babel" src="components/candidatos-steps.jsx"></script>
+  <script type="text/babel" src="components/candidatos-profile.jsx"></script>
+  <script type="text/babel" src="components/compara.jsx"></script>
+  <script src="components/elections-data.js"></script>
+  <script src="components/elections-geo.js"></script>
+  <script type="text/babel" src="components/historial.jsx"></script>
+
+  <script type="text/babel">
+    const SAVED_ROUTE_KEY = "presi_route_v1";
+
+    function App() {
+      const [route, setRouteState] = React.useState(() => {
+        try { return localStorage.getItem(SAVED_ROUTE_KEY) || "home"; } catch(e) { return "home"; }
+      });
+      const [preselected, setPreselected] = React.useState(null);
+      const [tweakOpen, setTweakOpen] = React.useState(false);
+      const [variant, setVariant] = React.useState("blue");
+      const [density, setDensity] = React.useState("comfortable");
+
+      const setRoute = (r) => {
+        setRouteState(r);
+        try { localStorage.setItem(SAVED_ROUTE_KEY, r); } catch(e) {}
+        window.scrollTo({ top: 0, behavior: "instant" });
+      };
+
+      const openCandidate = (c) => {
+        setPreselected(c);
+        setRoute("candidatos");
+      };
+
+      React.useEffect(() => {
+        document.body.classList.remove("variant-blue", "variant-warm", "variant-mono");
+        document.body.classList.add("variant-" + variant);
+      }, [variant]);
+      React.useEffect(() => {
+        document.body.classList.remove("density-comfortable", "density-spacious", "density-xl");
+        document.body.classList.add("density-" + density);
+      }, [density]);
+
+      // Tweaks protocol
+      React.useEffect(() => {
+        const handler = (e) => {
+          if (!e.data) return;
+          if (e.data.type === "__activate_edit_mode") setTweakOpen(true);
+          if (e.data.type === "__deactivate_edit_mode") setTweakOpen(false);
+        };
+        window.addEventListener("message", handler);
+        window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+        return () => window.removeEventListener("message", handler);
+      }, []);
+
+      return (
+        <>
+          <NavBar route={route} setRoute={setRoute} />
+          {route === "home" && <HomePage setRoute={setRoute} openCandidate={openCandidate} />}
+          {route === "candidatos" && (
+            <CandidatosPage
+              preselected={preselected}
+              clearPreselected={() => setPreselected(null)}
+            />
+          )}
+          {route === "compara" && <ComparaPage />}
+          {route === "historial" && <HistorialPage />}
+          {route === "contacto" && <ContactoPage />}
+
+          <footer style={{ borderTop: "1px solid var(--line)", padding: "32px", textAlign: "center", fontSize: 15, color: "var(--ink-3)" }}>
+            Presidencial 2026 · Consultoría ciudadana apartidista · Información educativa
+          </footer>
+
+          {tweakOpen && (
+            <div className="tweak-panel" role="dialog" aria-label="Tweaks">
+              <h4>Tweaks</h4>
+              <div className="group">
+                <label>Acento</label>
+                <div className="seg">
+                  {[
+                    { k: "blue", l: "Azul" },
+                    { k: "warm", l: "Coral" },
+                    { k: "mono", l: "Mono" },
+                  ].map((o) => (
+                    <button key={o.k} className={variant === o.k ? "active" : ""} onClick={() => setVariant(o.k)}>{o.l}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="group">
+                <label>Tamaño de texto</label>
+                <div className="seg">
+                  {[
+                    { k: "comfortable", l: "A" },
+                    { k: "spacious", l: "A+" },
+                    { k: "xl", l: "A++" },
+                  ].map((o) => (
+                    <button key={o.k} className={density === o.k ? "active" : ""} onClick={() => setDensity(o.k)}>{o.l}</button>
+                  ))}
+                </div>
+              </div>
+              <p style={{ margin: 0, fontSize: 13, color: "var(--ink-3)", lineHeight: 1.4 }}>
+                Tres variaciones para comparar: paleta institucional, cálida tipo Airbnb, o monocromo Apple.
+              </p>
+            </div>
+          )}
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
