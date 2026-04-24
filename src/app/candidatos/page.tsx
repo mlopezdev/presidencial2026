@@ -9,6 +9,7 @@ import {
   TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX, getCandidatePhoto,
   type Candidate, type Spectrum,
 } from "@/lib/data";
+import { TEMAS, getPosicion, type Posicion } from "@/lib/posiciones-data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
@@ -553,7 +554,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
   const hasPropuestas = Boolean(compare && Object.values(compare).some((arr) => arr.length > 0));
   const pendingTabs: string[] = [
     ...(!hasTrayectoria ? ["Trayectoria"] : []),
-    ...(!hasPropuestas ? ["Propuestas", "Posiciones"] : []),
+    ...(!hasPropuestas ? ["Propuestas"] : []),
     "Plan y DOFA",
   ];
 
@@ -561,7 +562,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
     { key: "resumen",     label: "Resumen" },
     ...(hasTrayectoria ? [{ key: "trayectoria", label: "Trayectoria" }] : []),
     ...(hasPropuestas   ? [{ key: "propuestas",  label: "Propuestas" }] : []),
-    ...(hasPropuestas   ? [{ key: "posiciones",  label: "Posiciones" }] : []),
+    { key: "posiciones",  label: "Posiciones" },   // siempre visible — datos en posiciones.json
     { key: "similitudes", label: "Similitudes" },
     // "Plan y DOFA" oculto hasta que haya datos
   ];
@@ -920,29 +921,53 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
     );
   }
 
-  if (tab === "posiciones") return (
-    <div>
-      <h3 style={{ margin: "0 0 6px", fontSize: 26, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
-        fontFamily: "var(--font-plex-serif), Georgia, serif" }}>Posiciones</h3>
-      <p style={{ margin: "0 0 24px", fontSize: 15, color: "var(--ink-3)" }}>Postura frente a los cuatro ejes principales.</p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
-        {AXES.map((a) => {
-          const items = compare?.[a.key];
-          const summary = items?.[0] ? items[0].desc : a.desc;
-          return (
-            <div key={a.key} style={{ background: "#F7F8FA", borderRadius: 16, padding: 22, border: "1px solid rgba(0,0,0,0.04)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: candidate.color }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Eje</span>
+  if (tab === "posiciones") {
+    const POSICION_META: Record<Posicion, { label: string; color: string; bg: string; icon: string }> = {
+      si:              { label: "Sí",              color: "#1F8F5C", bg: "rgba(31,143,92,0.08)",  icon: "✓" },
+      no:              { label: "No",              color: "#C8453C", bg: "rgba(200,69,60,0.08)",  icon: "✕" },
+      no_pronunciado:  { label: "Sin pronunciarse", color: "#86868B", bg: "rgba(134,134,139,0.07)", icon: "—" },
+    };
+    return (
+      <div>
+        <h3 style={{ margin: "0 0 6px", fontSize: 26, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
+          fontFamily: "var(--font-plex-serif), Georgia, serif" }}>Posiciones en temas polémicos</h3>
+        <p style={{ margin: "0 0 24px", fontSize: 15, color: "var(--ink-3)" }}>
+          15 preguntas clave. Basado en declaraciones, planes de gobierno y votaciones públicas.
+        </p>
+        <div style={{ display: "grid", gap: 10 }}>
+          {TEMAS.map((tema) => {
+            const pos = getPosicion(candidate.name, tema.id);
+            const meta = POSICION_META[pos];
+            return (
+              <div key={tema.id} style={{
+                display: "flex", alignItems: "center", gap: 14,
+                background: "#FAFBFC", borderRadius: 14, padding: "14px 18px",
+                border: "1px solid rgba(0,0,0,0.05)",
+              }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", width: 20, textAlign: "right", flexShrink: 0 }}>
+                  {tema.numero}
+                </span>
+                <p style={{ flex: 1, margin: 0, fontSize: 15, color: "var(--ink)", lineHeight: 1.4 }}>
+                  {tema.pregunta}
+                </p>
+                <div style={{
+                  flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "6px 12px", borderRadius: 999,
+                  background: meta.bg, border: `1px solid ${meta.color}30`,
+                }}>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: meta.color }}>{meta.icon}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: meta.color, whiteSpace: "nowrap" }}>{meta.label}</span>
+                </div>
               </div>
-              <h4 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em" }}>{a.key}</h4>
-              <p style={{ margin: 0, fontSize: 16, color: "var(--ink-2)", lineHeight: 1.5 }}>{summary}</p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+        <p style={{ marginTop: 16, fontSize: 13, color: "var(--ink-3)", lineHeight: 1.5 }}>
+          Fuente: declaraciones públicas, planes de gobierno y votaciones legislativas. "Sin pronunciarse" indica que no hay posición pública registrada.
+        </p>
       </div>
-    </div>
-  );
+    );
+  }
 
   if (tab === "similitudes") {
     const others = ALL_CANDIDATES.filter((c) => c.name !== candidate.name && COMPARE_DATA[c.name]);

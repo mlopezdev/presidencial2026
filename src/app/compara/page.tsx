@@ -1,10 +1,161 @@
 "use client";
 
 import { useState, useMemo, useRef } from "react";
-import { ALL_CANDIDATES, IDEOLOGY_MATRIX, type Candidate } from "@/lib/data";
+import { ALL_CANDIDATES, IDEOLOGY_MATRIX, getCandidatePhoto, type Candidate } from "@/lib/data";
 import { COMPARE_QUESTIONS, COMPARE_CATEGORIES } from "@/lib/compare-questions";
+import { TEMAS, getPosicion, type Posicion } from "@/lib/posiciones-data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Chevron } from "@/components/ui/Chevron";
+
+// ─── Vista: Temas polémicos (todos los candidatos) ───
+const POS_META: Record<Posicion, { icon: string; color: string; bg: string }> = {
+  si:             { icon: "✓", color: "#1F8F5C", bg: "rgba(31,143,92,0.10)" },
+  no:             { icon: "✕", color: "#C8453C", bg: "rgba(200,69,60,0.10)" },
+  no_pronunciado: { icon: "—", color: "#86868B", bg: "rgba(134,134,139,0.07)" },
+};
+
+function TemasView() {
+  const [activeTema, setActiveTema] = useState<string | null>(null);
+
+  return (
+    <div>
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 600,
+          color: "var(--brand)", background: "rgba(47,107,138,0.1)", padding: "5px 11px",
+          borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: 12 }}>
+          ⚡ Temas polémicos
+        </div>
+        <h3 style={{ margin: "0 0 8px", fontSize: 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
+          fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
+          Los 14 frente a frente
+        </h3>
+        <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)" }}>
+          Posición de cada candidato en 15 temas polémicos. Toca un tema para ver el detalle.
+        </p>
+      </div>
+
+      {/* Leyenda */}
+      <div style={{ display: "flex", gap: 20, marginBottom: 20, flexWrap: "wrap" }}>
+        {(["si","no","no_pronunciado"] as Posicion[]).map((p) => (
+          <div key={p} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-2)" }}>
+            <span style={{ width: 22, height: 22, borderRadius: 6, background: POS_META[p].bg,
+              border: `1px solid ${POS_META[p].color}30`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 12, fontWeight: 700, color: POS_META[p].color }}>
+              {POS_META[p].icon}
+            </span>
+            {p === "si" ? "Sí" : p === "no" ? "No" : "Sin pronunciarse"}
+          </div>
+        ))}
+      </div>
+
+      {/* Header con avatares */}
+      <div style={{ overflowX: "auto" }}>
+        <div style={{ minWidth: 900 }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: `minmax(280px,1fr) repeat(${ALL_CANDIDATES.length}, 48px)`,
+            gap: 4, padding: "0 0 12px", borderBottom: "2px solid var(--line)",
+            alignItems: "flex-end",
+          }}>
+            <div />
+            {ALL_CANDIDATES.map((c) => (
+              <div key={c.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <div style={{ boxShadow: `0 0 0 2px ${c.color}`, borderRadius: "50%" }}>
+                  <Avatar name={c.name} color={c.color} size={36} photo={getCandidatePhoto(c.name)} />
+                </div>
+                <div style={{ fontSize: 8, fontWeight: 600, color: "var(--ink-3)", textAlign: "center",
+                  lineHeight: 1.2, width: 44,
+                  overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                  {c.name.split(" ").slice(-1)[0]}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Filas de temas */}
+          {TEMAS.map((tema) => {
+            const isActive = activeTema === tema.id;
+            return (
+              <div key={tema.id} style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}>
+                <div
+                  onClick={() => setActiveTema(isActive ? null : tema.id)}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: `minmax(280px,1fr) repeat(${ALL_CANDIDATES.length}, 48px)`,
+                    gap: 4, padding: "10px 0", alignItems: "center", cursor: "pointer",
+                    background: isActive ? "rgba(47,107,138,0.04)" : "transparent",
+                    transition: "background 140ms ease",
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLElement).style.background = "#FAFBFC"; }}
+                  onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, paddingRight: 12 }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", flexShrink: 0 }}>
+                      {tema.numero}
+                    </span>
+                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--ink)", lineHeight: 1.35 }}>
+                      {tema.pregunta}
+                    </span>
+                  </div>
+                  {ALL_CANDIDATES.map((c) => {
+                    const pos = getPosicion(c.name, tema.id);
+                    const meta = POS_META[pos];
+                    return (
+                      <div key={c.name} style={{ display: "flex", justifyContent: "center" }}>
+                        <div style={{
+                          width: 32, height: 32, borderRadius: 8,
+                          background: meta.bg, border: `1px solid ${meta.color}25`,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: 13, fontWeight: 700, color: meta.color,
+                        }}>
+                          {meta.icon}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Detalle expandido */}
+                {isActive && (
+                  <div style={{ padding: "12px 0 20px", background: "rgba(47,107,138,0.03)" }}>
+                    <div style={{ padding: "0 16px", display: "flex", gap: 10, flexWrap: "wrap" }}>
+                      {(["si","no","no_pronunciado"] as Posicion[]).map((p) => {
+                        const group = ALL_CANDIDATES.filter((c) => getPosicion(c.name, tema.id) === p);
+                        if (!group.length) return null;
+                        const meta = POS_META[p];
+                        return (
+                          <div key={p} style={{
+                            flex: "1 1 200px", background: "#fff", borderRadius: 14, padding: "14px 16px",
+                            border: `1px solid ${meta.color}20`,
+                          }}>
+                            <div style={{ fontSize: 12, fontWeight: 700, color: meta.color,
+                              textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
+                              {meta.icon} {p === "si" ? "Sí" : p === "no" ? "No" : "Sin pronunciarse"}
+                              <span style={{ marginLeft: 6, fontWeight: 500, color: "var(--ink-3)" }}>({group.length})</span>
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                              {group.map((c) => (
+                                <div key={c.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                  <Avatar name={c.name} color={c.color} size={24} photo={getCandidatePhoto(c.name)} />
+                                  <span style={{ fontSize: 13, color: "var(--ink-2)" }}>{c.name}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const COMPARE_NAMES = ["Iván Cepeda", "Abelardo de la Espriella", "Paloma Valencia", "Claudia López", "Roy Barreras", "Sergio Fajardo", "Miguel Uribe Londoño", "Luis Gilberto Murillo"];
 
@@ -276,7 +427,7 @@ function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate
 
 // ─── Página Compara ───
 export default function ComparaPage() {
-  const [view, setView] = useState<"preguntas" | "matriz">("preguntas");
+  const [view, setView] = useState<"preguntas" | "temas" | "matriz">("temas");
   const [category, setCategory] = useState("Todas");
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
   const [activeCandidate, setActiveCandidate] = useState<string | null>(null);
@@ -310,8 +461,12 @@ export default function ComparaPage() {
       {/* Toggle de vista */}
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 32 }}>
         <div style={{ display: "inline-flex", gap: 4, padding: 4, background: "#fff", borderRadius: 14, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)" }}>
-          {[{ k: "preguntas", l: "Por preguntas", icon: "✓" }, { k: "matriz", l: "Matriz ideológica", icon: "⊞" }].map((o) => (
-            <button key={o.k} type="button" onClick={() => setView(o.k as "preguntas" | "matriz")} style={{
+          {[
+            { k: "temas",     l: "Temas polémicos",   icon: "⚡" },
+            { k: "preguntas", l: "Análisis detallado", icon: "✓" },
+            { k: "matriz",    l: "Matriz ideológica",  icon: "⊞" },
+          ].map((o) => (
+            <button key={o.k} type="button" onClick={() => setView(o.k as "preguntas" | "temas" | "matriz")} style={{
               fontFamily: "inherit", fontSize: 15, fontWeight: 500, cursor: "pointer",
               padding: "10px 18px", borderRadius: 10, border: 0,
               background: view === o.k ? "var(--brand)" : "transparent",
@@ -326,6 +481,12 @@ export default function ComparaPage() {
       </div>
 
       {view === "matriz" && <IdeologyMatrixView />}
+
+      {view === "temas" && (
+        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 24, padding: "28px 28px", overflow: "hidden" }}>
+          <TemasView />
+        </div>
+      )}
 
       {view === "preguntas" && (
         <>
