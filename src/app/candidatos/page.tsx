@@ -545,15 +545,25 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
   useEffect(() => { setActiveTab("resumen"); }, [candidate.name]);
 
   const compare = COMPARE_DATA[candidate.name];
-  const proposalCount = compare ? Object.values(compare).reduce((a, arr) => a + arr.length, 0) : "—";
+  const proposalCount = compare ? Object.values(compare).reduce((a, arr) => a + arr.length, 0) : 0;
   const axesCount = compare ? `${Object.values(compare).filter((a) => a.length > 0).length}/4` : "—";
+
+  // Solo mostrar tabs con contenido real
+  const hasTrayectoria = Boolean(TIMELINES[candidate.name]);
+  const hasPropuestas = Boolean(compare && Object.values(compare).some((arr) => arr.length > 0));
+  const pendingTabs: string[] = [
+    ...(!hasTrayectoria ? ["Trayectoria"] : []),
+    ...(!hasPropuestas ? ["Propuestas", "Posiciones"] : []),
+    "Plan y DOFA",
+  ];
+
   const tabs = [
-    { key: "resumen", label: "Resumen" },
-    { key: "trayectoria", label: "Trayectoria" },
-    { key: "propuestas", label: "Propuestas" },
-    { key: "posiciones", label: "Posiciones" },
+    { key: "resumen",     label: "Resumen" },
+    ...(hasTrayectoria ? [{ key: "trayectoria", label: "Trayectoria" }] : []),
+    ...(hasPropuestas   ? [{ key: "propuestas",  label: "Propuestas" }] : []),
+    ...(hasPropuestas   ? [{ key: "posiciones",  label: "Posiciones" }] : []),
     { key: "similitudes", label: "Similitudes" },
-    { key: "plan", label: "Plan y DOFA" },
+    // "Plan y DOFA" oculto hasta que haya datos
   ];
 
   return (
@@ -688,7 +698,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           </p>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingBottom: 4 }}>
             {[
-              { k: "Propuestas", v: proposalCount },
+              { k: "Propuestas", v: proposalCount > 0 ? proposalCount : "—" },
               { k: "Ejes cubiertos", v: axesCount },
               { k: "Espectro", v: capitalize(candidate.spectrum) },
             ].map((s) => (
@@ -698,6 +708,21 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
               </div>
             ))}
           </div>
+
+          {/* Aviso de secciones pendientes */}
+          {pendingTabs.length > 0 && (
+            <div style={{
+              marginTop: 16, padding: "10px 14px", borderRadius: 12,
+              background: "rgba(184,134,11,0.07)", border: "1px solid rgba(184,134,11,0.22)",
+              display: "inline-flex", alignItems: "center", gap: 8,
+            }}>
+              <span style={{ fontSize: 14 }}>⏳</span>
+              <span style={{ fontSize: 13, color: "#92680A", fontWeight: 500 }}>
+                Información pendiente:{" "}
+                <span style={{ fontWeight: 600 }}>{pendingTabs.join(", ")}</span>
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Tab bar — sticky */}

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "tema-01",
+    "numero": 1,
+    "pregunta": "¿Apoya la despenalización del aborto?"
+  },
+  {
+    "id": "tema-02",
+    "numero": 2,
+    "pregunta": "¿Apoya la legalización de la marihuana para uso recreativo?"
+  },
+  {
+    "id": "tema-03",
+    "numero": 3,
+    "pregunta": "¿Está a favor del matrimonio igualitario?"
+  },
+  {
+    "id": "tema-04",
+    "numero": 4,
+    "pregunta": "¿Apoya la adopción por parejas del mismo sexo?"
+  },
+  {
+    "id": "tema-05",
+    "numero": 5,
+    "pregunta": "¿Está a favor de continuar las negociaciones de paz con el ELN?"
+  },
+  {
+    "id": "tema-06",
+    "numero": 6,
+    "pregunta": "¿Apoya la pena de muerte para delitos graves?"
+  },
+  {
+    "id": "tema-07",
+    "numero": 7,
+    "pregunta": "¿Está a favor de mantener las relaciones diplomáticas con Venezuela?"
+  },
+  {
+    "id": "tema-08",
+    "numero": 8,
+    "pregunta": "¿Apoya la extradición de narcotraficantes a EE.UU.?"
+  },
+  {
+    "id": "tema-09",
+    "numero": 9,
+    "pregunta": "¿Apoya la reforma pensional impulsada por Petro?"
+  },
+  {
+    "id": "tema-10",
+    "numero": 10,
+    "pregunta": "¿Está a favor de nacionalizar empresas estratégicas?"
+  },
+  {
+    "id": "tema-11",
+    "numero": 11,
+    "pregunta": "¿Apoya el fracking como fuente de energía en Colombia?"
+  },
+  {
+    "id": "tema-12",
+    "numero": 12,
+    "pregunta": "¿Está a favor de reducir el gasto militar?"
+  },
+  {
+    "id": "tema-13",
+    "numero": 13,
+    "pregunta": "¿Apoya el ingreso básico universal?"
+  },
+  {
+    "id": "tema-14",
+    "numero": 14,
+    "pregunta": "¿Está a favor de permitir el aborto en menores de edad víctimas de violación?"
+  },
+  {
+    "id": "tema-15",
+    "numero": 15,
+    "pregunta": "¿Apoya la reforma agraria redistributiva (expropiación con compensación)?"
+  }
+]

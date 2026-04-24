@@ -1,0 +1,66 @@
+{
+  "eventos": [
+    {
+      "evento": "Inscripción de candidaturas (inicio)",
+      "fecha": "31 de enero de 2026",
+      "notas": "Claudia López, primera inscrita"
+    },
+    {
+      "evento": "Consultas interpartidistas",
+      "fecha": "8 de marzo de 2026",
+      "notas": "Gran Consulta por Colombia, Frente por la Vida, Consulta de las Soluciones"
+    },
+    {
+      "evento": "Cierre de inscripciones",
+      "fecha": "13 de marzo de 2026",
+      "notas": "14 candidatos formalizados"
+    },
+    {
+      "evento": "Período de modificaciones",
+      "fecha": "16 – 20 de marzo de 2026",
+      "notas": "Ajustes a fórmulas inscritas"
+    },
+    {
+      "evento": "Sorteo del tarjetón electoral",
+      "fecha": "25 de marzo de 2026",
+      "notas": "Centro de Convenciones Ágora, Bogotá"
+    },
+    {
+      "evento": "Primera vuelta presidencial",
+      "fecha": "31 de mayo de 2026",
+      "notas": "Gana quien obtenga más del 50% + 1 voto válido"
+    },
+    {
+      "evento": "Segunda vuelta (si aplica)",
+      "fecha": "21 de junio de 2026",
+      "notas": "Entre los dos candidatos más votados"
+    },
+    {
+      "evento": "Posesión del nuevo presidente",
+      "fecha": "7 de agosto de 2026",
+      "notas": "Período: 2026–2030"
+    }
+  ],
+  "notasMetodologicas": [
+    {
+      "tema": "Foto de candidatos",
+      "detalle": "El Excel no incluye imágenes fotográficas de los candidatos por restricciones de los formatos de datos. Se recomienda buscar las fotos oficiales en los sitios web de la Registraduría (https://wapp.registraduria.gov.co/electoral/2026/) y de las campañas respectivas. Pueden insertarse manualmente en la columna prevista."
+    },
+    {
+      "tema": "Posiciones en temas polémicos",
+      "detalle": "Las posiciones registradas se basan en declaraciones públicas, votaciones en el Congreso, entrevistas y programas de gobierno conocidos hasta abril 2026. 'NP' (No Pronunciado) indica que el candidato no ha hecho declaración clara o pública sobre ese tema específico."
+    },
+    {
+      "tema": "Datos de encuestas",
+      "detalle": "Los porcentajes de intención de voto son aproximados y corresponden a sondeos de finales de 2025 y principios de 2026 (Invamer, CNC, Guarumo). Las encuestas tienen margen de error y pueden variar significativamente antes de la primera vuelta."
+    },
+    {
+      "tema": "Clara López",
+      "detalle": "La candidata Clara López Obregón declinó su candidatura el 6 de abril de 2026 (antes del cierre de este documento) y se sumó a la campaña de Iván Cepeda. Sin embargo, su nombre permanece en el tarjetón oficial."
+    },
+    {
+      "tema": "Fuentes principales",
+      "detalle": "Registraduría Nacional del Estado Civil | Wikipedia – Elecciones presidenciales Colombia 2026 | El Tiempo | Infobae Colombia | LaFM | Café Político | PARES Colombia"
+    }
+  ]
+}
