@@ -12,28 +12,20 @@ const plexSans = IBM_Plex_Sans({
 const plexSerif = IBM_Plex_Serif({
   variable: "--font-plex-serif",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "UPB Presidencial 2026",
-  description: "Plataforma de comparación y perfil de candidatos presidenciales Colombia 2026",
+  title: "Presidencial 2026 · Colombia",
+  description: "Conoce, compara y analiza a los 14 candidatos a la Presidencia de Colombia 2026.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="es"
-      className={`${plexSans.variable} ${plexSerif.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col bg-[color:var(--background)] text-[color:var(--ink)]">
+    <html lang="es" className={`${plexSans.variable} ${plexSerif.variable}`} suppressHydrationWarning>
+      <body>
         <NavBar />
-        <main className="flex-1">{children}</main>
+        <div style={{ paddingTop: 72 }}>{children}</div>
       </body>
     </html>
   );

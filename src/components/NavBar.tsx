@@ -2,55 +2,95 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
-  { label: "Inicio", href: "/" },
-  { label: "Candidatos", href: "/candidatos" },
-  { label: "Compara candidatos", href: "/compara" },
-  { label: "Contactanos", href: "/contactanos" },
+  { key: "/", label: "Inicio" },
+  { key: "/candidatos", label: "Candidatos" },
+  { key: "/compara", label: "Comparar" },
+  { key: "/historial", label: "Historial" },
+  { key: "/contactanos", label: "Contacto" },
 ];
 
 export default function NavBar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[color:var(--line-soft)] bg-[color:var(--surface)] backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 px-6 py-6">
-        <div className="flex items-center gap-3 text-center">
-          <span className="h-9 w-9 rounded-full bg-[radial-gradient(circle_at_30%_30%,#dfe7ef,transparent_55%),linear-gradient(140deg,var(--brand),var(--brand-soft))]" />
-          <div>
-            <p className="text-[0.55rem] font-semibold uppercase tracking-[0.45em] text-[color:var(--ink-muted)]">
-              Consultoria Ciudadana
-            </p>
-            <p className="text-lg font-semibold text-[color:var(--ink)]" style={{ fontFamily: "var(--font-serif)" }}>
-              UPB Presidencial
-            </p>
-          </div>
-        </div>
+    <div style={{
+      position: "fixed", top: 16, left: 0, right: 0,
+      zIndex: 50, display: "flex", justifyContent: "center", padding: "0 16px",
+      pointerEvents: "none",
+    }}>
+      <header
+        className="liquid-nav"
+        style={{
+          pointerEvents: "auto",
+          display: "flex", alignItems: "center", gap: 8,
+          padding: "8px 10px 8px 18px", borderRadius: 999,
+          position: "relative", overflow: "hidden",
+        }}
+      >
+        {/* Specular highlight */}
+        <span aria-hidden="true" style={{
+          position: "absolute", inset: 0, borderRadius: "inherit",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 55%)",
+          pointerEvents: "none", mixBlendMode: "overlay", opacity: 0.7,
+        }} />
 
-        <nav className="hidden items-center gap-8 text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--ink-muted)] md:flex">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
+        {/* Brand */}
+        <Link href="/" style={{
+          display: "flex", alignItems: "center", gap: 10,
+          background: "transparent", padding: "4px 10px 4px 0",
+          position: "relative", zIndex: 1,
+        }}>
+          <span aria-hidden="true" style={{
+            width: 26, height: 26, borderRadius: 8,
+            background: "linear-gradient(180deg, color-mix(in oklab, var(--brand) 100%, white 18%) 0%, var(--brand) 100%)",
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            color: "#fff", fontWeight: 700, fontSize: 13, letterSpacing: "-0.02em",
+            boxShadow: "0 1px 0 rgba(255,255,255,0.5) inset, 0 2px 5px -1px rgba(0,0,0,0.18)",
+          }}>
+            P
+          </span>
+          <span style={{ fontSize: 15.5, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.015em" }}>
+            Presidencial 2026
+          </span>
+        </Link>
+
+        {/* Divider */}
+        <span aria-hidden="true" style={{
+          width: 1, height: 22,
+          background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%)",
+          margin: "0 4px", position: "relative", zIndex: 1,
+        }} />
+
+        {/* Nav items */}
+        <nav aria-label="Principal" style={{ display: "flex", gap: 2, position: "relative", zIndex: 1 }}>
+          {navItems.map((it) => {
+            const active = pathname === it.key;
             return (
               <Link
-                key={item.href}
-                href={item.href}
-                className={`transition ${
-                  isActive
-                    ? "text-[color:var(--ink)]"
-                    : "hover:text-[color:var(--ink)]"
-                }`}
-                aria-current={isActive ? "page" : undefined}
+                key={it.key}
+                href={it.key}
+                aria-current={active ? "page" : undefined}
+                style={{
+                  fontSize: 15, fontWeight: active ? 600 : 500,
+                  color: active ? "#fff" : "var(--ink-2)",
+                  background: active
+                    ? "linear-gradient(180deg, color-mix(in oklab, var(--brand) 100%, white 12%), var(--brand))"
+                    : "transparent",
+                  padding: "8px 16px", borderRadius: 999,
+                  transition: "background 200ms ease, color 200ms ease",
+                  letterSpacing: "-0.01em",
+                  boxShadow: active ? "0 1px 0 rgba(255,255,255,0.35) inset, 0 4px 12px -4px rgba(13,30,45,0.35)" : "none",
+                  display: "inline-flex", alignItems: "center",
+                }}
               >
-                {item.label}
+                {it.label}
               </Link>
             );
           })}
         </nav>
-
-        <ThemeToggle />
-      </div>
-    </header>
+      </header>
+    </div>
   );
 }
