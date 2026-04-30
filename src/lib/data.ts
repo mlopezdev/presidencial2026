@@ -11,24 +11,25 @@ export interface Candidate {
   lede: string;
 }
 
+// Paleta por espectro: izquierda=rojos, centro=ámbar/dorado, derecha=azules
 export const TOP_CANDIDATES: Candidate[] = [
-  { name: "Iván Cepeda", gender: "M", vice: "Aída Quilcué", viceGender: "F", party: "Pacto Histórico", spectrum: "izquierda", color: "#B8860B", lede: "La fuerza de la vida y el cambio continúa." },
-  { name: "Abelardo de la Espriella", gender: "M", vice: "José Manuel Restrepo", viceGender: "M", party: "Defensores de la Patria", spectrum: "derecha", color: "#B3261E", lede: "Firme por la patria." },
-  { name: "Paloma Valencia", gender: "F", vice: "Juan Daniel Oviedo", viceGender: "M", party: "Centro Democrático", spectrum: "derecha", color: "#2F6B8A", lede: "Sí podemos hacerlo juntos por Colombia." },
-  { name: "Claudia López", gender: "F", vice: "Leonardo Huerta", viceGender: "M", party: "Con Claudia Imparables", spectrum: "centro", color: "#1F6E4A", lede: "Con Claudia, imparables." },
-  { name: "Sergio Fajardo", gender: "M", vice: "Edna Bonilla", viceGender: "F", party: "Dignidad y Compromiso", spectrum: "centro", color: "#5B3A8B", lede: "Diferentes sin ser enemigos." },
-  { name: "Miguel Uribe Londoño", gender: "M", vice: "Luisa Fernanda Villegas", viceGender: "F", party: "Partido Demócrata", spectrum: "derecha", color: "#2E4BA8", lede: "Trabajando por una sola Colombia." },
-  { name: "Luis Gilberto Murillo", gender: "M", vice: "Luz María Zapata", viceGender: "F", party: "Luis Gilberto Soy Yo", spectrum: "centro", color: "#1E5B3A", lede: "No soy el candidato de ningún político." },
+  { name: "Iván Cepeda",            gender: "M", vice: "Aída Quilcué",            viceGender: "F", party: "Pacto Histórico",        spectrum: "izquierda", color: "#C0392B", lede: "La fuerza de la vida y el cambio continúa." },
+  { name: "Abelardo de la Espriella",gender: "M", vice: "José Manuel Restrepo",    viceGender: "M", party: "Defensores de la Patria", spectrum: "derecha",   color: "#1D4ED8", lede: "Firme por la patria." },
+  { name: "Paloma Valencia",         gender: "F", vice: "Juan Daniel Oviedo",      viceGender: "M", party: "Centro Democrático",      spectrum: "derecha",   color: "#2563EB", lede: "Sí podemos hacerlo juntos por Colombia." },
+  { name: "Claudia López",           gender: "F", vice: "Leonardo Huerta",         viceGender: "M", party: "Con Claudia Imparables",  spectrum: "centro",    color: "#D97706", lede: "Con Claudia, imparables." },
+  { name: "Sergio Fajardo",          gender: "M", vice: "Edna Bonilla",            viceGender: "F", party: "Dignidad y Compromiso",   spectrum: "centro",    color: "#B45309", lede: "Diferentes sin ser enemigos." },
+  { name: "Miguel Uribe Londoño",    gender: "M", vice: "Luisa Fernanda Villegas", viceGender: "F", party: "Partido Demócrata",       spectrum: "derecha",   color: "#1E40AF", lede: "Trabajando por una sola Colombia." },
+  { name: "Luis Gilberto Murillo",   gender: "M", vice: "Luz María Zapata",        viceGender: "F", party: "Luis Gilberto Soy Yo",    spectrum: "centro",    color: "#92400E", lede: "No soy el candidato de ningún político." },
 ];
 
 export const OTHER_CANDIDATES: Candidate[] = [
-  { name: "Santiago Botero", gender: "M", vice: "Carlos Fernando Cuevas", viceGender: "M", party: "Romper el Sistema", spectrum: "centro", color: "#4B5563", lede: "Es hora de romper el sistema." },
-  { name: "Mauricio Lizcano", gender: "M", vice: "Pedro de la Torre", viceGender: "M", party: "Firme con Lizcano", spectrum: "centro", color: "#6B8E23", lede: "Firme con Lizcano: resultados que se ven." },
-  { name: "Roy Barreras", gender: "M", vice: "Martha Lucía Zamora", viceGender: "F", party: "La Fuerza de la Paz", spectrum: "centro", color: "#B3261E", lede: "La fuerza de la paz y el consenso." },
-  { name: "Carlos Caicedo", gender: "M", vice: "Nelson Alarcón", viceGender: "M", party: "Fuerza Ciudadana", spectrum: "izquierda", color: "#C2410C", lede: "El cambio es con la gente." },
-  { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam", viceGender: "M", party: "La Abogada de Hierro", spectrum: "derecha", color: "#6B2D5C", lede: "Justicia para todos." },
-  { name: "Gustavo Matamoros", gender: "M", vice: "Mila María Paz", viceGender: "F", party: "Partido Ecologista", spectrum: "izquierda", color: "#2E7D32", lede: "Por nuestra tierra y nuestro futuro." },
-  { name: "Clara López", gender: "F", vice: "María Consuelo del Río", viceGender: "F", party: "Esperanza Democrática", spectrum: "izquierda", color: "#722F37", lede: "Esperanza democrática para el pueblo." },
+  { name: "Santiago Botero",  gender: "M", vice: "Carlos Fernando Cuevas",  viceGender: "M", party: "Romper el Sistema",           spectrum: "centro",    color: "#CA8A04", lede: "Es hora de romper el sistema." },
+  { name: "Mauricio Lizcano", gender: "M", vice: "Pedro de la Torre",        viceGender: "M", party: "Firme con Lizcano",           spectrum: "centro",    color: "#A16207", lede: "Firme con Lizcano: resultados que se ven." },
+  { name: "Roy Barreras",     gender: "M", vice: "Martha Lucía Zamora",      viceGender: "F", party: "La Fuerza de la Paz",         spectrum: "centro",    color: "#F59E0B", lede: "La fuerza de la paz y el consenso." },
+  { name: "Carlos Caicedo",   gender: "M", vice: "Nelson Alarcón",           viceGender: "M", party: "Fuerza Ciudadana",            spectrum: "izquierda", color: "#E74C3C", lede: "El cambio es con la gente." },
+  { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam",           viceGender: "M", party: "La Abogada de Hierro",        spectrum: "derecha",   color: "#3B82F6", lede: "Justicia para todos." },
+  { name: "Gustavo Matamoros",gender: "M", vice: "Mila María Paz",           viceGender: "F", party: "Partido Ecologista",          spectrum: "izquierda", color: "#A93226", lede: "Por nuestra tierra y nuestro futuro." },
+  { name: "Clara López",      gender: "F", vice: "María Consuelo del Río",   viceGender: "F", party: "Esperanza Democrática",       spectrum: "izquierda", color: "#922B21", lede: "Esperanza democrática para el pueblo." },
 ];
 
 export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDATES];

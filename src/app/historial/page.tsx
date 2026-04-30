@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { EL_NATIONAL, EL_COLOR, EL_SPECTRUM, EL_YEARS, type ElectionYear } from "@/lib/elections-data";
+import { ALL_CANDIDATES } from "@/lib/data";
 
 const pct = (n: number, d = 1) => `${n.toFixed(d)}%`;
 const fmt = (n: number) => n.toLocaleString("es-CO");
 
-const SPECTRUM_CLR: Record<string, string> = { izquierda: "#B3261E", centro: "#6B7280", derecha: "#1E40AF" };
+const SPECTRUM_CLR: Record<string, string> = { izquierda: "#C0392B", centro: "#D97706", derecha: "#1E40AF" };
 
 function ElSectionHeader({ kicker, title, dek }: { kicker: string; title: string; dek?: string }) {
   return (
@@ -267,11 +268,66 @@ function SecondRoundResults({ year }: { year: number }) {
 }
 
 // ─── Página principal ───
+// ─── Panel radiografía 2026 ───
+function ContiendaPanel() {
+  const spectrumColors: Record<string, string> = { izquierda: "#C0392B", centro: "#D97706", derecha: "#1E40AF" };
+  const specs = ["izquierda", "centro", "derecha"] as const;
+  const total = ALL_CANDIDATES.length;
+  const femaleCount = ALL_CANDIDATES.filter((c) => c.gender === "F").length;
+  const spectrumCount = ALL_CANDIDATES.reduce((acc, c) => { acc[c.spectrum] = (acc[c.spectrum] || 0) + 1; return acc; }, {} as Record<string, number>);
+
+  return (
+    <section style={{ background: "linear-gradient(180deg, #F5F7FA 0%, #FBFBFD 100%)", border: "1px solid var(--line)", borderRadius: 28, padding: 28, marginBottom: 56 }}>
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14 }}>
+        <span style={{ fontSize: 12, fontWeight: 600, color: "var(--brand)", background: "rgba(47,107,138,0.1)", padding: "5px 11px", borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase" }}>◆ Radiografía 2026</span>
+      </div>
+      <h3 style={{ margin: "0 0 6px", fontSize: 28, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.025em", lineHeight: 1.1, fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
+        ¿Quiénes están en la contienda?
+      </h3>
+      <p style={{ margin: "0 0 24px", fontSize: 16, color: "var(--ink-2)" }}>
+        {total} candidatos inscritos · Composición por género y espectro político.
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 14, marginBottom: 24 }}>
+        {[
+          { label: "Total candidatos", value: total, sub: "fórmulas inscritas", color: "var(--ink)" },
+          { label: "Mujeres candidatas", value: femaleCount, sub: `${Math.round((femaleCount / total) * 100)}% del total`, color: "#B5649C" },
+          { label: "Hombres candidatos", value: total - femaleCount, sub: `${Math.round(((total - femaleCount) / total) * 100)}% del total`, color: "var(--brand)" },
+        ].map((s) => (
+          <div key={s.label} style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: "18px 20px" }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>{s.label}</div>
+            <div style={{ fontSize: 38, fontWeight: 600, color: s.color, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.value}</div>
+            <div style={{ fontSize: 13, color: "var(--ink-3)", marginTop: 2 }}>{s.sub}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 20, padding: 22 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 16 }}>Distribución por espectro político</div>
+        {specs.map((k) => {
+          const n = spectrumCount[k] || 0;
+          const pctN = (n / total) * 100;
+          return (
+            <div key={k} style={{ marginBottom: 14 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 6 }}>
+                <span style={{ fontWeight: 600, color: spectrumColors[k], textTransform: "capitalize" }}>{k}</span>
+                <span style={{ color: "var(--ink-2)" }}>{n} candidatos · {Math.round(pctN)}%</span>
+              </div>
+              <div style={{ height: 10, borderRadius: 999, background: "#F2F4F7", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${pctN}%`, background: spectrumColors[k], borderRadius: 999 }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 export default function HistorialPage() {
   const [year, setYear] = useState(2022);
 
   return (
     <main style={{ maxWidth: 1200, margin: "0 auto", padding: "56px 32px 120px" }}>
+      <ContiendaPanel />
       <ElHero year={year} setYear={setYear} />
       <ElRoundBars year={year} />
       <SecondRoundResults year={year} />

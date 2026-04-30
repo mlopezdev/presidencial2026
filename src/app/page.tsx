@@ -11,7 +11,7 @@ import { Chevron } from "@/components/ui/Chevron";
 // ─── Celda individual del tarjetón ───
 function BallotCell({ candidate, index }: { candidate: Candidate; index: number }) {
   const [hovered, setHovered] = useState(false);
-  const SPECTRUM_CLR: Record<string, string> = { izquierda: "#B3261E", centro: "#2F6B8A", derecha: "#1E40AF" };
+  const SPECTRUM_CLR: Record<string, string> = { izquierda: "#C0392B", centro: "#D97706", derecha: "#1E40AF" };
   const color = SPECTRUM_CLR[candidate.spectrum] ?? candidate.color;
   const inits = candidate.name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
@@ -455,76 +455,6 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
   );
 }
 
-// ─── Demographics panel simplificado ───
-function DemographicsPanel() {
-  const spectrumCount = ALL_CANDIDATES.reduce((acc, c) => {
-    acc[c.spectrum] = (acc[c.spectrum] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-  const femaleCount = ALL_CANDIDATES.filter((c) => c.gender === "F").length;
-  const total = ALL_CANDIDATES.length;
-
-  const spectrumColors: Record<string, string> = { izquierda: "#B3261E", centro: "#2F6B8A", derecha: "#1E40AF" };
-  const specs = ["izquierda", "centro", "derecha"] as const;
-
-  return (
-    <section style={{
-      background: "linear-gradient(180deg, #F5F7FA 0%, #FBFBFD 100%)",
-      border: "1px solid var(--line)", borderRadius: 28, padding: 28, marginBottom: 48,
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-        <span style={{
-          fontSize: 12, fontWeight: 600, color: "var(--brand)",
-          background: "rgba(47,107,138,0.1)", padding: "5px 11px", borderRadius: 999,
-          letterSpacing: "0.05em", textTransform: "uppercase",
-        }}>◆ Radiografía 2026</span>
-      </div>
-      <h3 style={{ margin: "0 0 6px", fontSize: 28, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.025em", lineHeight: 1.1,
-        fontFamily: "var(--font-plex-serif), Georgia, serif",
-      }}>
-        ¿Quiénes están en la contienda?
-      </h3>
-      <p style={{ margin: "0 0 24px", fontSize: 16, color: "var(--ink-2)", lineHeight: 1.45 }}>
-        {total} candidatos inscritos. Composición por género y espectro político.
-      </p>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 24 }}>
-        {[
-          { label: "Total candidatos", value: total, sub: "fórmulas inscritas", color: "var(--ink)" },
-          { label: "Mujeres candidatas", value: femaleCount, sub: `${Math.round((femaleCount / total) * 100)}% del total`, color: "#B5649C" },
-          { label: "Hombres candidatos", value: total - femaleCount, sub: `${Math.round(((total - femaleCount) / total) * 100)}% del total`, color: "var(--brand)" },
-        ].map((s) => (
-          <div key={s.label} style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: "18px 20px" }}>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>{s.label}</div>
-            <div style={{ fontSize: 38, fontWeight: 600, color: s.color, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.value}</div>
-            <div style={{ fontSize: 13, color: "var(--ink-3)", marginTop: 2 }}>{s.sub}</div>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 20, padding: 22 }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 16 }}>
-          Distribución por espectro político
-        </div>
-        {specs.map((k) => {
-          const n = spectrumCount[k] || 0;
-          const pct = (n / total) * 100;
-          return (
-            <div key={k} style={{ marginBottom: 14 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 6 }}>
-                <span style={{ fontWeight: 600, color: spectrumColors[k], textTransform: "capitalize" }}>{k}</span>
-                <span style={{ color: "var(--ink-2)" }}>{n} candidatos · {Math.round(pct)}%</span>
-              </div>
-              <div style={{ height: 10, borderRadius: 999, background: "#F2F4F7", overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${pct}%`, background: spectrumColors[k], borderRadius: 999, transition: "width 500ms ease" }} />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
 
 // ─── Página principal ───
 type Filter = "todos" | "punteros" | "izquierda" | "centro" | "derecha";
@@ -550,8 +480,6 @@ export default function HomePage() {
       <PartyMarquee />
 
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 32px 96px" }} id="grid-anchor">
-        <DemographicsPanel />
-
         <div style={{ marginBottom: 24, display: "flex", alignItems: "end", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
           <div>
             <p style={{ margin: "0 0 4px", fontSize: 15, fontWeight: 600, color: "var(--brand)", letterSpacing: "-0.01em" }}>

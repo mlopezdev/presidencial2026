@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
 
 // ─── helpers ───
-const SPECTRUM_CLR: Record<Spectrum, string> = { izquierda: "#B3261E", centro: "#2F6B8A", derecha: "#1E40AF" };
-const SPECTRUM_BG:  Record<Spectrum, string> = { izquierda: "rgba(179,38,30,0.07)", centro: "rgba(47,107,138,0.07)", derecha: "rgba(30,64,175,0.07)" };
+const SPECTRUM_CLR: Record<Spectrum, string> = { izquierda: "#C0392B", centro: "#D97706", derecha: "#1E40AF" };
+const SPECTRUM_BG:  Record<Spectrum, string> = { izquierda: "rgba(192,57,43,0.08)", centro: "rgba(217,119,6,0.08)", derecha: "rgba(30,64,175,0.08)" };
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // ─── Breadcrumb de filtro activo ───
@@ -549,22 +549,15 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
   const proposalCount = compare ? Object.values(compare).reduce((a, arr) => a + arr.length, 0) : 0;
   const axesCount = compare ? `${Object.values(compare).filter((a) => a.length > 0).length}/4` : "—";
 
-  // Solo mostrar tabs con contenido real
   const hasTrayectoria = Boolean(TIMELINES[candidate.name]);
   const hasPropuestas = Boolean(compare && Object.values(compare).some((arr) => arr.length > 0));
-  const pendingTabs: string[] = [
-    ...(!hasTrayectoria ? ["Trayectoria"] : []),
-    ...(!hasPropuestas ? ["Propuestas"] : []),
-    "Plan y DOFA",
-  ];
 
   const tabs = [
-    { key: "resumen",     label: "Resumen" },
+    { key: "resumen",    label: "Resumen" },
     ...(hasTrayectoria ? [{ key: "trayectoria", label: "Trayectoria" }] : []),
-    ...(hasPropuestas   ? [{ key: "propuestas",  label: "Propuestas" }] : []),
-    { key: "posiciones",  label: "Posiciones" },   // siempre visible — datos en posiciones.json
-    { key: "similitudes", label: "Similitudes" },
-    // "Plan y DOFA" oculto hasta que haya datos
+    ...(hasPropuestas  ? [{ key: "propuestas",  label: "Propuestas" }] : []),
+    { key: "posiciones", label: "Posiciones" },
+    // Similitudes y Plan/DOFA ocultos
   ];
 
   return (
@@ -636,9 +629,9 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
         </div>
       </div>
 
-      <article style={{ background: "#fff", borderRadius: 24, border: "1px solid var(--line)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
-        {/* Cover band */}
-        <div style={{ height: 160, background: `linear-gradient(135deg, ${candidate.color} 0%, ${candidate.color}88 100%)`, position: "relative" }}>
+      <article style={{ background: "#fff", borderRadius: 24, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)", position: "relative" }}>
+        {/* Cover band — overflow:hidden solo aquí para no bloquear el avatar que se superpone */}
+        <div style={{ height: 160, background: `linear-gradient(135deg, ${candidate.color} 0%, ${candidate.color}88 100%)`, position: "relative", zIndex: 0, borderRadius: "24px 24px 0 0", overflow: "hidden" }}>
           {/* Party badge */}
           <span style={{
             position: "absolute", right: 20, top: 16,
@@ -659,8 +652,8 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           </span>
         </div>
 
-        {/* Header overlap */}
-        <div style={{ padding: "0 32px", display: "flex", alignItems: "flex-end", gap: 20, marginTop: -60 }}>
+        {/* Header overlap — z-index alto para estar siempre sobre el cover */}
+        <div style={{ padding: "0 32px", display: "flex", alignItems: "flex-end", gap: 20, marginTop: -60, position: "relative", zIndex: 10 }}>
           <div style={{ boxShadow: "0 0 0 5px #fff, 0 0 0 6px rgba(0,0,0,0.06)", borderRadius: "50%", flexShrink: 0 }}>
             <Avatar name={candidate.name} color={candidate.color} size={120} photo={getCandidatePhoto(candidate.name)} />
           </div>
@@ -710,20 +703,6 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
             ))}
           </div>
 
-          {/* Aviso de secciones pendientes */}
-          {pendingTabs.length > 0 && (
-            <div style={{
-              marginTop: 16, padding: "10px 14px", borderRadius: 12,
-              background: "rgba(184,134,11,0.07)", border: "1px solid rgba(184,134,11,0.22)",
-              display: "inline-flex", alignItems: "center", gap: 8,
-            }}>
-              <span style={{ fontSize: 14 }}>⏳</span>
-              <span style={{ fontSize: 13, color: "#92680A", fontWeight: 500 }}>
-                Información pendiente:{" "}
-                <span style={{ fontWeight: 600 }}>{pendingTabs.join(", ")}</span>
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Tab bar — sticky */}
