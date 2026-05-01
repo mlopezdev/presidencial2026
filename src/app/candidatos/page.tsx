@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ALL_CANDIDATES, TOP_CANDIDATES, AXES, COMPARE_DATA,
-  TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX, getCandidatePhoto,
+  TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX, getCandidatePhoto, DOFA_DATA,
   type Candidate, type Spectrum,
 } from "@/lib/data";
 import { TEMAS, getPosicion, type Posicion } from "@/lib/posiciones-data";
@@ -551,13 +551,14 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
 
   const hasTrayectoria = Boolean(TIMELINES[candidate.name]);
   const hasPropuestas = Boolean(compare && Object.values(compare).some((arr) => arr.length > 0));
+  const hasDofa = Boolean(DOFA_DATA[candidate.name]);
 
   const tabs = [
     { key: "resumen",    label: "Resumen" },
     ...(hasTrayectoria ? [{ key: "trayectoria", label: "Trayectoria" }] : []),
     ...(hasPropuestas  ? [{ key: "propuestas",  label: "Propuestas" }] : []),
     { key: "posiciones", label: "Posiciones" },
-    // Similitudes y Plan/DOFA ocultos
+    ...(hasDofa        ? [{ key: "dofa",         label: "DOFA" }] : []),
   ];
 
   return (
@@ -643,7 +644,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           </span>
           {/* Spectrum badge */}
           <span style={{
-            position: "absolute", left: 20, bottom: 16,
+            position: "absolute", left: 20, top: 16,
             fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 999,
             background: "rgba(0,0,0,0.25)", color: "#fff",
             backdropFilter: "blur(8px)", letterSpacing: "0.06em", textTransform: "uppercase",
@@ -652,12 +653,12 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           </span>
         </div>
 
-        {/* Header overlap — z-index alto para estar siempre sobre el cover */}
-        <div style={{ padding: "0 32px", display: "flex", alignItems: "flex-end", gap: 20, marginTop: -60, position: "relative", zIndex: 10 }}>
+        {/* Header overlap — foto a la izquierda solapando el banner, nombre debajo del banner */}
+        <div style={{ padding: "0 32px", display: "flex", alignItems: "flex-start", gap: 20, marginTop: -60, position: "relative", zIndex: 10 }}>
           <div style={{ boxShadow: "0 0 0 5px #fff, 0 0 0 6px rgba(0,0,0,0.06)", borderRadius: "50%", flexShrink: 0 }}>
             <Avatar name={candidate.name} color={candidate.color} size={120} photo={getCandidatePhoto(candidate.name)} />
           </div>
-          <div style={{ flex: 1, minWidth: 0, paddingBottom: 16 }}>
+          <div style={{ flex: 1, minWidth: 0, paddingTop: 60, paddingBottom: 16 }}>
             <h2 style={{ margin: 0, fontSize: "clamp(24px,3vw,34px)", fontWeight: 600, letterSpacing: "-0.025em",
               color: "var(--ink)", lineHeight: 1.1, fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
               {candidate.name}
@@ -667,7 +668,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
             </p>
           </div>
           {/* CTA Comparar */}
-          <div style={{ paddingBottom: 16, flexShrink: 0 }}>
+          <div style={{ paddingTop: 76, paddingBottom: 16, flexShrink: 0 }}>
             <Link href="/compara">
               <button type="button" style={{
                 fontFamily: "inherit", fontSize: 14, fontWeight: 600, cursor: "pointer",
@@ -745,7 +746,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
         <div ref={contentRef} style={{ padding: "32px 36px" }}>
           <AnimatePresence mode="wait">
             <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-              <ProfileTabContent tab={activeTab} candidate={candidate} compare={compare} onPickOther={onPickOther} />
+              <ProfileTabContent tab={activeTab} candidate={candidate} compare={compare} onPickOther={onPickOther} dofa={DOFA_DATA[candidate.name]} />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -812,6 +813,7 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
   tab: string; candidate: Candidate;
   compare: (typeof COMPARE_DATA)[string] | undefined;
   onPickOther: (c: Candidate) => void;
+  dofa?: (typeof DOFA_DATA)[string];
 }) {
   if (tab === "resumen") return (
     <div style={{ maxWidth: 760 }}>
@@ -944,6 +946,46 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
         <p style={{ marginTop: 16, fontSize: 13, color: "var(--ink-3)", lineHeight: 1.5 }}>
           Fuente: declaraciones públicas, planes de gobierno y votaciones legislativas. "Sin pronunciarse" indica que no hay posición pública registrada.
         </p>
+      </div>
+    );
+  }
+
+  if (tab === "dofa") {
+    const dofa = DOFA_DATA[candidate.name];
+    if (!dofa) return <p style={{ color: "var(--ink-2)", fontSize: 18 }}>Contenido en construcción.</p>;
+
+    const cuadrantes = [
+      { key: "fortalezas",   label: "Fortalezas",    icon: "↑", color: "#1F8F5C", bg: "rgba(31,143,92,0.06)",   border: "rgba(31,143,92,0.18)",  items: dofa.fortalezas },
+      { key: "oportunidades",label: "Oportunidades", icon: "◎", color: "#2F6B8A", bg: "rgba(47,107,138,0.06)",  border: "rgba(47,107,138,0.18)", items: dofa.oportunidades },
+      { key: "debilidades",  label: "Debilidades",   icon: "↓", color: "#C8453C", bg: "rgba(200,69,60,0.06)",   border: "rgba(200,69,60,0.18)",  items: dofa.debilidades },
+      { key: "amenazas",     label: "Amenazas",      icon: "⚠", color: "#D97706", bg: "rgba(217,119,6,0.06)",   border: "rgba(217,119,6,0.18)",  items: dofa.amenazas },
+    ];
+
+    return (
+      <div style={{ maxWidth: 820 }}>
+        <h3 style={{ margin: "0 0 6px", fontSize: 26, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
+          fontFamily: "var(--font-plex-serif), Georgia, serif" }}>Análisis DOFA</h3>
+        <p style={{ margin: "0 0 24px", fontSize: 15, color: "var(--ink-3)" }}>
+          Fortalezas, Oportunidades, Debilidades y Amenazas del candidato.
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
+          {cuadrantes.map((q) => (
+            <div key={q.key} style={{ background: q.bg, border: `1px solid ${q.border}`, borderRadius: 18, padding: "20px 22px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ fontSize: 18, fontWeight: 800, color: q.color, lineHeight: 1 }}>{q.icon}</span>
+                <h4 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: q.color, letterSpacing: "-0.01em" }}>{q.label}</h4>
+              </div>
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {q.items.map((item, i) => (
+                  <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: q.color, flexShrink: 0, marginTop: 7 }} />
+                    <span style={{ fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

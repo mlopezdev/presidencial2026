@@ -220,23 +220,42 @@ function IdeologyMatrixView() {
           <text x={W-pad-6} y={toY(0)-14} fontSize="16" fill="#515154" textAnchor="end" fontWeight="700" letterSpacing="0.08em">MERCADO →</text>
           <text x={toX(0)+14} y={pad+22} fontSize="16" fill="#515154" fontWeight="700" letterSpacing="0.08em">↑ PROGRESISTA</text>
           <text x={toX(0)+14} y={H-pad-10} fontSize="16" fill="#515154" fontWeight="700" letterSpacing="0.08em">↓ CONSERVADOR</text>
+          <defs>
+            <clipPath id="clip-sm"><circle cx="0" cy="0" r="16" /></clipPath>
+            <clipPath id="clip-lg"><circle cx="0" cy="0" r="20" /></clipPath>
+          </defs>
           {activeCand && (
             <g>
-              <circle cx={toX(activeCand.econ)} cy={toY(activeCand.social)} r={34} fill={activeCand.color} opacity="0.12" />
-              <circle cx={toX(activeCand.econ)} cy={toY(activeCand.social)} r={24} fill="none" stroke={activeCand.color} strokeWidth="1.5" strokeDasharray="3 4" opacity="0.5" />
+              <circle cx={toX(activeCand.econ)} cy={toY(activeCand.social)} r={42} fill={activeCand.color} opacity="0.12" />
+              <circle cx={toX(activeCand.econ)} cy={toY(activeCand.social)} r={30} fill="none" stroke={activeCand.color} strokeWidth="1.5" strokeDasharray="3 4" opacity="0.5" />
             </g>
           )}
-          {plotted.map((c) => {
+          {plotted.map((c, i) => {
             const cx = toX(c.econ), cy = toY(c.social);
             const isActive = active === c.name, dimmed = active && !isActive;
-            const r = isActive ? 18 : 14;
+            const r = isActive ? 20 : 16;
+            const photo = getCandidatePhoto(c.name);
             return (
-              <g key={c.name} onMouseEnter={() => setHovered(c.name)} onMouseLeave={() => setHovered(null)}
-                onClick={() => setPinned(pinned === c.name ? null : c.name)} style={{ cursor: "pointer" }} opacity={dimmed ? 0.35 : 1}>
-                <circle cx={cx} cy={cy} r={30} fill="transparent" />
-                <circle cx={cx} cy={cy} r={r} fill={c.color} stroke="#fff" strokeWidth={isActive ? 4 : 3}
-                  style={{ transition: "all 200ms cubic-bezier(0.2,0.8,0.2,1)" }} />
-                {isActive && pinned === c.name && <circle cx={cx} cy={cy} r={r+6} fill="none" stroke={c.color} strokeWidth="2" />}
+              <g key={c.name} transform={`translate(${cx},${cy})`}
+                onMouseEnter={() => setHovered(c.name)} onMouseLeave={() => setHovered(null)}
+                onClick={() => setPinned(pinned === c.name ? null : c.name)}
+                style={{ cursor: "pointer", transition: "opacity 200ms ease" }} opacity={dimmed ? 0.3 : 1}>
+                <circle r={30} fill="transparent" />
+                {/* sombra / anillo de color */}
+                <circle r={r + 3} fill={c.color} opacity="0.25" />
+                {/* fondo blanco */}
+                <circle r={r + 2} fill="#fff" />
+                {photo ? (
+                  <image href={photo} x={-r} y={-r} width={r * 2} height={r * 2}
+                    clipPath={isActive ? "url(#clip-lg)" : "url(#clip-sm)"} preserveAspectRatio="xMidYMid slice" />
+                ) : (
+                  <circle r={r} fill={c.color} />
+                )}
+                {/* borde de color */}
+                <circle r={r + 2} fill="none" stroke={c.color} strokeWidth={isActive ? 3 : 1.5} />
+                {isActive && pinned === c.name && (
+                  <circle r={r + 8} fill="none" stroke={c.color} strokeWidth="2" strokeDasharray="3 3" />
+                )}
               </g>
             );
           })}
@@ -252,7 +271,7 @@ function IdeologyMatrixView() {
           return (
             <div style={{ position: "absolute", left, top, width: tooltipW, background: "#fff", borderRadius: 16, boxShadow: "0 24px 60px -20px rgba(13,30,45,0.3), 0 0 0 1px rgba(0,0,0,0.06)", padding: 18, pointerEvents: "none", zIndex: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-                <Avatar name={activeCand.name} color={activeCand.color} size={44} />
+                <Avatar name={activeCand.name} color={activeCand.color} size={44} photo={getCandidatePhoto(activeCand.name)} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 16, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.015em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activeCand.name}</div>
                   <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{activeCand.party}</div>
