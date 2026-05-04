@@ -32,37 +32,137 @@
     "foto": "/candidates/cepeda.png"
   },
   {
-    "numero": 2,
-    "nombreCompleto": "Clara Eugenia López Obregón",
-    "displayName": "Clara López",
-    "id": "clara-lopez",
-    "formulaVicepresidente": "María Consuelo del Río Mantilla",
-    "partido": "Esperanza Democrática",
-    "espectroPolitico": "Centro-Izquierda",
-    "espectroSimple": "izquierda",
-    "posicionTarjeton": 2,
-    "profesion": "Economista / Abogada",
-    "edadAproximada": 67,
-    "cargoPrevioDestacado": "Exministra de Trabajo / Exalcaldesa encargada Bogotá",
-    "departamentoOrigen": "Cundinamarca / Bogotá",
-    "comoLlegoALaCandidatura": "Aval partido Esperanza Democrática",
-    "urlFuente": "https://es.wikipedia.org/wiki/Clara_López_Obregón",
-    "biografia": "Economista y abogada bogotana (~1957). Ha construido una larga trayectoria en el servicio público distrital y nacional, vinculada a la izquierda democrática. Fue militante del M-19 en su juventud. Candidata presidencial en 2014 por el Polo Democrático.",
-    "trayectoria": [
-      "Contralora Distrital de Bogotá (1992–1993)",
-      "Secretaria de Gobierno de Bogotá (2003–2004)",
-      "Alcaldesa encargada de Bogotá (2011)",
-      "Ministra de Trabajo gobierno Santos (2013–2014)",
-      "Senadora de la República (2018–2022)",
-      "Candidata presidencial 2014 (Polo Democrático)",
-      "Nota: el 6 de abril 2026 declinó su candidatura y apoyó a Cepeda"
+    "candidata": "Clara López Obregón",
+    "elecciones": "Presidencia de la República de Colombia 2026",
+    "datos_personales": {
+      "cargo_actual": "Senadora de la República (2022-2026)",
+      "profesion": "Política, académica, exalta funcionaria del nivel central",
+      "experiencia_ejecutiva": "Exalcaldesa mayor encargada de Bogotá (periodo 2004-2011)"
+    },
+    "aval_politico": "Candidatura propia; compite directamente en primera vuelta sin participar en consultas internas",
+    "paradigma_estructural": "Pragmatismo Legislativo de Izquierda Democrática",
+    "posicionamiento_estrategico": "Transición de un Estado subsidiario centrado en la regulación del libre mercado hacia un Estado vigorosamente garante, interventor en la economía y protector de la dimensión humana integral de sus ciudadanos.",
+    "propuestas_emblematicas_por_tema": [
+      {
+        "tema": "Seguridad",
+        "diagnostico": "La doctrina de seguridad punitiva y reactiva es insostenible a largo plazo si persisten la precariedad estructural, el abandono estatal y la falta de oportunidades.",
+        "propuestas": [
+          {
+            "titulo": "Doctrina de la Ocupación Democrática del Territorio",
+            "descripcion": "Despliegue simultáneo de jueces, fiscales, maestros, médicos rurales, infraestructura de conectividad y proyectos productivos en territorios periféricos, arrebatando la base social y logística a las organizaciones criminales sin limitarse al combate militar."
+          },
+          {
+            "titulo": "Seguridad Económica como cimiento de la estabilidad",
+            "descripcion": "Garantizar acceso a empleo digno, ingresos estables y certidumbre financiera. La vulnerabilidad económica extrema es el principal factor de riesgo para el reclutamiento por parte de redes del narcotráfico, minería ilegal y extorsión."
+          },
+          {
+            "titulo": "Seguridad Jurídica y reforma a la administración de justicia",
+            "descripcion": "Consolidar un andamiaje legal transparente con leyes aplicadas equitativamente para todos. Reforma sustancial que elimine asimetrías de clase, impunidad y corrupción sistémica. La certeza del castigo justo supera en eficacia al simple aumento del pie de fuerza."
+          },
+          {
+            "titulo": "Seguridad Social como red de contención preventiva",
+            "descripcion": "Garantía estatal de necesidades humanas básicas (salud, vivienda, educación) y sistema pensional público robusto para mitigar marginalidad y pobreza oculta en periferias, evitando que individuos vulnerables recurran a la delincuencia como mecanismo de supervivencia."
+          }
+        ]
+      },
+      {
+        "tema": "Salud",
+        "diagnostico": "La Ley 100 de 1993 transformó un derecho humano inalienable en una mercancía sometida a lógicas de rentabilidad corporativa, generando barreras de acceso económicas, geográficas y administrativas.",
+        "propuestas": [
+          {
+            "titulo": "Derogatoria de la Ley 100 y eliminación de la intermediación financiera de las EPS",
+            "descripcion": "Tramitar en el Congreso un acto legislativo que otorgue a la salud el estatus de derecho fundamental absoluto. El Estado recuperará el control directo de todos los fondos de salud y seguridad social, garantizando universalidad sin discriminación por capacidad de pago o ubicación geográfica."
+          },
+          {
+            "titulo": "Escalamiento nacional del programa 'Salud a su Hogar'",
+            "descripcion": "Red nacional masiva de médicos, enfermeras y promotores comunitarios que realizan visitas domiciliarias preventivas directamente en barrios populares, resguardos y zonas rurales de difícil acceso, recuperando la figura del 'médico amigo' de familia."
+          },
+          {
+            "titulo": "Control farmacéutico y soberanía sanitaria",
+            "descripcion": "Renegociación de Tratados de Libre Comercio (TLC) para liberar cláusulas de propiedad intelectual y patentes médicas, facilitando la producción e importación de fármacos genéricos. Control estatal de precios de medicamentos y tecnologías en salud."
+          },
+          {
+            "titulo": "Integración de saberes ancestrales y dignificación del talento humano en salud",
+            "descripcion": "Institucionalizar medicinas tradicionales indígenas, afrodescendientes y campesinas dentro del sistema formal. Erradicar la tercerización laboral mediante contratos sindicales, garantizando contratación formal, salarios justos y educación médica continua."
+          }
+        ]
+      },
+      {
+        "tema": "Educación",
+        "diagnostico": "La obsoleta Ley 30 de 1992 (Art. 86) indexó los aportes a universidades públicas al IPC, ignorando el crecimiento poblacional y la necesidad de ampliar cobertura, generando un déficit billonario acumulado de 30 años.",
+        "propuestas": [
+          {
+            "titulo": "Reforma estructural a la Ley 30 de 1992 y 'Matrícula Cero' como derecho estatutario permanente",
+            "descripcion": "Redefinir el modelo de financiamiento estatal con transferencias robustas y crecientes que superen la inflación. La gratuidad en educación superior pública debe ser un mandato constitucional incondicional para estudiantes de estratos bajos y medios, garantizando no solo el ingreso sino la permanencia hasta la graduación."
+          },
+          {
+            "titulo": "Escuelas rurales para la paz y dignificación docente",
+            "descripcion": "Creación y dotación de miles de escuelas rurales con conectividad satelital, tecnología de punta y currícula pertinente a la vocación agraria local. Los educadores rurales son agentes de paz y defensores de derechos humanos: se les garantizará seguridad física, estabilidad laboral y acceso gratuito a formación de posgrado."
+          },
+          {
+            "titulo": "Eliminación del matrimonio infantil como política educativa",
+            "descripcion": "Liderazgo en la Ley basada en el PL 297/2024 para eliminar el matrimonio infantil y uniones de hecho tempranas (MIUT) en menores de 18 años, erradicando una práctica que históricamente ha forzado la deserción escolar masiva de niñas en áreas rurales y comunidades empobrecidas."
+          }
+        ]
+      },
+      {
+        "tema": "Infraestructura",
+        "diagnostico": "Los megaproyectos viales se han centrado en conectar grandes urbes y facilitar exportaciones de materias primas, dejando en abandono la red capilar rural que es la base de la economía campesina legal.",
+        "propuestas": [
+          {
+            "titulo": "Revolución de vías terciarias como 'arterias de la paz'",
+            "descripcion": "Inversión masiva en construcción de nueva placa huella, pavimentación y mantenimiento constante de vías secundarias y terciarias para que las familias campesinas abandonen voluntariamente los cultivos ilícitos al contar con rutas económicamente viables hacia los mercados legales."
+          },
+          {
+            "titulo": "Distritos de riego y centros de acopio regionales",
+            "descripcion": "Construcción y rehabilitación de distritos de riego para añadir cientos de miles de hectáreas productivas con resiliencia climática. Construcción de centros de acopio estratégicos para desmantelar el 'monopolio' de intermediarios especuladores y asegurar que la rentabilidad quede en manos de cooperativas de pequeños productores."
+          },
+          {
+            "titulo": "Ordenamiento territorial ambiental vinculante",
+            "descripcion": "Todo megaproyecto de infraestructura requiere coordinación obligatoria con autoridades ambientales. Defensa jurídica estricta de bienes de uso público ambiental (páramos, humedales, Amazonía, zonas de aluvión) para evitar la expansión destructiva de la frontera agrícola y la especulación inmobiliaria sobre ecosistemas estratégicos."
+          }
+        ]
+      },
+      {
+        "tema": "Tecnología e Inteligencia Artificial (IA)",
+        "diagnostico": "La IA es un catalizador técnico indispensable para superar los rezagos burocráticos históricos de la administración pública, pero no puede ni debe sustituir el juicio humano en decisiones de alto impacto sobre derechos ciudadanos.",
+        "propuestas": [
+          {
+            "titulo": "Marco normativo para IA en el Estado colombiano",
+            "descripcion": "Liderazgo en los Proyectos de Ley 52/2025 (Senado) y 459/2024 (Cámara) para incorporar, regular y financiar herramientas de IA avanzada en el Congreso y la administración pública, orientadas a agilizar la revisión documental jurídica, la auditoría algorítmica de la contratación estatal y la atención al ciudadano."
+          },
+          {
+            "titulo": "Principio de 'La IA como medio, no como fin'",
+            "descripcion": "Los algoritmos deben procesar datos y tareas operativas para liberar el tiempo del talento humano institucional hacia funciones que requieren empatía, discrecionalidad ética y análisis estratégico complejo. La IA no reemplaza funcionarios; los potencia para tareas verdaderamente críticas."
+          },
+          {
+            "titulo": "Garantía del Control Humano Significativo (meaningful human control)",
+            "descripcion": "Ninguna decisión estatal de alto impacto (derechos civiles, libertad individual, asignación de presupuestos sociales o patrimonio ciudadano) podrá ser delegada plenamente a sistemas de IA de 'caja negra'. Se garantiza la responsabilidad jurídica, política y moral inalienable de los representantes del Estado."
+          }
+        ]
+      }
     ],
-    "propuestaBandera": "Derechos sociales, educación pública, rol del Estado en la economía. Centro-izquierda moderada.",
-    "financiacionAval": "Partido Esperanza Democrática",
-    "encuestas": "~1–2% (candidatura de baja visibilidad)",
-    "perfilElectoradoObjetivo": "Militantes históricos del Polo Democrático, sectores sindicales",
-    "notasAdicionales": "El 6 de abril 2026 declinó su candidatura y se sumó a Cepeda. Su candidatura solo duró pocas semanas activa.",
-    "foto": "/candidates/Clara Lopez.png"
+    "legislacion_impulsada_destacada": [
+      {
+        "instrumento": "Ley Estatutaria de Salud",
+        "año": 2015,
+        "descripcion": "Herramienta base de su propuesta de reforma al sistema de salud."
+      },
+      {
+        "instrumento": "PL 297/2024 (Senado) / PL 155/2023 (Cámara)",
+        "descripcion": "Eliminación del matrimonio infantil y uniones maritales tempranas (MIUT) en menores de 18 años."
+      },
+      {
+        "instrumento": "PL 241/2024",
+        "descripcion": "Modernización del ordenamiento ambiental y agrario de la nación."
+      },
+      {
+        "instrumento": "PL 52/2025 (Senado) / PL 459/2024 (Cámara)",
+        "descripcion": "Marco regulatorio para la incorporación de Inteligencia Artificial en el Estado."
+      }
+    ],
+    "vision_macroeconomica": "La paz estructural no es un gasto pasivo infinito sino el motor principal del desarrollo económico equitativo. Vincular las economías ilegales periféricas al tejido productivo legal amplía la base tributaria y hace sostenibles las reformas sociales propuestas.",
+    "reto_principal": "Viabilidad fiscal: la absorción estatal de la salud, la Matrícula Cero universal, la inversión en infraestructura terciaria y la modernización digital requieren un nivel de recaudo tributario progresivo y eficiencia del gasto sin precedentes en la historia republicana de Colombia."
   },
   {
     "numero": 3,
@@ -128,35 +228,88 @@
     "foto": "/candidates/Santiago_Botero.png"
   },
   {
-    "numero": 5,
-    "nombreCompleto": "Gustavo Matamoros Camacho",
-    "displayName": "Gustavo Matamoros",
-    "id": "gustavo-matamoros",
-    "formulaVicepresidente": "Mila María Paz",
-    "partido": "Partido Ecologista Colombiano",
-    "espectroPolitico": "Derecha / Independiente",
-    "espectroSimple": "derecha",
-    "posicionTarjeton": 5,
-    "profesion": "Militar (General retirado)",
-    "edadAproximada": 65,
-    "cargoPrevioDestacado": "Excomandante militar",
-    "departamentoOrigen": "Por definir",
-    "comoLlegoALaCandidatura": "Candidatura por firmas (reemplazó a Maurice Armitage)",
-    "urlFuente": "https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Colombia_de_2026",
-    "biografia": "General retirado del Ejército Nacional de Colombia. Entró a la carrera presidencial en marzo 2026 como candidato del Partido Ecologista Colombiano, en reemplazo del exalcalde de Cali Maurice Armitage, quien renunció a la aspiración. Perfil de candidato de orden y seguridad.",
-    "trayectoria": [
-      "Oficial del Ejército Nacional (carrera militar de alto nivel)",
-      "General retirado",
-      "Candidato del Partido Ecologista Colombiano",
-      "Inscrito el 13 de marzo de 2026 (último día de inscripciones)",
-      "Fórmula VP: Mila María Paz (reemplazó a Robinson Giraldo)"
+    "candidato": "Gustavo Matamoros Camacho",
+    "elecciones": "Presidencia de la República de Colombia 2026",
+    "datos_personales": {
+      "fecha_nacimiento": "2 de febrero de 1955",
+      "lugar_nacimiento": "Bogotá, Colombia",
+      "profesion": "General retirado del Ejército Nacional",
+      "cargo_previo": "Exjefe del Estado Mayor Conjunto de las Fuerzas Militares de Colombia (2010-2011)"
+    },
+    "aval_politico": "Partido Ecologista Colombiano",
+    "paradigma_estructural": "Institucionalidad Coercitiva y Militar",
+    "hitos_destacados": [
+      "Operación Jaque (2008): rescate de 15 secuestrados incluyendo a Íngrid Betancourt y 3 contratistas estadounidenses",
+      "Operación Sodoma (2010): neutralización del 'Mono Jojoy', jefe militar de las FARC"
     ],
-    "propuestaBandera": "Seguridad nacional, orden público, defensa de las FF.MM., 'mano dura' contra el crimen.",
-    "financiacionAval": "Partido Ecologista Colombiano (firmas)",
-    "encuestas": "<1%",
-    "perfilElectoradoObjetivo": "Electores de derecha dura, exmilitares, sectores de ley y orden",
-    "notasAdicionales": "Entró a la carrera el último día de inscripciones. Reemplazó a Maurice Armitage. Poco conocido en encuestas.",
-    "foto": "/candidates/Matamoros.png"
+    "propuestas_emblematicas_por_tema": [
+      {
+        "tema": "Seguridad",
+        "diagnostico": "La 'Paz Total' fue un modelo fracasado que generó prebendas para estructuras criminales y limitó la acción de la Fuerza Pública.",
+        "propuestas": [
+          {
+            "titulo": "Reversión absoluta de la Paz Total",
+            "descripcion": "Clausura inmediata de todas las mesas de diálogo con organizaciones insurgentes como el ELN y disidencias de las FARC. No se negociará con grupos armados ilegales."
+          },
+          {
+            "titulo": "Ley de sometimiento draconiana",
+            "descripcion": "Trámite legislativo de una ley de sometimiento a la justicia ordinaria basada en 'cárcel y reparación', eliminando impunidad transicional, amnistías o elegibilidad política para cabecillas."
+          },
+          {
+            "titulo": "Restauración integral de la autoridad militar",
+            "descripcion": "Fortalecimiento operativo, logístico, moral y de fuero jurídico de las Fuerzas Militares. Erradicación frontal del narcotráfico, minería ilícita y corrupción asociada. Incremento del presupuesto del Ministerio de Defensa como porcentaje del PIB."
+          }
+        ]
+      },
+      {
+        "tema": "Salud y Educación",
+        "diagnostico": "Los servicios de salud y educación en zonas periféricas están cooptados, extorsionados o condicionados por mafias locales.",
+        "propuestas": [
+          {
+            "titulo": "Acción cívico-militar: 'Seguridad con Desarrollo'",
+            "descripcion": "Llevar inversión social (salud pública y escuelas) a regiones con necesidades como herramienta de legitimación del Estado en zonas recuperadas del control armado ilegal."
+          },
+          {
+            "titulo": "Protección de maestros y médicos rurales",
+            "descripcion": "Esquema de protección perimetral e inteligencia para resguardar a funcionarios públicos que laboran en zonas de alto riesgo de orden público."
+          }
+        ]
+      },
+      {
+        "tema": "Infraestructura",
+        "diagnostico": "La geografía hostil favorece la asimetría criminal al dificultar el despliegue y abastecimiento de las fuerzas del Estado.",
+        "propuestas": [
+          {
+            "titulo": "Infraestructura de uso dual",
+            "descripcion": "Construcción de vías terciarias, pavimentación de troncales y mejora de comunicaciones para facilitar tanto la competitividad comercial como la movilidad logística rápida del Ejército y la Policía."
+          },
+          {
+            "titulo": "Atracción de inversión extranjera directa",
+            "descripcion": "Mejora de relaciones comerciales y diplomáticas internacionales, alejándose de la polarización ideológica para proyectar estabilidad y respeto por la propiedad privada y así financiar las obras públicas."
+          }
+        ]
+      },
+      {
+        "tema": "Tecnología e Inteligencia Artificial (IA)",
+        "diagnostico": "El Estado es vulnerable ante el crimen organizado complejo y sus sofisticados ecosistemas financieros.",
+        "propuestas": [
+          {
+            "titulo": "Ciberdefensa y ciberinteligencia militar",
+            "descripcion": "Enfoque tecnológico especializado en cibernética militar, recolección algorítmica de inteligencia electrónica (SIGINT) y tecnologías de precisión para rastrear y desmantelar redes criminales."
+          },
+          {
+            "titulo": "Rastreo algorítmico financiero antidrogas",
+            "descripcion": "Uso de tecnologías analíticas para detectar y desarticular los complejos ecosistemas de lavado de activos que sustentan al crimen transnacional organizado."
+          }
+        ]
+      }
+    ],
+    "impacto_estrategico_esperado": {
+      "seguridad": "Reducción de economías ilícitas; aumento del presupuesto de defensa; doctrina de ofensiva sostenida.",
+      "salud_educacion": "Presencia institucional legitimada en zonas de posconflicto mediante acción cívico-militar.",
+      "infraestructura": "Mayor movilidad de tropas e integración de mercados campesinos.",
+      "tecnologia": "Desmantelamiento de redes de lavado de activos y fortalecimiento de la ciberdefensa nacional."
+    }
   },
   {
     "numero": 6,
@@ -223,36 +376,104 @@
     "foto": "/candidates/Fajaro-removebg-preview.png"
   },
   {
-    "numero": 8,
-    "nombreCompleto": "Roy Leonardo Barreras Montealegre",
-    "displayName": "Roy Barreras",
-    "id": "roy-barreras",
-    "formulaVicepresidente": "Martha Lucía Zamora",
-    "partido": "Frente por la Vida",
-    "espectroPolitico": "Centro-Izquierda",
-    "espectroSimple": "izquierda",
-    "posicionTarjeton": 8,
-    "profesion": "Médico Cirujano",
-    "edadAproximada": 62,
-    "cargoPrevioDestacado": "Exsenador / Expresidente del Senado / Exembajador",
-    "departamentoOrigen": "Cauca",
-    "comoLlegoALaCandidatura": "Ganador Frente por la Vida (mar 2026)",
-    "urlFuente": "https://es.wikipedia.org/wiki/Roy_Barreras",
-    "biografia": "Médico cirujano (~1962). Político con larga trayectoria en el Partido de la U y el Petrismo. Fue embajador de Colombia ante la ONU durante el gobierno Petro. Ganó la consulta Frente por la Vida el 8 de marzo de 2026.",
-    "trayectoria": [
-      "Representante a la Cámara por Cauca",
-      "Senador de la República (múltiples períodos)",
-      "Presidente del Senado (en dos ocasiones)",
-      "Embajador de Colombia ante la ONU (gobierno Petro)",
-      "Ganador consulta Frente por la Vida (8 mar 2026)",
-      "Fórmula VP: Martha Lucía Zamora (jurista)"
+    "candidato": "Roy Barreras Montealegre",
+    "elecciones": "Presidencia de la República de Colombia 2026",
+    "datos_personales": {
+      "edad": 62,
+      "lugar_nacimiento": "Cali, Colombia",
+      "profesion": "Médico, legislador y exembajador"
+    },
+    "aval_politico": "La Fuerza de la Paz",
+    "paradigma_estructural": "Pragmatismo Legislativo y Centro-Izquierda",
+    "perfil_politico": "Uno de los legisladores y operadores políticos más hábiles e influyentes de las últimas tres décadas en Colombia. Exembajador en el Reino Unido. Promotor de una consulta o 'Frente Amplio' de centro-izquierda liberal y socialdemócrata.",
+    "posicionamiento_estrategico": "Distanciamiento retórico de los sectores más radicales del petrismo, al tiempo que retiene banderas de justicia social y equidad. Se presenta como garante de un gobierno capaz de construir mayorías parlamentarias sólidas.",
+    "propuestas_emblematicas_por_tema": [
+      {
+        "tema": "Salud",
+        "diagnostico": "El sistema de aseguramiento mixto tiene logros innegables en cobertura pero ha sido parasitado por la integración vertical abusiva de las EPS.",
+        "propuestas": [
+          {
+            "titulo": "Defensa técnica del modelo mixto y protección del aseguramiento",
+            "descripcion": "Rechazar la idea populista de 'acabar las EPS' y proteger los 30 años de sistemas de información, calidad y administración de riesgos acumulados. Mantener el sector privado con regulación estatal mucho más estricta."
+          },
+          {
+            "titulo": "Eliminación de la Integración Vertical",
+            "descripcion": "Prohibir y sancionar severamente la práctica mediante la cual las aseguradoras se contratan a sí mismas a través de sus propias clínicas y laboratorios, lo que genera incentivos perversos para negar servicios y precarizar al personal médico."
+          },
+          {
+            "titulo": "Cierre de 'clínicas de garaje' y auditorías rigurosas",
+            "descripcion": "Eliminación y clausura definitiva de prestadores de baja calidad, junto con auditorías rigurosas y constantes para garantizar la calidad de la atención al paciente."
+          }
+        ]
+      },
+      {
+        "tema": "Seguridad",
+        "diagnostico": "La 'Paz Total' generó ambigüedad jurídica y otorgó concesiones a narcos puros y bandas criminales sin estatus político, debilitando la percepción de seguridad.",
+        "propuestas": [
+          {
+            "titulo": "Doctrina de la 'Seguridad Total'",
+            "descripcion": "Estado indoblegable y fuerte contra las mafias y criminalidad organizada. Las garantías deben estar del lado de las familias y no de los criminales. Aparato de justicia y fuerzas de seguridad implacables."
+          },
+          {
+            "titulo": "Cárceles por concesión (APP)",
+            "descripcion": "Construcción, operación y mantenimiento de infraestructura carcelaria bajo Asociaciones Público-Privadas para mitigar el hacinamiento crítico, aislar a cabecillas de extorsión carcelaria y profesionalizar los procesos de reclusión y resocialización."
+          }
+        ]
+      },
+      {
+        "tema": "Infraestructura",
+        "diagnostico": "El crecimiento sostenido y la confianza inversionista son prerrequisitos para financiar la inclusión social. La deuda externa asfixia el presupuesto con tasas de hasta el 13%.",
+        "propuestas": [
+          {
+            "titulo": "Concesiones de infraestructura '5G Plus'",
+            "descripcion": "Expansión agresiva de puertos, aeropuertos internacionales, trenes de carga y cercanías, y finalización de dobles calzadas bajo el modelo moderno de concesiones 5G Plus, restaurando la garantía de seguridad jurídica para atraer inversión."
+          },
+          {
+            "titulo": "Cancelación de compra de aviones de combate Gripen",
+            "descripcion": "Desviar recursos de la guerra hacia la infraestructura civil, cancelando la millonaria compra de la nueva flota de cazas supersónicos Gripen para reinvertir esos billones en obras de desarrollo."
+          },
+          {
+            "titulo": "Reforma Política para unificación de periodos electorales",
+            "descripcion": "Unificar los periodos electorales de alcaldes, gobernadores y Presidente para eliminar los 18 meses perdidos en Ley de Garantías y empalmes que paralizan la gobernabilidad y la planificación de megaproyectos regionales."
+          }
+        ]
+      },
+      {
+        "tema": "Educación",
+        "diagnostico": "La revolución del conocimiento impulsada por la IA y la automatización impactará profundamente el mercado laboral y la geopolítica de los recursos estratégicos.",
+        "propuestas": [
+          {
+            "titulo": "Educación basada en la investigación científica",
+            "descripcion": "Promover una educación universitaria fundamentada en la investigación robusta, anticipando los impactos de la IA y la automatización en el mercado laboral."
+          },
+          {
+            "titulo": "Preparación institucional para la economía del conocimiento",
+            "descripcion": "Delinear la necesidad de un ecosistema legal y productivo resiliente ante los desequilibrios globales generados por la dependencia tecnológica en la era del Big Data y la IA generativa."
+          }
+        ]
+      },
+      {
+        "tema": "Tecnología e Inteligencia Artificial (IA)",
+        "diagnostico": "La adopción tecnológica del Estado no debe eliminar instituciones sino racionalizar la burocracia inútil y estimular la actividad económica.",
+        "propuestas": [
+          {
+            "titulo": "IA para racionalizar la burocracia y simplificar trámites",
+            "descripcion": "Uso pragmático de la tecnología para eliminar el gasto público ineficiente, simplificar trámites ciudadanos y fortalecer el emprendimiento privado. No para reemplazar instituciones sino para modernizarlas."
+          },
+          {
+            "titulo": "Marcos de protección jurídica y tecnológica en seguridad urbana",
+            "descripcion": "Implementación de sistemas de cibervigilancia institucionales altamente regulados para combatir delitos digitales como la ciberextorsión y las redes de microtráfico."
+          }
+        ]
+      }
     ],
-    "propuestaBandera": "Reforma de salud, paz negociada, derechos sociales, modelo de 'progresismo moderado'.",
-    "financiacionAval": "Frente por la Vida (consulta con partidos afines)",
-    "encuestas": "~4–7%",
-    "perfilElectoradoObjetivo": "Electores del Cauca, simpatizantes del petrismo moderado, sindicatos",
-    "notasAdicionales": "Exembajador ante la ONU. Tiene una trayectoria de alianzas con múltiples partidos a lo largo de su carrera. Ganó la consulta Frente por la Vida.",
-    "foto": "/candidates/Roy_Barreras.png"
+    "vision_de_paz_y_conflicto": "Seguridad Total: cerco a mafias y cárceles por concesión, sin estridencias militaristas. Fortalecimiento penal institucional con expansión del sistema penitenciario y aparato judicial tecnificado.",
+    "diferenciadores_clave": [
+      "Único candidato con experiencia técnica como médico, legislador y diplomático simultáneamente.",
+      "Autoria original de la Ley Estatutaria de Salud (2015).",
+      "Propone cancelar la compra de aviones Gripen para reinvertir en infraestructura civil.",
+      "Aboga por unificar periodos electorales para mejorar la planificación gubernamental."
+    ]
   },
   {
     "numero": 9,
@@ -349,36 +570,114 @@
     "foto": "/candidates/Miguel Uribe.png"
   },
   {
-    "numero": 12,
-    "nombreCompleto": "Sondra Macollins Garvin Pinto",
-    "displayName": "Sondra Macollins",
-    "id": "sondra-macollins",
-    "formulaVicepresidente": "Leonardo Karam Helo",
-    "partido": "Movimiento Sondra Macollins – La abogada de hierro",
-    "espectroPolitico": "Centro-Derecha / Independiente",
-    "espectroSimple": "derecha",
-    "posicionTarjeton": 12,
-    "profesion": "Abogada Penalista",
-    "edadAproximada": 45,
-    "cargoPrevioDestacado": "Litigante penal / activismo ciudadano",
-    "departamentoOrigen": "Bolívar / Cartagena",
-    "comoLlegoALaCandidatura": "Candidatura por firmas (+1,2 millones)",
-    "urlFuente": "https://www.lafm.com.co/politica/lista-de-los-14-candidatos",
-    "biografia": "Abogada penalista (~1978) oriunda de Cartagena. Conocida en medios nacionales por su labor como litigante y comentarista jurídica. Recogió más de 1,2 millones de firmas para respaldar su candidatura presidencial, certificada el 19 de enero de 2026. Es la primera candidata afrodescendiente de la historia electoral colombiana con candidatura propia por firmas a este nivel.",
-    "trayectoria": [
-      "Abogada penalista con casos de alto perfil",
-      "Activista ciudadana y comentarista jurídica en medios",
-      "Candidatura por firmas (+1,2 millones certificadas)",
-      "Inscrita oficialmente el 11 de marzo de 2026",
-      "Fórmula VP: Leonardo Karam Helo (empresario)",
-      "Primera candidata afrodescendiente en llegar al tarjetón presidencial"
+    "candidata": "Sondra Macollins Garvin Pinto",
+    "elecciones": "Presidencia de la República de Colombia 2026",
+    "datos_personales": {
+      "profesion": "Abogada",
+      "apodo_publico": "La Mujer de Hierro / La Abogada de Hierro"
+    },
+    "aval_politico": "Partido Digital Colombiano (primer partido digital de Colombia)",
+    "formula_vicepresidencial": {
+      "nombre": "Leonardo Karam Helo",
+      "perfil": "Abogado con experiencia en seguridad ciudadana, análisis de riesgos, videovigilancia, ciberseguridad y ciberdefensa."
+    },
+    "paradigma_estructural": "Utopismo Tecnológico y Desregulación",
+    "plan_de_gobierno": "Plan Colombia 5.0",
+    "enfoque_campaña": "90% de naturaleza digital; apunta a jóvenes 'ninis' (más de 2.5 millones que ni estudian ni trabajan) y ciudadanos desencantados de la clase política tradicional.",
+    "propuestas_emblematicas_por_tema": [
+      {
+        "tema": "Tecnología e Inteligencia Artificial (IA)",
+        "diagnostico": "Las instituciones de control tradicionales ('IAs del siglo XX') son ineficientes, corruptas y políticamente sesgadas.",
+        "propuestas": [
+          {
+            "titulo": "Eliminación de entes de control tradicionales y reemplazo por IA",
+            "descripcion": "Suprimir la Fiscalía General de la Nación, la Contraloría y la Procuraduría (las 'ías') y reemplazarlas por sistemas avanzados de Inteligencia Artificial y auditoría basada en tecnología Blockchain (contratos inteligentes / smart contracts), garantizando transparencia algorítmica total y eliminando la corrupción."
+          },
+          {
+            "titulo": "Democracia directa tecnológica",
+            "descripcion": "Permitir a los ciudadanos auditar presupuestos y aprobar leyes en tiempo real desde plataformas criptográficamente seguras en sus teléfonos celulares, desintermediando al Congreso de la República."
+          },
+          {
+            "titulo": "Gobernanza Blockchain del gasto público",
+            "descripcion": "Toda la auditoría fiscal, seguimiento del gasto y sanción disciplinaria automatizadas por redes neuronales de IA, eliminando el sesgo político y el amiguismo del factor humano en la fiscalización."
+          }
+        ]
+      },
+      {
+        "tema": "Seguridad",
+        "diagnostico": "El patrullaje reactivo y de desgaste humano es ineficiente en las extensas fronteras y selvas colombianas.",
+        "propuestas": [
+          {
+            "titulo": "Seguridad predictiva con drones y Big Data",
+            "descripcion": "Despliegue de 'pelotones de reacción' rápida que actúan quirúrgicamente cuando el dron indique la necesidad, transitando del patrullaje de desgaste a uno de reacción basada en inteligencia de señales."
+          },
+          {
+            "titulo": "Prevención del delito con IA y macrodatos",
+            "descripcion": "Análisis de Big Data, redes masivas de cámaras interconectadas e IA para predecir zonas de calor de criminalidad e identificar patrones anómalos antes de que se cometan actos ilícitos."
+          },
+          {
+            "titulo": "Sistema nacional de alertas masivas para personas desaparecidas",
+            "descripcion": "Activación de redes de solidaridad ciudadana geolocalizadas a través de smartphones para localizar personas en tiempo real, reduciendo los tiempos de reacción del aparato estatal."
+          }
+        ]
+      },
+      {
+        "tema": "Infraestructura",
+        "diagnostico": "La burocracia intermedia departamental es un 'peaje político y económico' que impide que los recursos lleguen a los municipios.",
+        "propuestas": [
+          {
+            "titulo": "Eliminación de Gobernaciones y creación de macro-regiones autónomas",
+            "descripcion": "Suprimir progresivamente las gobernaciones departamentales y agrupar el país en grandes regiones autónomas hiperconectadas, acercando los recursos del Estado central directamente a los municipios."
+          },
+          {
+            "titulo": "Monetización de la Amazonía",
+            "descripcion": "Emisión soberana de bonos de carbono de alta integridad, impulso a la biotecnología y atracción de fondos ESG (Ambiental, Social y Gobernanza) para transformar el activo ambiental del país en flujo de caja soberano y financiar obras civiles."
+          },
+          {
+            "titulo": "Reducción drástica del Congreso",
+            "descripcion": "Disminuir el número de congresistas, acusados de estar desconectados de la realidad ciudadana, para liberar recursos presupuestales destinados a obras e inversión social."
+          }
+        ]
+      },
+      {
+        "tema": "Salud",
+        "diagnostico": "La crisis del sistema de salud es un problema de ineficiencia burocrática y falta de trazabilidad del gasto, no de modelo ideológico.",
+        "propuestas": [
+          {
+            "titulo": "Saneamiento de deudas con trazabilidad digital",
+            "descripcion": "Pago de deudas históricas a prestadores de salud condicionado a la implementación de sistemas digitales de control y trazabilidad exacta de cada peso invertido en recursos médicos."
+          },
+          {
+            "titulo": "Historia clínica electrónica universal e IA para asignación de recursos",
+            "descripcion": "Implementación de historia clínica electrónica interoperable y despliegue de IA para la asignación dinámica de recursos, citas y procedimientos, reduciendo filas hospitalarias y burocracia administrativa."
+          }
+        ]
+      },
+      {
+        "tema": "Educación",
+        "diagnostico": "La juventud vulnerable es reclutada por el narcotráfico por falta de propósito y oportunidades en la economía digital.",
+        "propuestas": [
+          {
+            "titulo": "Salud mental y conectividad rural total",
+            "descripcion": "Priorizar la salud mental de los estudiantes e implementar conectividad rural total para democratizar el acceso a la educación digital de vanguardia."
+          },
+          {
+            "titulo": "Auditoría Blockchain al PAE y protección infantil",
+            "descripcion": "Usar tecnología Blockchain para asegurar que los fondos del Programa de Alimentación Escolar (PAE) lleguen íntegramente a sus destinatarios, evitando desvíos por redes de corrupción local."
+          },
+          {
+            "titulo": "Capacitación tecnológica y emprendimiento digital para jóvenes",
+            "descripcion": "Rescatar a la juventud vulnerable de las redes del narcotráfico ofreciéndoles formación tecnológica, propósito de vida y oportunidades de emprendimiento en la nueva economía digital."
+          }
+        ]
+      }
     ],
-    "propuestaBandera": "Combate a la impunidad, reforma judicial, seguridad ciudadana, defensa de víctimas.",
-    "financiacionAval": "Movimiento ciudadano propio (firmas)",
-    "encuestas": "~1–2%",
-    "perfilElectoradoObjetivo": "Ciudadanos hartos de la impunidad, mujeres, comunidades afrodescendientes",
-    "notasAdicionales": "Primera candidata afrodescendiente con candidatura propia. Conocida por su trabajo mediático en casos penales. Perfil de litigante-activista.",
-    "foto": "/candidates/Sondra.png"
+    "impacto_en_arquitectura_del_estado": {
+      "gobernanza": "Sustitución de magistraturas humanas por algoritmos de código abierto; reemplazo de órganos de control por contratos inteligentes.",
+      "territorio": "Desaparición de la capa burocrática intermedia departamental; centralización del flujo de datos en macro-regiones.",
+      "seguridad": "Optimización del pie de fuerza; modelo de seguridad basado en vigilancia electrónica predictiva.",
+      "finanzas_publicas": "Alternativa no extractivista para el financiamiento de infraestructura social mediante mercados financieros verdes."
+    }
   },
   {
     "numero": 13,
