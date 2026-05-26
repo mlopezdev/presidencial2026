@@ -94,6 +94,25 @@ const DEPTO_SUFIXES = [
   "CÓRDOBA", "CONSULADOS",
 ];
 
+// ─── Match depto GeoJSON ↔ datos Congreso ───
+// El GeoJSON usa nombres oficiales DANE ("VALLE DEL CAUCA", "NORTE DE SANTANDER",
+// "SANTAFE DE BOGOTA D.C", "ARCHIPIELAGO DE SAN ANDRES...") mientras que los datos
+// del Congreso vienen crudos del MMV sin tilde y a veces truncados ("VALLE",
+// "NORTE DE SAN", "BOGOTA D.C.", "SAN ANDRES"). Normalizamos ambos lados a una
+// misma clave para poder cruzarlos.
+function stripAccents(s: string): string {
+  return s.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+}
+
+export function deptKey(nombre: string): string {
+  const n = stripAccents(nombre).toUpperCase().trim();
+  if (n.includes("BOGOTA")) return "BOGOTA";
+  if (n.includes("VALLE")) return "VALLE";
+  if (n.startsWith("NORTE DE SAN")) return "NORTE DE SANTANDER";
+  if (n.includes("SAN ANDRES")) return "SAN ANDRES";
+  return n;
+}
+
 export function normalizaPartidoMovimiento(nombre: string): string {
   const up = nombre.toUpperCase();
   for (const suf of DEPTO_SUFIXES) {

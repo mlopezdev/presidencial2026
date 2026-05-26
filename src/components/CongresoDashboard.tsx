@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CONGRESO_FILES, normalizaPartidoMovimiento, partidoColor, type Corporacion, type DeptoCongreso, type MuniCongreso, type MunisCongresoPorDepto, type PartidosFile } from "@/lib/congreso-data";
-import { GEO_TO_DATA, GEOJSON_URL } from "@/lib/mapa-data";
+import { CONGRESO_FILES, deptKey, normalizaPartidoMovimiento, partidoColor, type Corporacion, type DeptoCongreso, type MuniCongreso, type MunisCongresoPorDepto, type PartidosFile } from "@/lib/congreso-data";
+import { GEOJSON_URL } from "@/lib/mapa-data";
 import { geomToPath, makeProjection, shade, type GeoJSON } from "@/lib/mapa-utils";
 
 const pct = (n: number, d = 1) => `${n.toFixed(d)}%`;
@@ -71,7 +71,7 @@ export default function CongresoDashboard() {
     }), { blanco: 0, nulo: 0, no_marcado: 0 });
   }, [current]);
 
-  // Mapa: por cada depto en geojson, calcular partido ganador
+  // Mapa: por cada depto en geojson, calcular partido ganador (keyed por deptKey)
   const ganadorPorDepto = useMemo(() => {
     if (!current) return new Map<string, { partido: string; votos: number; share: number; total: number }>();
     const m = new Map<string, { partido: string; votos: number; share: number; total: number }>();
@@ -80,7 +80,7 @@ export default function CongresoDashboard() {
       const entries = Object.entries(p);
       if (!entries.length) return;
       const [winner, votes] = entries.reduce((a, b) => b[1] > a[1] ? b : a);
-      m.set(d.departamento, { partido: winner, votos: votes, share: votes / d.total, total: d.total });
+      m.set(deptKey(d.departamento), { partido: winner, votos: votes, share: votes / d.total, total: d.total });
     });
     return m;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,9 +91,8 @@ export default function CongresoDashboard() {
 
   const hoverDepto = useMemo(() => {
     if (!hover || !current) return undefined;
-    const canon = GEO_TO_DATA[hover];
-    if (!canon) return undefined;
-    return current.deptos.find(d => d.departamento === canon);
+    const k = deptKey(hover);
+    return current.deptos.find(d => deptKey(d.departamento) === k);
   }, [hover, current]);
 
   // Drill-down muni
@@ -183,12 +182,12 @@ export default function CongresoDashboard() {
               <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", display: "block" }}>
                 {geo.features.map((f, i) => {
                   const name = f.properties.NOMBRE_DPT;
-                  const canon = GEO_TO_DATA[name];
-                  const g = canon ? ganadorPorDepto.get(canon) : undefined;
+                  const k = deptKey(name);
+                  const g = ganadorPorDepto.get(k);
                   const fill = !g ? "#E5E7EB" : shade(partidoColor(g.partido), g.share);
                   const isHover = hover === name;
-                  const isSelected = canon && selectedDep?.name === canon;
-                  const dep = canon ? current.deptos.find(d => d.departamento === canon) : undefined;
+                  const dep = current.deptos.find(d => deptKey(d.departamento) === k);
+                  const isSelected = dep && selectedDep?.cod === dep.id_depto;
                   return (
                     <path key={i} d={geomToPath(f.geometry, proj)} fill={fill}
                       stroke={isSelected ? "#B3261E" : isHover ? "#1D1D1F" : "rgba(0,0,0,0.35)"}
