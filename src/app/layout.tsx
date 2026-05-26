@@ -32,6 +32,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <NavBar />
         <div style={{ paddingTop: 72 }}>{children}</div>
+        <footer
+          style={{
+            borderTop: "1px solid var(--line)",
+            background: "var(--bg-2, #FAFBFC)",
+            padding: "28px 20px",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ margin: 0, fontSize: 14, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 640, marginInline: "auto" }}>
+            Proyecto creado en la clase de <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Política Internacional y Transformación Digital</strong> de la{" "}
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>UPB Bucaramanga</strong>.
+          </p>
+        </footer>
       </body>
     </html>
   );
