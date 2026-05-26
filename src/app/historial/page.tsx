@@ -1,8 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EL_NATIONAL, EL_COLOR, EL_SPECTRUM, EL_YEARS, type ElectionYear } from "@/lib/elections-data";
 import { ALL_CANDIDATES } from "@/lib/data";
+import MapaDepto from "@/components/MapaDepto";
+import PanelMunicipios from "@/components/PanelMunicipios";
+import MapaCalidad from "@/components/MapaCalidad";
+import MapaSwing from "@/components/MapaSwing";
+import MapaConcentracion from "@/components/MapaConcentracion";
+import MapaGenero from "@/components/MapaGenero";
 
 const pct = (n: number, d = 1) => `${n.toFixed(d)}%`;
 const fmt = (n: number) => n.toLocaleString("es-CO");
@@ -324,6 +330,9 @@ function ContiendaPanel() {
 
 export default function HistorialPage() {
   const [year, setYear] = useState(2022);
+  const [muniDrill, setMuniDrill] = useState<{ codDep: number; name: string; round: "r1" | "r2" } | null>(null);
+
+  useEffect(() => { setMuniDrill(null); }, [year]);
 
   return (
     <main style={{ maxWidth: 1200, margin: "0 auto", padding: "56px 32px 120px" }}>
@@ -331,6 +340,25 @@ export default function HistorialPage() {
       <ElHero year={year} setYear={setYear} />
       <ElRoundBars year={year} />
       <SecondRoundResults year={year} />
+      {(year === 2018 || year === 2022) && (
+        <MapaDepto
+          year={year}
+          selectedCodDep={muniDrill?.codDep ?? null}
+          onSelect={year === 2022 ? (codDep, name, round) => setMuniDrill({ codDep, name, round }) : undefined}
+        />
+      )}
+      {year === 2022 && muniDrill && (
+        <PanelMunicipios
+          round={muniDrill.round}
+          codDep={muniDrill.codDep}
+          deptoName={muniDrill.name}
+          onClose={() => setMuniDrill(null)}
+        />
+      )}
+      {year === 2022 && <MapaCalidad />}
+      {year === 2022 && <MapaSwing />}
+      {year === 2022 && <MapaConcentracion />}
+      {year === 2022 && <MapaGenero />}
       <ElTrendChart />
       <ElAbstention />
       <footer style={{ marginTop: 80, paddingTop: 32, borderTop: "1px solid rgba(0,0,0,0.12)", fontSize: 13, color: "var(--ink-3)", lineHeight: 1.6 }}>

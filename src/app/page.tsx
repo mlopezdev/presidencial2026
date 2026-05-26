@@ -7,6 +7,7 @@ import { ALL_CANDIDATES, TOP_CANDIDATES, getCandidatePhoto, type Candidate } fro
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 // ─── Celda individual del tarjetón ───
 function BallotCell({ candidate, index }: { candidate: Candidate; index: number }) {
@@ -101,24 +102,24 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
 
 // ─── Tarjetón electoral completo ───
 function BallotCard() {
-  const COLS = 3;
+  const isMobile = useIsMobile();
+  const COLS = isMobile ? 2 : 3;
   const rows = Math.ceil(ALL_CANDIDATES.length / COLS);
-  // COLS=3 → 14 candidatos → 5 filas (15 celdas, 1 vacía)
   const cells = [...ALL_CANDIDATES, ...Array(COLS * rows - ALL_CANDIDATES.length).fill(null)];
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 40, rotate: 3 }}
-      animate={{ opacity: 1, x: 0, rotate: 2 }}
+      initial={{ opacity: 0, x: isMobile ? 0 : 40, rotate: isMobile ? 0 : 3 }}
+      animate={{ opacity: 1, x: 0, rotate: isMobile ? 0 : 2 }}
       transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ rotate: 0.5, scale: 1.01, transition: { duration: 0.4 } }}
+      whileHover={isMobile ? undefined : { rotate: 0.5, scale: 1.01, transition: { duration: 0.4 } }}
       style={{
         background: "#FFFEFB",
         borderRadius: 16,
         boxShadow: "0 4px 0 1px rgba(0,0,0,0.04), 0 24px 60px -20px rgba(13,30,45,0.28), 0 4px 20px -4px rgba(13,30,45,0.12)",
         border: "1px solid rgba(0,0,0,0.10)",
         overflow: "hidden",
-        maxWidth: 420,
+        maxWidth: isMobile ? "100%" : 420,
         width: "100%",
         userSelect: "none",
       }}
@@ -176,10 +177,11 @@ function BallotCard() {
 
 // ─── Hero split: título izquierda + tarjetón derecha ───
 function FloatingCardsHero() {
+  const isMobile = useIsMobile();
   return (
     <section style={{
       position: "relative", overflowX: "clip",
-      padding: "80px 48px 96px",
+      padding: isMobile ? "48px 18px 56px" : "80px 48px 96px",
       background: "radial-gradient(900px 500px at 20% 50%, rgba(47,107,138,0.08), transparent 65%), radial-gradient(700px 400px at 85% 20%, rgba(30,64,175,0.05), transparent 60%), var(--bg)",
     }}>
       {/* Grid de fondo sutil */}
@@ -194,8 +196,10 @@ function FloatingCardsHero() {
       <div style={{
         position: "relative",
         maxWidth: 1200, margin: "0 auto",
-        display: "grid", gridTemplateColumns: "1fr auto",
-        gap: 64, alignItems: "flex-start",
+        display: "grid",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr auto",
+        gap: isMobile ? 36 : 64,
+        alignItems: "flex-start",
       }}>
         {/* ── IZQUIERDA: texto ── */}
         <div>
@@ -221,9 +225,9 @@ function FloatingCardsHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              margin: "0 0 22px",
-              fontSize: "clamp(44px, 5.5vw, 72px)",
-              fontWeight: 700, letterSpacing: "-0.045em", lineHeight: 0.98,
+              margin: "0 0 18px",
+              fontSize: "clamp(36px, 8.5vw, 72px)",
+              fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1,
               color: "var(--ink)",
               fontFamily: "var(--font-plex-serif), Georgia, serif",
             }}
@@ -242,7 +246,7 @@ function FloatingCardsHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.22 }}
-            style={{ margin: "0 0 36px", maxWidth: 480, fontSize: 19, lineHeight: 1.5, color: "var(--ink-2)" }}
+            style={{ margin: "0 0 28px", maxWidth: 480, fontSize: isMobile ? 16 : 19, lineHeight: 1.5, color: "var(--ink-2)" }}
           >
             Conoce los {ALL_CANDIDATES.length} candidatos, compara propuestas y decide con la misma información para todos, lado a lado.
           </motion.p>
@@ -251,15 +255,15 @@ function FloatingCardsHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.34 }}
-            style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
+            style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
           >
-            <Link href="/candidatos">
-              <Button variant="primary" style={{ fontSize: 16, padding: "13px 24px" }}>
+            <Link href="/candidatos" style={{ flex: isMobile ? "1 1 100%" : "0 0 auto" }}>
+              <Button variant="primary" style={{ fontSize: 16, padding: "13px 24px", width: isMobile ? "100%" : undefined }}>
                 Explorar candidatos
               </Button>
             </Link>
-            <Link href="/compara">
-              <Button variant="secondary" style={{ fontSize: 16, padding: "13px 24px" }}>
+            <Link href="/compara" style={{ flex: isMobile ? "1 1 100%" : "0 0 auto" }}>
+              <Button variant="secondary" style={{ fontSize: 16, padding: "13px 24px", width: isMobile ? "100%" : undefined }}>
                 Comparar propuestas
               </Button>
             </Link>
@@ -270,7 +274,7 @@ function FloatingCardsHero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.55 }}
-            style={{ display: "flex", gap: 32, marginTop: 48, flexWrap: "wrap" }}
+            style={{ display: "flex", gap: isMobile ? 22 : 32, marginTop: isMobile ? 32 : 48, flexWrap: "wrap" }}
           >
             {[
               { n: ALL_CANDIDATES.length, label: "candidatos" },
@@ -278,18 +282,18 @@ function FloatingCardsHero() {
               { n: "3", label: "espectros" },
             ].map((s) => (
               <div key={s.label}>
-                <div style={{ fontSize: 34, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1,
+                <div style={{ fontSize: isMobile ? 28 : 34, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1,
                   fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
                   {s.n}
                 </div>
-                <div style={{ fontSize: 14, color: "var(--ink-3)", marginTop: 3 }}>{s.label}</div>
+                <div style={{ fontSize: isMobile ? 13 : 14, color: "var(--ink-3)", marginTop: 3 }}>{s.label}</div>
               </div>
             ))}
           </motion.div>
         </div>
 
         {/* ── DERECHA: tarjetón ── */}
-        <div style={{ display: "flex", justifyContent: "center", flexShrink: 0 }}>
+        <div style={{ display: "flex", justifyContent: "center", flexShrink: 0, width: "100%" }}>
           <BallotCard />
         </div>
       </div>
@@ -322,6 +326,7 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
   const ref = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const el = ref.current;
@@ -344,7 +349,7 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
       style={{
         textAlign: "left", background: "#fff",
         border: `1px solid ${hover ? "rgba(47,107,138,0.28)" : "rgba(0,0,0,0.08)"}`,
-        borderRadius: 22, padding: 0,
+        borderRadius: isMobile ? 16 : 22, padding: 0,
         display: "flex", flexDirection: "column", overflow: "hidden",
         cursor: "pointer",
         transition: "transform 280ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 260ms ease, border-color 200ms ease, opacity 500ms ease",
@@ -365,17 +370,17 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
         overflow: "hidden",
       }}>
         <span style={{
-          position: "absolute", top: 14, left: 14,
-          fontSize: 12, fontWeight: 600, color: "#fff",
-          padding: "6px 10px", borderRadius: 999,
+          position: "absolute", top: isMobile ? 10 : 14, left: isMobile ? 10 : 14,
+          fontSize: isMobile ? 10 : 12, fontWeight: 600, color: "#fff",
+          padding: isMobile ? "4px 8px" : "6px 10px", borderRadius: 999,
           background: "rgba(0,0,0,0.32)", backdropFilter: "blur(8px)",
           letterSpacing: "-0.01em",
         }}>
           {spectrumLabel}
         </span>
         <span aria-hidden="true" style={{
-          position: "absolute", top: 14, right: 14,
-          width: 24, height: 24, borderRadius: 999,
+          position: "absolute", top: isMobile ? 10 : 14, right: isMobile ? 10 : 14,
+          width: isMobile ? 18 : 24, height: isMobile ? 18 : 24, borderRadius: 999,
           background: candidate.color,
           border: "2px solid rgba(255,255,255,0.9)",
           boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
@@ -416,11 +421,12 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
           background: "linear-gradient(to top, rgba(0,0,0,0.35), rgba(0,0,0,0))",
           pointerEvents: "none",
         }} />
-        <div style={{ position: "absolute", left: 20, right: 20, bottom: 18, color: "#fff" }}>
-          <div style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.1, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>
+        <div style={{ position: "absolute", left: isMobile ? 12 : 20, right: isMobile ? 12 : 20, bottom: isMobile ? 12 : 18, color: "#fff" }}>
+          <div style={{ fontSize: isMobile ? 15 : 22, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>
             {candidate.name}
           </div>
-          <div style={{ fontSize: 14, marginTop: 4, opacity: 0.9, letterSpacing: "-0.005em" }}>
+          <div style={{ fontSize: isMobile ? 11 : 14, marginTop: 3, opacity: 0.9, letterSpacing: "-0.005em",
+            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             Fórmula: {candidate.vice}
           </div>
         </div>
@@ -429,27 +435,30 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
       {/* Banner inferior estilo FIFA */}
       <div style={{
         background: candidate.color, color: "#fff",
-        padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10,
+        padding: isMobile ? "10px 12px" : "14px 18px",
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8,
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-          <span aria-hidden="true" style={{ width: 6, height: 28, borderRadius: 3, background: "rgba(255,255,255,0.85)", flex: "0 0 auto" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 10, minWidth: 0 }}>
+          <span aria-hidden="true" style={{ width: isMobile ? 4 : 6, height: isMobile ? 22 : 28, borderRadius: 3, background: "rgba(255,255,255,0.85)", flex: "0 0 auto" }} />
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: 10, fontWeight: 600, opacity: 0.85, textTransform: "uppercase", letterSpacing: "0.08em" }}>Partido</div>
-            <div style={{ fontSize: 15, fontWeight: 600, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            <div style={{ fontSize: isMobile ? 9 : 10, fontWeight: 600, opacity: 0.85, textTransform: "uppercase", letterSpacing: "0.08em" }}>Partido</div>
+            <div style={{ fontSize: isMobile ? 12 : 15, fontWeight: 600, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               {candidate.party}
             </div>
           </div>
         </div>
-        <span style={{
-          display: "inline-flex", alignItems: "center", gap: 4,
-          fontSize: 13, fontWeight: 600, padding: "8px 12px", borderRadius: 999,
-          background: "rgba(255,255,255,0.18)",
-          transform: hover ? "translateX(2px)" : "translateX(0)",
-          transition: "transform 200ms ease",
-          flex: "0 0 auto",
-        }}>
-          Ver <Chevron dir="right" size={12} />
-        </span>
+        {!isMobile && (
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: 4,
+            fontSize: 13, fontWeight: 600, padding: "8px 12px", borderRadius: 999,
+            background: "rgba(255,255,255,0.18)",
+            transform: hover ? "translateX(2px)" : "translateX(0)",
+            transition: "transform 200ms ease",
+            flex: "0 0 auto",
+          }}>
+            Ver <Chevron dir="right" size={12} />
+          </span>
+        )}
       </div>
     </button>
   );
@@ -461,6 +470,7 @@ type Filter = "todos" | "punteros" | "izquierda" | "centro" | "derecha";
 
 export default function HomePage() {
   const [filter, setFilter] = useState<Filter>("todos");
+  const isMobile = useIsMobile();
 
   const filters: { key: Filter; label: string; count: number }[] = [
     { key: "todos", label: "Todos", count: ALL_CANDIDATES.length },
@@ -479,28 +489,39 @@ export default function HomePage() {
       <FloatingCardsHero />
       <PartyMarquee />
 
-      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 32px 96px" }} id="grid-anchor">
-        <div style={{ marginBottom: 24, display: "flex", alignItems: "end", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+      <main style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px 64px" : "80px 32px 96px" }} id="grid-anchor">
+        <div style={{ marginBottom: 24, display: "flex", alignItems: "end", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
-            <p style={{ margin: "0 0 4px", fontSize: 15, fontWeight: 600, color: "var(--brand)", letterSpacing: "-0.01em" }}>
+            <p style={{ margin: "0 0 4px", fontSize: isMobile ? 13 : 15, fontWeight: 600, color: "var(--brand)", letterSpacing: "-0.01em" }}>
               Los 14 candidatos a la Presidencia
             </p>
             <h2 style={{
-              margin: "0 0 8px", fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em",
+              margin: "0 0 8px", fontSize: isMobile ? 30 : 40, fontWeight: 600, letterSpacing: "-0.03em",
               color: "var(--ink)", lineHeight: 1.1,
               fontFamily: "var(--font-plex-serif), Georgia, serif",
             }}>
               Todos los candidatos
             </h2>
-            <p style={{ margin: 0, fontSize: 18, color: "var(--ink-2)" }}>
+            <p style={{ margin: 0, fontSize: isMobile ? 15 : 18, color: "var(--ink-2)" }}>
               Filtra por espectro o encuestas, y toca una tarjeta para ver el perfil.
             </p>
           </div>
-          <span style={{ fontSize: 15, color: "var(--ink-3)" }}>{list.length} mostrando</span>
+          <span style={{ fontSize: isMobile ? 13 : 15, color: "var(--ink-3)" }}>{list.length} mostrando</span>
         </div>
 
-        {/* Filtros */}
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
+        {/* Filtros — wrap en desktop, scroll horizontal en móvil */}
+        <div
+          style={{
+            display: "flex", gap: 8, marginBottom: 28,
+            flexWrap: isMobile ? "nowrap" : "wrap",
+            overflowX: isMobile ? "auto" : "visible",
+            scrollSnapType: isMobile ? "x mandatory" : undefined,
+            marginLeft: isMobile ? -16 : 0,
+            marginRight: isMobile ? -16 : 0,
+            padding: isMobile ? "2px 16px" : 0,
+            WebkitOverflowScrolling: "touch",
+          }}
+        >
           {filters.map((f) => {
             const active = filter === f.key;
             return (
@@ -509,12 +530,14 @@ export default function HomePage() {
                 onClick={() => setFilter(f.key)}
                 aria-pressed={active}
                 style={{
-                  fontFamily: "inherit", fontSize: 15, fontWeight: 500,
-                  padding: "10px 16px", borderRadius: 999, cursor: "pointer",
+                  fontFamily: "inherit", fontSize: isMobile ? 14 : 15, fontWeight: 500,
+                  padding: isMobile ? "9px 14px" : "10px 16px", borderRadius: 999, cursor: "pointer",
                   border: `1px solid ${active ? "var(--brand)" : "rgba(0,0,0,0.1)"}`,
                   background: active ? "var(--brand)" : "#fff",
                   color: active ? "#fff" : "var(--ink)",
-                  display: "inline-flex", alignItems: "center", gap: 8,
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  flex: "0 0 auto", whiteSpace: "nowrap",
+                  scrollSnapAlign: isMobile ? "start" : undefined,
                   transition: "all 160ms ease",
                 }}
               >
@@ -534,8 +557,8 @@ export default function HomePage() {
         {/* Grid de candidatos */}
         <section aria-label="Candidatos" style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-          gap: 20, marginBottom: 48,
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fill, minmax(240px, 1fr))",
+          gap: isMobile ? 12 : 20, marginBottom: 40,
         }}>
           {list.map((c, i) => (
             <Link key={c.name} href={`/candidatos?name=${encodeURIComponent(c.name)}`} style={{ display: "contents" }}>
@@ -546,29 +569,30 @@ export default function HomePage() {
 
         {/* CTA banner */}
         <section style={{
-          marginTop: 48, padding: "48px 56px",
+          marginTop: isMobile ? 32 : 48, padding: isMobile ? "28px 22px" : "48px 56px",
           background: "linear-gradient(135deg, var(--brand), var(--brand-soft))",
-          borderRadius: 28, display: "flex", alignItems: "center",
-          justifyContent: "space-between", gap: 32, flexWrap: "wrap",
+          borderRadius: isMobile ? 20 : 28, display: "flex", alignItems: "center",
+          justifyContent: "space-between", gap: isMobile ? 18 : 32, flexWrap: "wrap",
           color: "#fff", boxShadow: "0 30px 60px -30px rgba(47,107,138,0.5)",
         }}>
-          <div style={{ flex: "1 1 320px" }}>
+          <div style={{ flex: "1 1 280px", minWidth: 0 }}>
             <h2 style={{
-              margin: 0, fontSize: 32, fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.15,
+              margin: 0, fontSize: isMobile ? 24 : 32, fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.15,
               fontFamily: "var(--font-plex-serif), Georgia, serif",
             }}>
               ¿Aún no te decides?
             </h2>
-            <p style={{ margin: "10px 0 0", fontSize: 19, lineHeight: 1.4, opacity: 0.92 }}>
+            <p style={{ margin: "8px 0 0", fontSize: isMobile ? 15 : 19, lineHeight: 1.45, opacity: 0.92 }}>
               Compara propuestas lado a lado y conoce sus posiciones frente a 15 preguntas clave.
             </p>
           </div>
-          <Link href="/compara">
+          <Link href="/compara" style={{ width: isMobile ? "100%" : "auto" }}>
             <button style={{
-              fontFamily: "inherit", fontSize: 17, fontWeight: 600, padding: "16px 28px", borderRadius: 999,
+              fontFamily: "inherit", fontSize: isMobile ? 15 : 17, fontWeight: 600, padding: isMobile ? "14px 22px" : "16px 28px", borderRadius: 999,
               border: 0, background: "#fff", color: "var(--brand)", cursor: "pointer",
-              display: "inline-flex", alignItems: "center", gap: 8,
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
               boxShadow: "0 4px 12px rgba(0,0,0,0.15)", letterSpacing: "-0.01em",
+              width: isMobile ? "100%" : "auto",
             }}>
               Comparar propuestas <Chevron dir="right" />
             </button>

@@ -20,6 +20,12 @@ export const metadata: Metadata = {
   description: "Conoce, compara y analiza a los 14 candidatos a la Presidencia de Colombia 2026.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${plexSans.variable} ${plexSerif.variable}`} suppressHydrationWarning>
