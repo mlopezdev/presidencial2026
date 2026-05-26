@@ -61,10 +61,26 @@ function SpectrumExplorer({ onPick, onPickAll }: {
   // Convertir -1..+1 a porcentaje 5%..95%
   const toX = (econ: number) => `${5 + ((econ + 1) / 2) * 90}%`;
 
+  // Espectro basado en el eje económico del Diagrama de Nolan
   const spectrumCards = [
-    { key: "izquierda" as Spectrum, label: "Izquierda", desc: "Transformación social, Estado fuerte, paz negociada" },
-    { key: "centro" as Spectrum, label: "Centro", desc: "Reformismo moderado, coaliciones, pragmatismo" },
-    { key: "derecha" as Spectrum, label: "Derecha", desc: "Libre mercado, seguridad, inversión privada" },
+    {
+      key: "izquierda" as Spectrum,
+      label: "Izquierda",
+      sub: "Progresista + Estado",
+      desc: "Mayor intervención estatal en la economía combinada con agenda social progresista: redistribución, servicios públicos, regulación laboral y derechos civiles amplios.",
+    },
+    {
+      key: "centro" as Spectrum,
+      label: "Centro",
+      sub: "Moderado · Zona de transición",
+      desc: "Equilibrio entre regulación estatal y libre mercado, sin adoptar extremos en la agenda cultural. Apuesta por reformas graduales y coaliciones amplias.",
+    },
+    {
+      key: "derecha" as Spectrum,
+      label: "Derecha",
+      sub: "Conservador + Mercado",
+      desc: "Libre mercado, propiedad privada y menor intervención del Estado, bajo un marco social que prioriza valores tradicionales, seguridad y orden público.",
+    },
   ];
 
   return (
@@ -77,10 +93,16 @@ function SpectrumExplorer({ onPick, onPickAll }: {
         <h1 style={{ margin: "0 0 10px", fontSize: "clamp(28px,7vw,48px)", fontWeight: 600,
           letterSpacing: "-0.03em", color: "var(--ink)", lineHeight: 1.05,
           fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
-          ¿Por dónde empezamos?
+          El péndulo ideológico
         </h1>
-        <p style={{ margin: 0, fontSize: isMobile ? 15 : 18, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 600 }}>
-          Elige un espectro para filtrar candidatos, o explora los {ALL_CANDIDATES.length} directamente.
+        <p style={{ margin: "0 0 14px", fontSize: isMobile ? 15 : 17, color: "var(--ink-2)", lineHeight: 1.55, maxWidth: 680 }}>
+          El espectro político va más allá de izquierda y derecha. Cada candidato se posiciona
+          según su visión <strong style={{ color: "var(--ink)" }}>económica</strong> (¿más Estado o más mercado?) y su agenda
+          <strong style={{ color: "var(--ink)" }}> sociocultural</strong> (¿conservadora o progresista?).
+          La barra muestra su posición en el eje económico.
+        </p>
+        <p style={{ margin: 0, fontSize: isMobile ? 13 : 15, color: "var(--ink-3)" }}>
+          Elige un espectro para filtrar, o explora los {ALL_CANDIDATES.length} candidatos directamente.
         </p>
       </div>
 
@@ -88,8 +110,8 @@ function SpectrumExplorer({ onPick, onPickAll }: {
       <div style={{ position: "relative", marginBottom: 40 }}>
         <div style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em",
           color: "var(--ink-3)", marginBottom: 16, display: "flex", justifyContent: "space-between" }}>
-          <span>← Intervención del Estado</span>
-          <span>Libre mercado →</span>
+          <span>← Mayor intervención del Estado</span>
+          <span>Mayor libre mercado →</span>
         </div>
 
         {/* Track degradado */}
@@ -143,10 +165,13 @@ function SpectrumExplorer({ onPick, onPickAll }: {
                 <div style={{ width: 10, height: 10, borderRadius: "50%", background: SPECTRUM_CLR[s.key], marginTop: 6 }} />
               </div>
 
-              <div style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, color: SPECTRUM_CLR[s.key], marginBottom: 4, letterSpacing: "-0.015em" }}>
+              <div style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, color: SPECTRUM_CLR[s.key], marginBottom: 2, letterSpacing: "-0.015em" }}>
                 {s.label}
               </div>
-              <div style={{ fontSize: isMobile ? 13 : 14, color: "var(--ink-3)", lineHeight: 1.4, marginBottom: isMobile ? 12 : 18 }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: SPECTRUM_CLR[s.key] + "BB", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
+                {s.sub}
+              </div>
+              <div style={{ fontSize: isMobile ? 13 : 13, color: "var(--ink-3)", lineHeight: 1.5, marginBottom: isMobile ? 12 : 18 }}>
                 {s.desc}
               </div>
 
