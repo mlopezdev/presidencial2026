@@ -133,7 +133,7 @@ export default function MapaGenero() {
     <section style={{ marginBottom: 80 }}>
       <div style={{ marginBottom: 28, maxWidth: 820 }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: "#B5649C", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Brecha de género · 2022</div>
-        <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 38, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: "clamp(24px, 6vw, 38px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>
           ¿Vota distinto donde hay más mujeres?
         </h2>
         <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 720 }}>
@@ -161,7 +161,7 @@ export default function MapaGenero() {
         </select>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 1fr", gap: 24, alignItems: "start" }}>
+      <div className="cmap-grid cmap-grid--even">
         {/* Mapa %mujeres */}
         <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 12 }}>
           <div style={{ padding: "6px 8px 12px", fontSize: 12, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em" }}>

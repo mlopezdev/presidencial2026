@@ -87,17 +87,17 @@ export default function PanelMunicipios({ round, codDep, deptoName, onClose }: P
           background: "#fff", color: "var(--ink-2)",
         }}>← volver al mapa</button>
       </div>
-      <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 36, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 6px", lineHeight: 1.1 }}>
+      <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: "clamp(24px, 6vw, 36px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 6px", lineHeight: 1.1 }}>
         {deptoName} · {munis.length} municipios
       </h2>
-      <p style={{ margin: "0 0 24px", fontSize: 17, color: "var(--ink-2)", lineHeight: 1.5 }}>
+      <p style={{ margin: "0 0 24px", fontSize: "clamp(15px, 3.5vw, 17px)", color: "var(--ink-2)", lineHeight: 1.5 }}>
         Resultados consolidados por municipio. Total del depto: <strong>{fmt(totals.total)}</strong> votos · Abstención: <strong>{totals.censo > 0 ? pct((totals.abst / totals.censo) * 100) : "—"}</strong>
       </p>
 
       {/* Controles */}
       <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
         <input type="search" placeholder="Buscar municipio…" value={search} onChange={(e) => setSearch(e.target.value)}
-          style={{ fontFamily: "inherit", fontSize: 14, padding: "9px 14px", border: "1px solid var(--line)", borderRadius: 9, background: "#fff", color: "var(--ink)", minWidth: 220 }}
+          style={{ fontFamily: "inherit", fontSize: 16, padding: "9px 14px", border: "1px solid var(--line)", borderRadius: 9, background: "#fff", color: "var(--ink)", flex: "1 1 220px", minWidth: 0 }}
         />
         <div style={{ display: "flex", gap: 4, padding: 4, background: "#F2F4F7", borderRadius: 10 }}>
           {([{ k: "total", l: "Más votos" }, { k: "share", l: "% candidato" }, { k: "abst", l: "Más abstención" }] as { k: SortBy; l: string }[]).map((o) => (
@@ -148,6 +148,8 @@ export default function PanelMunicipios({ round, codDep, deptoName, onClose }: P
 
       {/* Tabla de municipios */}
       <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden" }}>
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+        <div style={{ minWidth: 460 }}>
         <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1.5fr) 90px 1fr 90px", padding: "12px 16px", borderBottom: "1px solid var(--line)", fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", background: "#FAFBFC" }}>
           <div>Municipio</div>
           <div style={{ textAlign: "right" }}>Votos</div>
@@ -187,6 +189,8 @@ export default function PanelMunicipios({ round, codDep, deptoName, onClose }: P
               Mostrando 200 de {sorted.length}. Refina la búsqueda.
             </div>
           )}
+        </div>
+        </div>
         </div>
       </div>
     </section>

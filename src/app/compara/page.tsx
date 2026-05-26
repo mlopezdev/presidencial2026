@@ -6,6 +6,7 @@ import { COMPARE_QUESTIONS, COMPARE_CATEGORIES } from "@/lib/compare-questions";
 import { TEMAS, getPosicion, type Posicion } from "@/lib/posiciones-data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Chevron } from "@/components/ui/Chevron";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 // ─── Vista: Temas polémicos (todos los candidatos) ───
 const POS_META: Record<Posicion, { icon: string; color: string; bg: string }> = {
@@ -16,21 +17,24 @@ const POS_META: Record<Posicion, { icon: string; color: string; bg: string }> = 
 
 function TemasView() {
   const [activeTema, setActiveTema] = useState<string | null>(null);
+  const isMobile = useIsMobile();
+  const firstCol = isMobile ? 200 : 280;
 
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom: 20 }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 600,
           color: "var(--brand)", background: "rgba(47,107,138,0.1)", padding: "5px 11px",
           borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: 12 }}>
           ⚡ Temas polémicos
         </div>
-        <h3 style={{ margin: "0 0 8px", fontSize: 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
+        <h3 style={{ margin: "0 0 8px", fontSize: isMobile ? 24 : 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
           fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
           Los 14 frente a frente
         </h3>
-        <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)" }}>
+        <p style={{ margin: 0, fontSize: isMobile ? 15 : 17, color: "var(--ink-2)" }}>
           Posición de cada candidato en 15 temas polémicos. Toca un tema para ver el detalle.
+          {isMobile && <span style={{ display: "block", marginTop: 6, color: "var(--ink-3)", fontSize: 13 }}>↔ Desliza la tabla para ver todos los candidatos.</span>}
         </p>
       </div>
 
@@ -50,11 +54,11 @@ function TemasView() {
       </div>
 
       {/* Header con avatares */}
-      <div style={{ overflowX: "auto" }}>
-        <div style={{ minWidth: 900 }}>
+      <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch", marginLeft: isMobile ? -14 : 0, marginRight: isMobile ? -14 : 0, padding: isMobile ? "0 14px" : 0 }}>
+        <div style={{ minWidth: firstCol + ALL_CANDIDATES.length * 52 }}>
           <div style={{
             display: "grid",
-            gridTemplateColumns: `minmax(280px,1fr) repeat(${ALL_CANDIDATES.length}, 48px)`,
+            gridTemplateColumns: `minmax(${firstCol}px,1fr) repeat(${ALL_CANDIDATES.length}, 48px)`,
             gap: 4, padding: "0 0 12px", borderBottom: "2px solid var(--line)",
             alignItems: "flex-end",
           }}>
@@ -82,7 +86,7 @@ function TemasView() {
                   onClick={() => setActiveTema(isActive ? null : tema.id)}
                   style={{
                     display: "grid",
-                    gridTemplateColumns: `minmax(280px,1fr) repeat(${ALL_CANDIDATES.length}, 48px)`,
+                    gridTemplateColumns: `minmax(${firstCol}px,1fr) repeat(${ALL_CANDIDATES.length}, 48px)`,
                     gap: 4, padding: "10px 0", alignItems: "center", cursor: "pointer",
                     background: isActive ? "rgba(47,107,138,0.04)" : "transparent",
                     transition: "background 140ms ease",
@@ -161,10 +165,12 @@ const COMPARE_NAMES = ["Iván Cepeda", "Abelardo de la Espriella", "Paloma Valen
 
 // ─── Matriz ideológica SVG ───
 function IdeologyMatrixView() {
+  const isMobile = useIsMobile();
   const [hovered, setHovered] = useState<string | null>(null);
   const [pinned, setPinned] = useState<string | null>(null);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const wrapRef = useRef<HTMLDivElement>(null);
+  const axisFont = isMobile ? 30 : 16;
 
   const plotted = useMemo(() => ALL_CANDIDATES.map((c) => {
     const coords = IDEOLOGY_MATRIX[c.name];
@@ -193,12 +199,12 @@ function IdeologyMatrixView() {
         <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "var(--brand)", background: "rgba(47,107,138,0.1)", padding: "5px 11px", borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: 12 }}>
           ⊞ Matriz ideológica
         </div>
-        <h3 style={{ margin: "0 0 8px", fontSize: 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)", lineHeight: 1.1,
+        <h3 style={{ margin: "0 0 8px", fontSize: isMobile ? 24 : 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)", lineHeight: 1.1,
           fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
           ¿Hacia dónde apunta cada candidato?
         </h3>
-        <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)", lineHeight: 1.45 }}>
-          Pasa el cursor sobre cualquier punto para ver detalles. Toca para fijar la selección.
+        <p style={{ margin: 0, fontSize: isMobile ? 15 : 17, color: "var(--ink-2)", lineHeight: 1.45 }}>
+          {isMobile ? "Toca un punto para ver los detalles del candidato." : "Pasa el cursor sobre cualquier punto para ver detalles. Toca para fijar la selección."}
         </p>
       </div>
 
@@ -216,10 +222,10 @@ function IdeologyMatrixView() {
           <rect x={pad} y={pad} width={W-2*pad} height={H-2*pad} fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="1.2" rx="12" />
           <line x1={pad} y1={toY(0)} x2={W-pad} y2={toY(0)} stroke="rgba(0,0,0,0.35)" strokeWidth="1.5" />
           <line x1={toX(0)} y1={pad} x2={toX(0)} y2={H-pad} stroke="rgba(0,0,0,0.35)" strokeWidth="1.5" />
-          <text x={pad+6} y={toY(0)-14} fontSize="16" fill="#515154" textAnchor="start" fontWeight="700" letterSpacing="0.08em">← ESTADO</text>
-          <text x={W-pad-6} y={toY(0)-14} fontSize="16" fill="#515154" textAnchor="end" fontWeight="700" letterSpacing="0.08em">MERCADO →</text>
-          <text x={toX(0)+14} y={pad+22} fontSize="16" fill="#515154" fontWeight="700" letterSpacing="0.08em">↑ PROGRESISTA</text>
-          <text x={toX(0)+14} y={H-pad-10} fontSize="16" fill="#515154" fontWeight="700" letterSpacing="0.08em">↓ CONSERVADOR</text>
+          <text x={pad+6} y={toY(0)-14} fontSize={axisFont} fill="#515154" textAnchor="start" fontWeight="700" letterSpacing="0.08em">← ESTADO</text>
+          <text x={W-pad-6} y={toY(0)-14} fontSize={axisFont} fill="#515154" textAnchor="end" fontWeight="700" letterSpacing="0.08em">MERCADO →</text>
+          <text x={toX(0)+14} y={pad+22} fontSize={axisFont} fill="#515154" fontWeight="700" letterSpacing="0.08em">↑ PROGRESISTA</text>
+          <text x={toX(0)+14} y={H-pad-10} fontSize={axisFont} fill="#515154" fontWeight="700" letterSpacing="0.08em">↓ CONSERVADOR</text>
           <defs>
             <clipPath id="clip-sm"><circle cx="0" cy="0" r="16" /></clipPath>
             <clipPath id="clip-lg"><circle cx="0" cy="0" r="20" /></clipPath>
@@ -326,10 +332,11 @@ function IdeologyMatrixView() {
 }
 
 // ─── Fila de pregunta ───
-function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate, setActiveCandidate }: {
+function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate, setActiveCandidate, isMobile, firstCol }: {
   question: typeof COMPARE_QUESTIONS[0]; candidates: Candidate[];
   expanded: boolean; onToggle: () => void;
   activeCandidate: string | null; setActiveCandidate: (n: string | null) => void;
+  isMobile: boolean; firstCol: number;
 }) {
   const answerFor = (name: string) => question.yes.includes(name) ? "yes" : question.no.includes(name) ? "no" : "na";
 
@@ -337,8 +344,8 @@ function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate
     <div style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
       <div style={{
         display: "grid",
-        gridTemplateColumns: `minmax(280px, 1fr) repeat(${candidates.length}, 64px) 48px`,
-        alignItems: "center", padding: "20px 28px", gap: 8, cursor: "pointer",
+        gridTemplateColumns: `minmax(${firstCol}px, 1fr) repeat(${candidates.length}, 64px) 48px`,
+        alignItems: "center", padding: isMobile ? "16px 14px" : "20px 28px", gap: 8, cursor: "pointer",
         transition: "background 160ms ease",
       }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#FAFBFC"; }}
         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
@@ -390,7 +397,7 @@ function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate
         </div>
       </div>
       {expanded && (
-        <div style={{ padding: "0 28px 28px" }}>
+        <div style={{ padding: isMobile ? "0 14px 20px" : "0 28px 28px" }}>
           <div style={{ background: "#FAFBFC", borderRadius: 18, padding: 22, display: "grid", gap: 12 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 4 }}>
               {candidates.map((c) => {
@@ -446,11 +453,13 @@ function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate
 
 // ─── Página Compara ───
 export default function ComparaPage() {
+  const isMobile = useIsMobile();
   const [view, setView] = useState<"preguntas" | "temas" | "matriz">("temas");
   const [category, setCategory] = useState("Todas");
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
   const [activeCandidate, setActiveCandidate] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const firstCol = isMobile ? 200 : 280;
 
   const candidates = useMemo(() => COMPARE_NAMES.map((n) => ALL_CANDIDATES.find((c) => c.name === n)).filter(Boolean) as Candidate[], []);
   const categories = ["Todas", ...COMPARE_CATEGORIES];
@@ -465,32 +474,32 @@ export default function ComparaPage() {
   };
 
   return (
-    <main style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 32px 96px" }}>
-      <div style={{ textAlign: "center", maxWidth: 780, margin: "0 auto 36px" }}>
-        <p style={{ margin: "0 0 8px", fontSize: 15, fontWeight: 600, color: "var(--brand)", letterSpacing: "-0.01em" }}>Comparar candidatos</p>
-        <h1 style={{ margin: "0 0 16px", fontSize: "clamp(36px,5vw,56px)", fontWeight: 600, letterSpacing: "-0.035em", color: "var(--ink)", lineHeight: 1.02,
+    <main style={{ maxWidth: 1280, margin: "0 auto", padding: isMobile ? "32px 14px 64px" : "48px 32px 96px" }}>
+      <div style={{ textAlign: "center", maxWidth: 780, margin: isMobile ? "0 auto 24px" : "0 auto 36px" }}>
+        <p style={{ margin: "0 0 8px", fontSize: isMobile ? 13 : 15, fontWeight: 600, color: "var(--brand)", letterSpacing: "-0.01em" }}>Comparar candidatos</p>
+        <h1 style={{ margin: "0 0 14px", fontSize: "clamp(30px,7vw,56px)", fontWeight: 600, letterSpacing: "-0.035em", color: "var(--ink)", lineHeight: 1.02,
           fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
           ¿Qué opina cada uno?
         </h1>
-        <p style={{ margin: 0, fontSize: 21, color: "var(--ink-2)", lineHeight: 1.45 }}>
+        <p style={{ margin: 0, fontSize: isMobile ? 16 : 21, color: "var(--ink-2)", lineHeight: 1.45 }}>
           15 preguntas clave, o una vista en matriz ideológica para entender a todos de un vistazo.
         </p>
       </div>
 
-      {/* Toggle de vista */}
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: 32 }}>
-        <div style={{ display: "inline-flex", gap: 4, padding: 4, background: "#fff", borderRadius: 14, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)" }}>
+      {/* Toggle de vista — scroll horizontal si no cabe */}
+      <div style={{ display: "flex", justifyContent: isMobile ? "flex-start" : "center", marginBottom: isMobile ? 24 : 32, overflowX: isMobile ? "auto" : "visible", marginLeft: isMobile ? -14 : 0, marginRight: isMobile ? -14 : 0, padding: isMobile ? "0 14px" : 0, WebkitOverflowScrolling: "touch" }}>
+        <div style={{ display: "inline-flex", gap: 4, padding: 4, background: "#fff", borderRadius: 14, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)", flexShrink: 0 }}>
           {[
-            { k: "temas",     l: "Temas polémicos",   icon: "⚡" },
-            { k: "preguntas", l: "Análisis detallado", icon: "✓" },
-            { k: "matriz",    l: "Matriz ideológica",  icon: "⊞" },
+            { k: "temas",     l: isMobile ? "Temas" : "Temas polémicos",   icon: "⚡" },
+            { k: "preguntas", l: isMobile ? "Detalle" : "Análisis detallado", icon: "✓" },
+            { k: "matriz",    l: isMobile ? "Matriz" : "Matriz ideológica",  icon: "⊞" },
           ].map((o) => (
             <button key={o.k} type="button" onClick={() => setView(o.k as "preguntas" | "temas" | "matriz")} style={{
-              fontFamily: "inherit", fontSize: 15, fontWeight: 500, cursor: "pointer",
-              padding: "10px 18px", borderRadius: 10, border: 0,
+              fontFamily: "inherit", fontSize: isMobile ? 14 : 15, fontWeight: 500, cursor: "pointer",
+              padding: isMobile ? "9px 14px" : "10px 18px", borderRadius: 10, border: 0,
               background: view === o.k ? "var(--brand)" : "transparent",
               color: view === o.k ? "#fff" : "var(--ink-2)", transition: "all 160ms ease",
-              display: "inline-flex", alignItems: "center", gap: 8,
+              display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap",
             }}>
               <span style={{ fontSize: 14, opacity: 0.8 }}>{o.icon}</span>
               {o.l}
@@ -502,7 +511,7 @@ export default function ComparaPage() {
       {view === "matriz" && <IdeologyMatrixView />}
 
       {view === "temas" && (
-        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 24, padding: "28px 28px", overflow: "hidden" }}>
+        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: isMobile ? 16 : 24, padding: isMobile ? "18px 14px" : "28px 28px", overflow: "hidden" }}>
           <TemasView />
         </div>
       )}
@@ -510,41 +519,43 @@ export default function ComparaPage() {
       {view === "preguntas" && (
         <>
           {/* Leyenda + buscador */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between", padding: "16px 22px", background: "#fff", border: "1px solid var(--line)", borderRadius: 16, marginBottom: 20 }}>
-            <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 12 : 20, alignItems: "center", justifyContent: "space-between", padding: isMobile ? "14px 16px" : "16px 22px", background: "#fff", border: "1px solid var(--line)", borderRadius: 16, marginBottom: 20 }}>
+            <div style={{ display: "flex", gap: isMobile ? 12 : 20, alignItems: "center", flexWrap: "wrap" }}>
               {[
                 { bg: "#1F8F5C", icon: "✓", label: "A favor" },
                 { bg: "#C8453C", icon: "✕", label: "En contra" },
                 { bg: "#E8EEF3", icon: "—", label: "Sin posición", fg: "#86868B" },
               ].map((l) => (
-                <span key={l.label} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 15, color: "var(--ink-2)" }}>
-                  <span style={{ width: 22, height: 22, borderRadius: "50%", background: l.bg, color: l.fg || "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700 }}>{l.icon}</span>
+                <span key={l.label} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: isMobile ? 13 : 15, color: "var(--ink-2)" }}>
+                  <span style={{ width: 20, height: 20, borderRadius: "50%", background: l.bg, color: l.fg || "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700 }}>{l.icon}</span>
                   {l.label}
                 </span>
               ))}
             </div>
             <input type="search" placeholder="Buscar pregunta..." value={search} onChange={(e) => setSearch(e.target.value)}
-              style={{ fontFamily: "inherit", fontSize: 15, padding: "10px 16px", borderRadius: 999, border: "1px solid rgba(0,0,0,0.12)", outline: "none", background: "#FAFBFC", minWidth: 240 }} />
+              style={{ fontFamily: "inherit", fontSize: isMobile ? 16 : 15, padding: "10px 16px", borderRadius: 999, border: "1px solid rgba(0,0,0,0.12)", outline: "none", background: "#FAFBFC", minWidth: isMobile ? 0 : 240, width: isMobile ? "100%" : undefined }} />
           </div>
 
-          {/* Chips de categoría */}
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+          {/* Chips de categoría — scroll horizontal en móvil */}
+          <div style={{ display: "flex", gap: 8, flexWrap: isMobile ? "nowrap" : "wrap", marginBottom: 20, overflowX: isMobile ? "auto" : "visible", marginLeft: isMobile ? -14 : 0, marginRight: isMobile ? -14 : 0, padding: isMobile ? "2px 14px" : 0, WebkitOverflowScrolling: "touch" }}>
             {categories.map((cat) => (
               <button key={cat} type="button" onClick={() => { setCategory(cat); setExpandedIdx(null); }} style={{
-                fontFamily: "inherit", fontSize: 15, fontWeight: 500, padding: "10px 18px", borderRadius: 999, cursor: "pointer",
+                fontFamily: "inherit", fontSize: isMobile ? 14 : 15, fontWeight: 500, padding: isMobile ? "9px 14px" : "10px 18px", borderRadius: 999, cursor: "pointer",
                 border: `1px solid ${category === cat ? "var(--brand)" : "rgba(0,0,0,0.1)"}`,
                 background: category === cat ? "var(--brand)" : "#fff",
                 color: category === cat ? "#fff" : "var(--ink)", transition: "all 160ms ease",
+                flexShrink: 0, whiteSpace: "nowrap",
               }}>
                 {cat}
               </button>
             ))}
           </div>
 
-          {/* Tabla */}
-          <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 24, overflow: "hidden" }}>
+          {/* Tabla — scroll horizontal en móvil */}
+          <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: isMobile ? 16 : 24, overflowX: "auto", overflowY: "hidden", WebkitOverflowScrolling: "touch" }}>
+            <div style={{ minWidth: isMobile ? firstCol + candidates.length * 68 + 48 : "auto" }}>
             {/* Header */}
-            <div style={{ background: "#FAFBFC", borderBottom: "1px solid var(--line)", display: "grid", gridTemplateColumns: `minmax(280px, 1fr) repeat(${candidates.length}, 64px) 48px`, padding: "16px 28px", gap: 8, alignItems: "end" }}>
+            <div style={{ background: "#FAFBFC", borderBottom: "1px solid var(--line)", display: "grid", gridTemplateColumns: `minmax(${firstCol}px, 1fr) repeat(${candidates.length}, 64px) 48px`, padding: isMobile ? "14px 14px" : "16px 28px", gap: 8, alignItems: "end" }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Pregunta</div>
               {candidates.map((c) => (
                 <div key={c.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
@@ -562,8 +573,10 @@ export default function ComparaPage() {
             )}
             {filtered.map(({ q, i }) => (
               <QuestionRow key={i} question={q} candidates={candidates} expanded={expandedIdx === i}
-                onToggle={() => toggleRow(i)} activeCandidate={activeCandidate} setActiveCandidate={setActiveCandidate} />
+                onToggle={() => toggleRow(i)} activeCandidate={activeCandidate} setActiveCandidate={setActiveCandidate}
+                isMobile={isMobile} firstCol={firstCol} />
             ))}
+            </div>
           </div>
           <p style={{ marginTop: 24, fontSize: 14, color: "var(--ink-3)", textAlign: "center", lineHeight: 1.5 }}>
             Las respuestas se basan en declaraciones públicas, planes de gobierno y entrevistas.

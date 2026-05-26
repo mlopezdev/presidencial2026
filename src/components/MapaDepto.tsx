@@ -138,7 +138,7 @@ export default function MapaDepto({ year, onSelect, selectedCodDep }: Props) {
     <section style={{ marginBottom: 80 }}>
       <div style={{ marginBottom: 28, maxWidth: 820 }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: "#B3261E", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Mapa departamental</div>
-        <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 38, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: "clamp(24px, 6vw, 38px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>
           Cómo votó cada departamento
         </h2>
         <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 720 }}>
@@ -183,7 +183,7 @@ export default function MapaDepto({ year, onSelect, selectedCodDep }: Props) {
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 320px", gap: 24, alignItems: "start" }}>
+      <div className="cmap-grid">
         {/* Mapa */}
         <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 12, position: "relative" }}>
           {!geo || !data || !proj ? (
@@ -213,7 +213,7 @@ export default function MapaDepto({ year, onSelect, selectedCodDep }: Props) {
         </div>
 
         {/* Panel lateral */}
-        <aside style={{ position: "sticky", top: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+        <aside className="cmap-aside">
           <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 18 }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>
               {hoverDepto ? hoverDepto.depto : "Pasa el cursor por un departamento"}

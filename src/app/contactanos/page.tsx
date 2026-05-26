@@ -8,16 +8,16 @@ export default function ContactanosPage() {
   const [focused, setFocused] = useState<string | null>(null);
 
   return (
-    <main style={{ maxWidth: 720, margin: "0 auto", padding: "64px 32px 96px" }}>
+    <main style={{ maxWidth: 720, margin: "0 auto", padding: "clamp(36px, 6vw, 64px) clamp(16px, 4vw, 32px) 80px" }}>
       <p style={{ margin: "0 0 8px", fontSize: 15, fontWeight: 600, color: "var(--brand)", letterSpacing: "-0.01em" }}>Contáctanos</p>
       <h1 style={{
-        margin: "0 0 16px", fontSize: "clamp(36px, 5vw, 48px)", fontWeight: 600,
+        margin: "0 0 16px", fontSize: "clamp(28px, 7vw, 48px)", fontWeight: 600,
         letterSpacing: "-0.03em", color: "var(--ink)", lineHeight: 1.05,
         fontFamily: "var(--font-plex-serif), Georgia, serif",
       }}>
         ¿Tienes dudas o sugerencias?
       </h1>
-      <p style={{ margin: "0 0 32px", fontSize: 20, color: "var(--ink-2)", lineHeight: 1.45 }}>
+      <p style={{ margin: "0 0 28px", fontSize: "clamp(16px, 4vw, 20px)", color: "var(--ink-2)", lineHeight: 1.45 }}>
         Escríbenos y te responderemos en menos de 48 horas. Este proyecto es abierto y apartidista.
       </p>
 
@@ -36,7 +36,7 @@ export default function ContactanosPage() {
       ) : (
         <form
           onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-          style={{ background: "#fff", borderRadius: 20, border: "1px solid var(--line)", padding: 32, display: "grid", gap: 20 }}
+          style={{ background: "#fff", borderRadius: 20, border: "1px solid var(--line)", padding: "clamp(20px, 5vw, 32px)", display: "grid", gap: 18 }}
         >
           {[
             { id: "name", label: "Nombre completo", type: "text", placeholder: "Tu nombre" },

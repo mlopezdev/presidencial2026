@@ -131,7 +131,7 @@ export default function MapaSwing() {
     <section style={{ marginBottom: 80 }}>
       <div style={{ marginBottom: 28, maxWidth: 820 }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: "#1F8F5C", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Swing 1ra → 2da · 2022</div>
-        <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 38, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: "clamp(24px, 6vw, 38px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>
           A dónde fueron los votos de Fico, Fajardo, Íngrid
         </h2>
         <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 720 }}>
@@ -139,7 +139,7 @@ export default function MapaSwing() {
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 320px", gap: 24, alignItems: "start" }}>
+      <div className="cmap-grid">
         <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 12 }}>
           {!geo || !proj || swing.size === 0 ? (
             <div style={{ height: 520, display: "grid", placeItems: "center", color: "var(--ink-3)" }}>Cargando…</div>
@@ -167,7 +167,7 @@ export default function MapaSwing() {
         </div>
 
         {/* Panel */}
-        <aside style={{ display: "flex", flexDirection: "column", gap: 12, position: "sticky", top: 16 }}>
+        <aside className="cmap-aside">
           <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 18 }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
               {hoverData ? hoverData.name : "Balance del swing"}
@@ -204,6 +204,8 @@ export default function MapaSwing() {
               background: "#fff", color: "var(--ink-2)",
             }}>cerrar ×</button>
           </div>
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <div style={{ minWidth: 500 }}>
           <div style={{ display: "grid", gridTemplateColumns: "minmax(160px, 1.2fr) 110px 110px 1fr", padding: "8px 12px", borderBottom: "1px solid var(--line)", fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", background: "#FAFBFC" }}>
             <div>Municipio</div>
             <div style={{ textAlign: "right" }}>Δ Petro</div>
@@ -234,6 +236,8 @@ export default function MapaSwing() {
                 </div>
               );
             })}
+          </div>
+          </div>
           </div>
         </div>
       )}

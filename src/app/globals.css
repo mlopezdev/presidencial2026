@@ -70,6 +70,15 @@ button { font-family: inherit; }
 .marquee-track:hover { animation-play-state: paused; }
 .animate-in { animation: float-up 420ms ease-out both; }
 
+/* ─── Layout mapas (mapa + panel lateral) ─── */
+.cmap-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+.cmap-grid--even { grid-template-columns: minmax(0, 1fr) 1fr; }
+.cmap-aside { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 12px; }
+@media (max-width: 760px) {
+  .cmap-grid, .cmap-grid--even { grid-template-columns: 1fr; gap: 16px; }
+  .cmap-aside { position: static; top: auto; }
+}
+
 /* ─── Glass nav ─── */
 .liquid-nav {
   background: rgba(255,255,255,0.55);

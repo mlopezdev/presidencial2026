@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CONGRESO_FILES, deptKey, normalizaPartidoMovimiento, partidoColor, type Corporacion, type DeptoCongreso, type MuniCongreso, type MunisCongresoPorDepto, type PartidosFile } from "@/lib/congreso-data";
 import { GEOJSON_URL } from "@/lib/mapa-data";
 import { geomToPath, makeProjection, shade, type GeoJSON } from "@/lib/mapa-utils";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const pct = (n: number, d = 1) => `${n.toFixed(d)}%`;
 const fmt = (n: number) => n.toLocaleString("es-CO");
@@ -15,6 +16,7 @@ interface Loaded {
 }
 
 export default function CongresoDashboard() {
+  const isMobile = useIsMobile();
   const [corp, setCorp] = useState<Corporacion>("senado");
   const [agruparMov, setAgruparMov] = useState(true); // útil sobre todo en Cámara
   const [data, setData] = useState<Record<Corporacion, Loaded | null>>({ senado: null, camara: null });
@@ -142,15 +144,30 @@ export default function CongresoDashboard() {
       </div>
 
       {/* Sección 1: Ranking nacional de partidos */}
-      <section style={{ marginBottom: 64 }}>
-        <h3 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 28, fontWeight: 600, color: "var(--ink)", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+      <section style={{ marginBottom: isMobile ? 44 : 64 }}>
+        <h3 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "var(--ink)", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
           Ranking de partidos
         </h3>
         <p style={{ fontSize: 14, color: "var(--ink-3)", margin: "0 0 18px" }}>Votos nacionales por {corp === "senado" ? "lista al Senado" : "movimiento en Cámara"}. {agruparMov && "Listas departamentales del mismo movimiento están agrupadas."}</p>
-        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 20 }}>
+        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: isMobile ? 14 : 20 }}>
           {partidosAgregados.slice(0, 20).map(p => {
             const share = (p.votos / totalNacional) * 100;
             const color = partidoColor(p.nombre);
+            if (isMobile) {
+              return (
+                <div key={p.nombre} style={{ padding: "10px 0", borderBottom: "1px solid #F2F4F7" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                    <span style={{ width: 11, height: 11, borderRadius: 2, background: color, flexShrink: 0 }} />
+                    <span style={{ flex: 1, minWidth: 0, fontSize: 14, fontWeight: 600, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.nombre}</span>
+                    <span style={{ fontVariantNumeric: "tabular-nums", fontWeight: 700, color, fontSize: 14, flexShrink: 0 }}>{pct(share, 1)}</span>
+                  </div>
+                  <div style={{ position: "relative", height: 10, background: "#F7F8FA", borderRadius: 3 }}>
+                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${share}%`, background: color, borderRadius: 3 }} />
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--ink-3)", marginTop: 3, fontVariantNumeric: "tabular-nums" }}>{fmt(p.votos)} votos</div>
+                </div>
+              );
+            }
             return (
               <div key={p.nombre} style={{ display: "grid", gridTemplateColumns: "minmax(180px, 1.6fr) 1fr 90px 60px", gap: 14, alignItems: "center", padding: "8px 0", borderBottom: "1px solid #F2F4F7" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>
@@ -169,12 +186,12 @@ export default function CongresoDashboard() {
       </section>
 
       {/* Sección 2: Mapa */}
-      <section style={{ marginBottom: 64 }}>
-        <h3 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 28, fontWeight: 600, color: "var(--ink)", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+      <section style={{ marginBottom: isMobile ? 44 : 64 }}>
+        <h3 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "var(--ink)", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
           Partido ganador por departamento
         </h3>
         <p style={{ fontSize: 14, color: "var(--ink-3)", margin: "0 0 18px" }}>Color del partido más votado en cada depto. Intensidad = % obtenido. Click en un depto para ver detalle municipal.</p>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 320px", gap: 24, alignItems: "start" }}>
+        <div className="cmap-grid">
           <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 12 }}>
             {!geo || !proj ? (
               <div style={{ height: 520, display: "grid", placeItems: "center", color: "var(--ink-3)" }}>Cargando mapa…</div>
@@ -202,10 +219,10 @@ export default function CongresoDashboard() {
               </svg>
             )}
           </div>
-          <aside style={{ display: "flex", flexDirection: "column", gap: 12, position: "sticky", top: 16 }}>
+          <aside className="cmap-aside">
             <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 18 }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-                {hoverDepto ? hoverDepto.departamento : "Pasa el cursor por un depto"}
+                {hoverDepto ? hoverDepto.departamento : "Toca un depto para ver el detalle"}
               </div>
               {hoverDepto ? (
                 <DeptoBreakdown depto={hoverDepto} agruparPartidos={agruparPartidos} />
@@ -220,13 +237,14 @@ export default function CongresoDashboard() {
       </section>
 
       {/* Sección 3: Top candidatos */}
-      <section style={{ marginBottom: 64 }}>
-        <h3 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 28, fontWeight: 600, color: "var(--ink)", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+      <section style={{ marginBottom: isMobile ? 44 : 64 }}>
+        <h3 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "var(--ink)", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
           Top candidatos por voto preferente
         </h3>
         <p style={{ fontSize: 14, color: "var(--ink-3)", margin: "0 0 18px" }}>Los {Math.min(50, current.partidos.candidatos.length)} candidatos más votados nacional para {corp === "senado" ? "Senado" : "Cámara"}.</p>
-        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "40px minmax(180px, 1.4fr) 1fr 110px", padding: "12px 18px", borderBottom: "1px solid var(--line)", fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", background: "#FAFBFC" }}>
+        <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <div style={{ minWidth: isMobile ? 460 : "auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "40px minmax(160px, 1.4fr) 1fr 110px", padding: "12px 18px", borderBottom: "1px solid var(--line)", fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.06em", background: "#FAFBFC" }}>
             <div>#</div>
             <div>Candidato</div>
             <div>Partido</div>
@@ -236,7 +254,7 @@ export default function CongresoDashboard() {
             {current.partidos.candidatos.slice(0, 50).map((c, i) => {
               const partidoDisplay = agruparMov ? normalizaPartidoMovimiento(c.partido) : c.partido;
               return (
-                <div key={c.cedula} style={{ display: "grid", gridTemplateColumns: "40px minmax(180px, 1.4fr) 1fr 110px", padding: "10px 18px", borderBottom: "1px solid #F2F4F7", fontSize: 13, gap: 10, alignItems: "center" }}>
+                <div key={c.cedula} style={{ display: "grid", gridTemplateColumns: "40px minmax(160px, 1.4fr) 1fr 110px", padding: "10px 18px", borderBottom: "1px solid #F2F4F7", fontSize: 13, gap: 10, alignItems: "center" }}>
                   <div style={{ color: "var(--ink-3)", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>{i + 1}</div>
                   <div>
                     <div style={{ fontWeight: 600, color: "var(--ink)" }}>{c.nombre}</div>
@@ -250,6 +268,7 @@ export default function CongresoDashboard() {
                 </div>
               );
             })}
+          </div>
           </div>
         </div>
       </section>
