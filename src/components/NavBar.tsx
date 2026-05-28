@@ -11,7 +11,7 @@ const navItems = [
   { key: "/compara", label: "Comparar" },
   { key: "/historial", label: "Historial" },
   { key: "/congreso-2026", label: "Congreso 2026" },
-  { key: "/contactanos", label: "Contacto" },
+  { key: "/creadores", label: "Creadores" },
 ];
 
 export default function NavBar() {
