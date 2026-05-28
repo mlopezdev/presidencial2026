@@ -185,27 +185,51 @@ function IdeologyMatrixView() {
   const active = pinned || hovered;
   const activeCand = plotted.find((c) => c.name === active);
 
+  // Cuadrantes basados en el Diagrama de Nolan
+  // Eje X: Estado (−) ↔ Mercado (+)  |  Eje Y: Progresista (−, arriba) ↔ Conservador (+, abajo)
   const quadrantName = (c: { econ: number; social: number }) => {
     const isLeft = c.econ < 0, isProg = c.social < 0;
-    if (isLeft && isProg) return { label: "Progresista estatista", color: "#B3261E" };
-    if (!isLeft && isProg) return { label: "Progresista liberal", color: "#2F6B8A" };
-    if (isLeft && !isProg) return { label: "Conservador estatista", color: "#8B5A3C" };
-    return { label: "Conservador liberal", color: "#1E40AF" };
+    if (isLeft && isProg)  return { label: "Izquierda / Socialdemocracia",       color: "#B3261E", desc: "Estado fuerte + agenda social progresista" };
+    if (!isLeft && isProg) return { label: "Libertarismo / Liberalismo progresista", color: "#2F6B8A", desc: "Libre mercado + derechos civiles amplios" };
+    if (isLeft && !isProg) return { label: "Populismo nacional",                  color: "#7C5A2A", desc: "Control estatal + valores tradicionales" };
+    return                        { label: "Derecha / Neoliberalismo conservador", color: "#1E40AF", desc: "Libre mercado + valores tradicionales" };
   };
 
   return (
     <div>
-      <div style={{ marginBottom: 20 }}>
+      <div style={{ marginBottom: 28 }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 600, color: "var(--brand)", background: "rgba(47,107,138,0.1)", padding: "5px 11px", borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: 12 }}>
-          ⊞ Matriz ideológica
+          ⊞ Diagrama de Nolan · Matriz ideológica
         </div>
-        <h3 style={{ margin: "0 0 8px", fontSize: isMobile ? 24 : 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)", lineHeight: 1.1,
+        <h3 style={{ margin: "0 0 10px", fontSize: isMobile ? 24 : 32, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)", lineHeight: 1.1,
           fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
           ¿Hacia dónde apunta cada candidato?
         </h3>
-        <p style={{ margin: 0, fontSize: isMobile ? 15 : 17, color: "var(--ink-2)", lineHeight: 1.45 }}>
-          {isMobile ? "Toca un punto para ver los detalles del candidato." : "Pasa el cursor sobre cualquier punto para ver detalles. Toca para fijar la selección."}
+        <p style={{ margin: "0 0 16px", fontSize: isMobile ? 14 : 16, color: "var(--ink-2)", lineHeight: 1.55, maxWidth: 780 }}>
+          Adaptación del <strong style={{ color: "var(--ink)" }}>Diagrama de Nolan</strong>, un modelo que va más allá del eje izquierda–derecha. Cruza dos dimensiones:
+          el <strong style={{ color: "var(--ink)" }}>eje económico</strong> (de mayor intervención del Estado hacia el libre mercado) y el
+          <strong style={{ color: "var(--ink)" }}> eje sociocultural</strong> (de valores conservadores hacia posiciones progresistas).
+          {" "}{isMobile ? "Toca un punto para ver los detalles del candidato." : "Pasa el cursor sobre cualquier punto para ver detalles."}
         </p>
+
+        {/* Leyenda de cuadrantes */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10, marginBottom: 8 }}>
+          {[
+            { color: "#B3261E", label: "Izquierda / Socialdemocracia",        desc: "Estado fuerte + agenda social progresista" },
+            { color: "#2F6B8A", label: "Libertarismo / Liberalismo prog.",    desc: "Libre mercado + derechos civiles amplios" },
+            { color: "#1E40AF", label: "Derecha / Neoliberalismo conserv.",   desc: "Libre mercado + valores tradicionales" },
+            { color: "#7C5A2A", label: "Populismo nacional (vacío)",          desc: "Control estatal + valores tradicionales" },
+          ].map((q) => (
+            <div key={q.label} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 14px", borderRadius: 12, background: q.color + "0A", border: `1px solid ${q.color}25` }}>
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: q.color, flexShrink: 0, marginTop: 3 }} />
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: q.color, lineHeight: 1.2 }}>{q.label}</div>
+                <div style={{ fontSize: 11, color: "var(--ink-3)", marginTop: 2 }}>{q.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{ margin: 0, fontSize: 13, color: "var(--ink-3)" }}>Pasa el cursor sobre cualquier candidato para ver detalles. Toca para fijar la selección.</p>
       </div>
 
       <div ref={wrapRef} onMouseMove={(e) => {
@@ -283,14 +307,15 @@ function IdeologyMatrixView() {
                   <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{activeCand.party}</div>
                 </div>
               </div>
-              <div style={{ display: "inline-block", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: q.color, background: q.color + "18", padding: "4px 10px", borderRadius: 6, marginBottom: 10, textTransform: "uppercase" }}>{q.label}</div>
+              <div style={{ display: "inline-block", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: q.color, background: q.color + "18", padding: "4px 10px", borderRadius: 6, marginBottom: 6, textTransform: "uppercase" }}>{q.label}</div>
+              <div style={{ fontSize: 12, color: "var(--ink-3)", marginBottom: 10 }}>{q.desc}</div>
               <div style={{ display: "grid", gap: 6, fontSize: 13 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", color: "var(--ink-2)" }}>
-                  <span>Economía</span>
+                  <span>Económico</span>
                   <span style={{ fontWeight: 600, color: "var(--ink)" }}>{activeCand.econ >= 0 ? "Mercado" : "Estado"} · {activeCand.econ >= 0 ? "+" : ""}{activeCand.econ.toFixed(2)}</span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", color: "var(--ink-2)" }}>
-                  <span>Social</span>
+                  <span>Sociocultural</span>
                   <span style={{ fontWeight: 600, color: "var(--ink)" }}>{activeCand.social >= 0 ? "Conservador" : "Progresista"} · {activeCand.social >= 0 ? "+" : ""}{activeCand.social.toFixed(2)}</span>
                 </div>
               </div>

@@ -19,7 +19,6 @@ export const TOP_CANDIDATES: Candidate[] = [
   { name: "Claudia López",           gender: "F", vice: "Leonardo Huerta",         viceGender: "M", party: "Con Claudia Imparables",  spectrum: "centro",    color: "#D97706", lede: "Con Claudia, imparables." },
   { name: "Sergio Fajardo",          gender: "M", vice: "Edna Bonilla",            viceGender: "F", party: "Dignidad y Compromiso",   spectrum: "centro",    color: "#B45309", lede: "Diferentes sin ser enemigos." },
   { name: "Miguel Uribe Londoño",    gender: "M", vice: "Luisa Fernanda Villegas", viceGender: "F", party: "Partido Demócrata",       spectrum: "derecha",   color: "#1E40AF", lede: "Trabajando por una sola Colombia." },
-  { name: "Luis Gilberto Murillo",   gender: "M", vice: "Luz María Zapata",        viceGender: "F", party: "Luis Gilberto Soy Yo",    spectrum: "centro",    color: "#92400E", lede: "No soy el candidato de ningún político." },
 ];
 
 export const OTHER_CANDIDATES: Candidate[] = [
@@ -43,7 +42,6 @@ export const CANDIDATE_PHOTOS: Record<string, string> = {
   "Gustavo Matamoros": "/candidates/Matamoros.png",
   "Iván Cepeda": "/candidates/cepeda.png",
   "Miguel Uribe Londoño": "/candidates/Miguel Uribe.png",
-  "Luis Gilberto Murillo": "/candidates/Luis_GIlberto_Murillo.png",
   "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
   "Paloma Valencia": "/candidates/Paloma_Valencia.png",
   "Roy Barreras": "/candidates/Roy_Barreras.png",
@@ -251,24 +249,6 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
       { title: "Reforma a la justicia contra la impunidad", desc: "Agilizar procesos y lograr condenas efectivas para evitar la excarcelación exprés en casos de flagrancia." },
     ],
   },
-  "Luis Gilberto Murillo": {
-    Salud: [
-      { title: "Salud como derecho", desc: "Garantizar acceso universal, especialmente en comunidades vulnerables." },
-      { title: "Atención étnica", desc: "Salud intercultural para comunidades indígenas y afrocolombianas." },
-    ],
-    Economía: [
-      { title: "Economía verde", desc: "Biodiversidad como activo económico para el desarrollo sostenible." },
-      { title: "Empleo regional", desc: "Fortalecer las economías locales y reducir las brechas territoriales." },
-    ],
-    Educación: [
-      { title: "Educación pertinente", desc: "Curricula que responden a las necesidades de cada región." },
-      { title: "Conectividad rural", desc: "Internet y tecnología para niños en zonas remotas." },
-    ],
-    Seguridad: [
-      { title: "Seguridad humana", desc: "Seguridad entendida como bienestar integral, no solo represión." },
-      { title: "Diálogo regional", desc: "Soluciones de paz negociadas con actores locales." },
-    ],
-  },
 };
 
 export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> = {
@@ -278,7 +258,6 @@ export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> =
   "Claudia López":            { econ:  0.10, social: -0.55 },
   "Sergio Fajardo":           { econ:  0.05, social: -0.15 },
   "Miguel Uribe Londoño":     { econ:  0.65, social:  0.65 },
-  "Luis Gilberto Murillo":    { econ: -0.05, social: -0.25 },
   "Santiago Botero":          { econ:  0.25, social:  0.00 },
   "Mauricio Lizcano":         { econ:  0.32, social:  0.05 },
   "Roy Barreras":             { econ: -0.20, social: -0.30 },
