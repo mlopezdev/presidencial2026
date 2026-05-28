@@ -85,7 +85,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ul>
 
           <p style={{ margin: "24px auto 0", fontSize: 12, color: "var(--ink-3)" }}>
-            © {new Date().getFullYear()} · UPB Bucaramanga
+            © {new Date().getFullYear()} · UPB Bucaramanga ·{" "}
+            <a href="/api" style={{ color: "var(--brand)", textDecoration: "underline", textUnderlineOffset: 2 }}>
+              API pública
+            </a>
           </p>
         </footer>
       </body>
