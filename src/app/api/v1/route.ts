@@ -20,6 +20,8 @@ export function GET(req: Request) {
       candidatos_lista_filtrada:  absoluteUrl(req, "/api/v1/candidatos?espectro=izquierda&q=cepeda"),
       candidato_perfil:           absoluteUrl(req, "/api/v1/candidatos/{slug}"),
       temas_polemicos:            absoluteUrl(req, "/api/v1/temas"),
+      comparativa_detallada:      absoluteUrl(req, "/api/v1/comparativa"),
+      comparativa_filtrada:       absoluteUrl(req, "/api/v1/comparativa?categoria=Derechos&candidato=ivan-cepeda"),
       matriz_ideologica:          absoluteUrl(req, "/api/v1/matriz-ideologica"),
       historial_resumen:          absoluteUrl(req, "/api/v1/historial"),
       historial_año:              absoluteUrl(req, "/api/v1/historial/{2010|2014|2018|2022}"),

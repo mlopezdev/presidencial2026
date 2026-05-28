@@ -44,11 +44,21 @@ const SECTIONS: { titulo: string; intro?: string; endpoints: Endpoint[] }[] = [
     ],
   },
   {
-    titulo: "Temas y posiciones",
+    titulo: "Temas, comparativa y posiciones",
+    intro: "Tres vistas complementarias: los 15 temas polémicos rápidos, la comparativa detallada con citas explicativas, y la matriz ideológica Nolan.",
     endpoints: [
       {
         method: "GET", path: "/api/v1/temas",
         desc: "Los 15 temas polémicos con la posición declarada (sí/no/sin pronunciarse) de cada candidato.",
+      },
+      {
+        method: "GET", path: "/api/v1/comparativa",
+        desc: "Preguntas detalladas con conteo de sí/no y una cita explicativa por candidato. La fuente de la vista 'Análisis detallado' del sitio.",
+        params: [
+          { nombre: "categoria", tipo: "string", descripcion: "Filtra por categoría (Institucional, Derechos, Seguridad, etc.)." },
+          { nombre: "candidato", tipo: "slug | string", descripcion: "Filtra las respuestas para ver sólo las de un candidato." },
+        ],
+        ejemplo: "/api/v1/comparativa?categoria=Derechos",
       },
       {
         method: "GET", path: "/api/v1/matriz-ideologica",

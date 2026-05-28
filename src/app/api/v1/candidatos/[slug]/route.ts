@@ -3,6 +3,7 @@ import {
   IDEOLOGY_MATRIX, TIMELINES, getCandidatePhoto,
 } from "@/lib/data";
 import { TEMAS, getPosicion } from "@/lib/posiciones-data";
+import { COMPARE_QUESTIONS } from "@/lib/compare-questions";
 import { absoluteUrl, error, json, options, toSlug } from "@/lib/api-helpers";
 
 export const dynamic = "force-static";
@@ -35,6 +36,24 @@ export async function GET(req: Request, ctx: Ctx) {
   const trayectoria = TIMELINES[cand.name] ?? null;
   const ideologia = IDEOLOGY_MATRIX[cand.name] ?? null;
 
+  // Comparativa detallada: sólo las preguntas donde este candidato tiene postura registrada
+  const comparativa = COMPARE_QUESTIONS
+    .map((q) => {
+      const posicion: "si" | "no" | null = q.yes.includes(cand.name)
+        ? "si"
+        : q.no.includes(cand.name)
+          ? "no"
+          : null;
+      if (!posicion) return null;
+      return {
+        pregunta: q.q,
+        categoria: q.cat,
+        posicion,
+        cita: q.quotes[cand.name] ?? null,
+      };
+    })
+    .filter(Boolean);
+
   return json({
     slug,
     nombre: cand.name,
@@ -50,6 +69,7 @@ export async function GET(req: Request, ctx: Ctx) {
     trayectoria,
     propuestas_por_eje: propuestas,
     posiciones_15_temas: posiciones,
+    comparativa_detallada: comparativa,
     dofa: dofa ?? null,
   });
 }
