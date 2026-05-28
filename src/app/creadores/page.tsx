@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const CREADORES = [
   { nombre: "Ilych Jhosue Esteban Blanco Mendoza" },
   { nombre: "Miguel Andrés Granados Blanco" },
@@ -15,7 +19,20 @@ function initials(nombre: string) {
     .toUpperCase();
 }
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function CreadoresPage() {
+  // Empezamos con el orden estable (para evitar hydration mismatch) y
+  // mezclamos una vez en el cliente, así nadie aparece "primero" o "último".
+  const [orden, setOrden] = useState(CREADORES);
+  useEffect(() => { setOrden(shuffle(CREADORES)); }, []);
   return (
     <main
       style={{
@@ -75,7 +92,7 @@ export default function CreadoresPage() {
           marginBottom: "clamp(32px, 5vw, 56px)",
         }}
       >
-        {CREADORES.map((c, i) => (
+        {orden.map((c) => (
           <article
             key={c.nombre}
             style={{
@@ -128,26 +145,24 @@ export default function CreadoresPage() {
             <div style={{ minWidth: 0 }}>
               <div
                 style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "var(--ink-3)",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  marginBottom: 4,
-                }}
-              >
-                Creador · 0{i + 1}
-              </div>
-              <div
-                style={{
                   fontSize: "clamp(15px, 3.5vw, 17px)",
                   fontWeight: 600,
                   color: "var(--ink)",
                   lineHeight: 1.25,
                   letterSpacing: "-0.01em",
+                  marginBottom: 3,
                 }}
               >
                 {c.nombre}
+              </div>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "var(--ink-3)",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Estudiante · UPB Bucaramanga
               </div>
             </div>
           </article>
