@@ -400,8 +400,18 @@ function CandidateGridCard({ candidate: c, index, onPick }: { candidate: Candida
         background: `radial-gradient(100% 70% at 50% 0%, color-mix(in srgb, ${c.color} 30%, #fff) 0%, color-mix(in srgb, ${c.color} 60%, #1a1a1a) 100%)`,
         overflow: "hidden",
       }}>
+        {/* retirado overlay */}
+        {c.withdrawn && (
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>
+            <span style={{ fontSize: 11, fontWeight: 800, padding: "5px 12px", borderRadius: 999,
+              background: "rgba(255,255,255,0.15)", border: "1.5px solid rgba(255,255,255,0.5)",
+              backdropFilter: "blur(8px)", color: "#fff", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              {c.gender === "F" ? "Retirada" : "Retirado"}
+            </span>
+          </div>
+        )}
         {/* puntero badge */}
-        {isPuntero && (
+        {isPuntero && !c.withdrawn && (
           <span style={{ position: "absolute", top: 10, left: 10, fontSize: 10, fontWeight: 700,
             padding: "3px 8px", borderRadius: 999, background: "rgba(255,255,255,0.25)",
             backdropFilter: "blur(8px)", color: "#fff", letterSpacing: "0.04em", textTransform: "uppercase" }}>
@@ -486,8 +496,14 @@ function CandidateListRow({ candidate: c, index, onPick }: { candidate: Candidat
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.015em" }}>{c.name}</span>
-          {isPuntero && (
+          <span style={{ fontSize: 16, fontWeight: 600, color: c.withdrawn ? "var(--ink-3)" : "var(--ink)", letterSpacing: "-0.015em" }}>{c.name}</span>
+          {c.withdrawn && (
+            <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
+              background: "rgba(0,0,0,0.07)", color: "var(--ink-3)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+              {c.gender === "F" ? "Retirada" : "Retirado"}
+            </span>
+          )}
+          {isPuntero && !c.withdrawn && (
             <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
               background: "rgba(47,107,138,0.1)", color: "var(--brand)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
               Puntero
@@ -630,7 +646,21 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
         </div>
       </div>
 
-      <article style={{ background: "#fff", borderRadius: 24, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)", position: "relative" }}>
+      {candidate.withdrawn && (
+        <div style={{ marginBottom: 16, padding: "14px 20px", borderRadius: 14, background: "rgba(0,0,0,0.04)",
+          border: "1px solid rgba(0,0,0,0.1)", display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ fontSize: 20 }}>🚫</span>
+          <div>
+            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--ink)" }}>
+              {candidate.gender === "F" ? "Candidata retirada" : "Candidato retirado"}
+            </span>
+            <span style={{ fontSize: 14, color: "var(--ink-3)", marginLeft: 8 }}>
+              {candidate.name} ya no participa en la carrera presidencial 2026.
+            </span>
+          </div>
+        </div>
+      )}
+      <article style={{ background: "#fff", borderRadius: 24, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)", position: "relative", opacity: candidate.withdrawn ? 0.85 : 1 }}>
         {/* Cover band — overflow:hidden solo aquí para no bloquear el avatar que se superpone */}
         <div style={{ height: 160, background: `linear-gradient(135deg, ${candidate.color} 0%, ${candidate.color}88 100%)`, position: "relative", zIndex: 0, borderRadius: "24px 24px 0 0", overflow: "hidden" }}>
           {/* Party badge */}

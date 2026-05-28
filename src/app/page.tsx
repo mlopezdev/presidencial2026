@@ -50,7 +50,7 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
           fontSize: 9, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em",
           boxShadow: hovered ? `0 0 0 2px #fff, 0 0 0 3.5px ${color}` : "none",
           transition: "box-shadow 180ms ease",
-          position: "relative",
+          position: "relative", filter: candidate.withdrawn ? "grayscale(80%)" : "none",
         }}>
           {getCandidatePhoto(candidate.name) ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -59,13 +59,16 @@ function BallotCell({ candidate, index }: { candidate: Candidate; index: number 
           ) : inits}
         </div>
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, color: "var(--ink)", lineHeight: 1.2, letterSpacing: "-0.01em",
-            overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+          <div style={{ fontSize: 10, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.01em",
+            overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
+            color: candidate.withdrawn ? "rgba(0,0,0,0.35)" : "var(--ink)",
+            textDecoration: candidate.withdrawn ? "line-through" : "none",
+          }}>
             {candidate.name}
           </div>
           <div style={{ fontSize: 9, color: "rgba(0,0,0,0.38)", marginTop: 1, lineHeight: 1.2,
             overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>
-            {candidate.party}
+            {candidate.withdrawn ? (candidate.gender === "F" ? "Retirada" : "Retirado") : candidate.party}
           </div>
         </div>
       </div>
@@ -391,6 +394,7 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
               objectFit: "cover", objectPosition: "center top",
               transform: hover ? "scale(1.04)" : "scale(1)",
               transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+              filter: candidate.withdrawn ? "grayscale(80%)" : "none",
             }}
           />
         ) : (
@@ -404,6 +408,21 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
             transition: "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
           }}>
             {inits}
+          </div>
+        )}
+        {/* Badge retirado */}
+        {candidate.withdrawn && (
+          <div style={{
+            position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(0,0,0,0.38)", zIndex: 2,
+          }}>
+            <span style={{
+              fontSize: 12, fontWeight: 800, padding: "6px 14px", borderRadius: 999,
+              background: "rgba(255,255,255,0.15)", border: "1.5px solid rgba(255,255,255,0.55)",
+              backdropFilter: "blur(8px)", color: "#fff", letterSpacing: "0.08em", textTransform: "uppercase",
+            }}>
+              {candidate.gender === "F" ? "Retirada" : "Retirado"}
+            </span>
           </div>
         )}
         <div aria-hidden="true" style={{
@@ -428,7 +447,7 @@ function CandidateCard({ candidate, revealIndex = 0, onOpen }: { candidate: Cand
 
       {/* Banner inferior estilo FIFA */}
       <div style={{
-        background: candidate.color, color: "#fff",
+        background: candidate.withdrawn ? "#6B7280" : candidate.color, color: "#fff",
         padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>

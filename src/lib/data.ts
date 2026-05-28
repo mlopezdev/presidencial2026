@@ -9,6 +9,7 @@ export interface Candidate {
   spectrum: Spectrum;
   color: string;
   lede: string;
+  withdrawn?: boolean;
 }
 
 // Paleta por espectro: izquierda=rojos, centro=ámbar/dorado, derecha=azules
@@ -19,36 +20,36 @@ export const TOP_CANDIDATES: Candidate[] = [
   { name: "Claudia López",           gender: "F", vice: "Leonardo Huerta",         viceGender: "M", party: "Con Claudia Imparables",  spectrum: "centro",    color: "#D97706", lede: "Con Claudia, imparables." },
   { name: "Sergio Fajardo",          gender: "M", vice: "Edna Bonilla",            viceGender: "F", party: "Dignidad y Compromiso",   spectrum: "centro",    color: "#B45309", lede: "Diferentes sin ser enemigos." },
   { name: "Miguel Uribe Londoño",    gender: "M", vice: "Luisa Fernanda Villegas", viceGender: "F", party: "Partido Demócrata",       spectrum: "derecha",   color: "#1E40AF", lede: "Trabajando por una sola Colombia." },
-  { name: "Luis Gilberto Murillo",   gender: "M", vice: "Luz María Zapata",        viceGender: "F", party: "Luis Gilberto Soy Yo",    spectrum: "centro",    color: "#92400E", lede: "No soy el candidato de ningún político." },
+  { name: "Luis Gilberto Murillo",   gender: "M", vice: "Luz María Zapata",        viceGender: "F", party: "Luis Gilberto Soy Yo",    spectrum: "centro",    color: "#92400E", lede: "No soy el candidato de ningún político.", withdrawn: true },
 ];
 
 export const OTHER_CANDIDATES: Candidate[] = [
   { name: "Santiago Botero",  gender: "M", vice: "Carlos Fernando Cuevas",  viceGender: "M", party: "Romper el Sistema",           spectrum: "centro",    color: "#CA8A04", lede: "Es hora de romper el sistema." },
   { name: "Mauricio Lizcano", gender: "M", vice: "Pedro de la Torre",        viceGender: "M", party: "Firme con Lizcano",           spectrum: "centro",    color: "#A16207", lede: "Firme con Lizcano: resultados que se ven." },
   { name: "Roy Barreras",     gender: "M", vice: "Martha Lucía Zamora",      viceGender: "F", party: "La Fuerza de la Paz",         spectrum: "centro",    color: "#F59E0B", lede: "La fuerza de la paz y el consenso." },
-  { name: "Carlos Caicedo",   gender: "M", vice: "Nelson Alarcón",           viceGender: "M", party: "Fuerza Ciudadana",            spectrum: "izquierda", color: "#E74C3C", lede: "El cambio es con la gente." },
+  { name: "Carlos Caicedo",   gender: "M", vice: "Nelson Alarcón",           viceGender: "M", party: "Fuerza Ciudadana",            spectrum: "izquierda", color: "#E74C3C", lede: "El cambio es con la gente.", withdrawn: true },
   { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam",           viceGender: "M", party: "La Abogada de Hierro",        spectrum: "derecha",   color: "#3B82F6", lede: "Justicia para todos." },
   { name: "Gustavo Matamoros",gender: "M", vice: "Mila María Paz",           viceGender: "F", party: "Partido Ecologista",          spectrum: "izquierda", color: "#A93226", lede: "Por nuestra tierra y nuestro futuro." },
-  { name: "Clara López",      gender: "F", vice: "María Consuelo del Río",   viceGender: "F", party: "Esperanza Democrática",       spectrum: "izquierda", color: "#922B21", lede: "Esperanza democrática para el pueblo." },
+  { name: "Clara López",      gender: "F", vice: "María Consuelo del Río",   viceGender: "F", party: "Esperanza Democrática",       spectrum: "izquierda", color: "#922B21", lede: "Esperanza democrática para el pueblo.", withdrawn: true },
 ];
 
 export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDATES];
 
 // Mapa de fotos disponibles en /public/candidates
 export const CANDIDATE_PHOTOS: Record<string, string> = {
-  "Abelardo de la Espriella": "/candidates/Abelardo.png",
+  "Abelardo de la Espriella": "/candidates/Abelardo de la espriella.png",
   "Carlos Caicedo": "/candidates/Caicedo.png",
   "Clara López": "/candidates/Clara Lopez.png",
-  "Claudia López": "/candidates/Clauida Lopez.png",
+  "Claudia López": "/candidates/Claudia Lopez.png",
   "Gustavo Matamoros": "/candidates/Matamoros.png",
-  "Iván Cepeda": "/candidates/cepeda.png",
+  "Iván Cepeda": "/candidates/Ivan cepeda.png",
   "Miguel Uribe Londoño": "/candidates/Miguel Uribe.png",
   "Luis Gilberto Murillo": "/candidates/Luis_GIlberto_Murillo.png",
-  "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
-  "Paloma Valencia": "/candidates/Paloma_Valencia.png",
-  "Roy Barreras": "/candidates/Roy_Barreras.png",
-  "Santiago Botero": "/candidates/Santiago_Botero.png",
-  "Sondra Macollins": "/candidates/Sondra.png",
+  "Mauricio Lizcano": "/candidates/Mauricio Lizcano.png",
+  "Paloma Valencia": "/candidates/Paloma Valencia.png",
+  "Roy Barreras": "/candidates/Roy barreras.png",
+  "Santiago Botero": "/candidates/Santiago Botero.png",
+  "Sondra Macollins": "/candidates/Sondra Macollins.png",
   "Sergio Fajardo": "/candidates/Fajaro-removebg-preview.png",
 };
 
