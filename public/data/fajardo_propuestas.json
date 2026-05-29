@@ -1,0 +1,108 @@
+{
+  "candidato": "Sergio Fajardo",
+  "movimiento": "Dignidad & Compromiso",
+  "filosofia": "Cambio Serio y Seguro",
+  "elecciones": "Colombia 2026",
+  "areas_programaticas": {
+    "seguridad": {
+      "titulo": "Restauración del Monopolio Legítimo de la Fuerza y Presencia Territorial",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Liderazgo Civil Directo y Reconstrucción de la Fuerza Pública",
+          "descripcion": "El Presidente asumirá personalmente su rol constitucional como Comandante Supremo de las Fuerzas Armadas desde el primer día, revirtiendo la desmoralización institucional mediante garantías jurídicas claras para militares y policías, y recuperando el control territorial con presencia multidimensional sostenida del Estado."
+        },
+        {
+          "id": 2,
+          "vector": "Paz con Condiciones Inflexibles y Rechazo a la 'Paz Total'",
+          "descripcion": "Los diálogos de paz no se descartan, pero estarán sujetos a condiciones estrictas, verificables e inamovibles: desactivación de economías ilícitas, reducción efectiva de la violencia y desmantelamiento real de redes criminales. Sin espacios de apaciguamiento sin contraprestaciones auditables en desarme y desmovilización."
+        },
+        {
+          "id": 3,
+          "vector": "Prevención Estructural mediante 'Entornos Protectores'",
+          "descripcion": "Programa interinstitucional dirigido a 250.000 jóvenes vulnerables en 170 municipios críticos y 10 principales ciudades, interrumpiendo ciclos intergeneracionales de violencia mediante habilidades para la vida, educación pertinente, deporte y arte como alternativas al reclutamiento criminal."
+        }
+      ]
+    },
+    "salud": {
+      "titulo": "Reforma Estructural del Sistema de Salud con Enfoque en Acceso Universal",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Defensa del Sistema de Aseguramiento y Rechazo a la Estatización",
+          "descripcion": "Se rechaza la eliminación abrupta de las EPS sin un modelo de reemplazo probado. La reforma se orienta a corregir las fallas del sistema existente —desvío de recursos, negación de servicios, corrupción administrativa— manteniendo la arquitectura de aseguramiento y fortaleciendo la capacidad reguladora y sancionatoria del Estado."
+        },
+        {
+          "id": 2,
+          "vector": "Fortalecimiento de la Red Pública Hospitalaria y Atención Primaria",
+          "descripcion": "Inversión prioritaria en hospitales públicos de primer y segundo nivel en regiones periféricas históricamente desatendidas, garantizando acceso oportuno a servicios básicos de salud, reduciendo la mortalidad evitable y atacando las brechas geográficas de atención que afectan a las poblaciones rurales y más vulnerables del país."
+        },
+        {
+          "id": 3,
+          "vector": "Independencia Biotecnológica y Telemedicina con IA",
+          "descripcion": "Creación de un Centro de Salud Integral enfocado en investigación de enfermedades tropicales, desarrollo de capacidades biotecnológicas nacionales y despliegue de sistemas predictivos de inteligencia artificial para salud preventiva, reduciendo la dependencia tecnológica y farmacéutica del exterior."
+        }
+      ]
+    },
+    "educacion": {
+      "titulo": "Educación como Motor de Transformación Social y Desarrollo del Capital Humano",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Calidad Educativa con Evidencia: Formación Docente y Evaluación Continua",
+          "descripcion": "Consolidación de un sistema de evaluación permanente de aprendizajes y formación rigurosa de maestros como núcleo de la política educativa, basándose en la experiencia de 'Antioquia la más Educada'. El maestro es el agente central de transformación social y su dignificación profesional es una prioridad presupuestal indelegable."
+        },
+        {
+          "id": 2,
+          "vector": "Acceso Universal a Educación Superior y Reducción de Brechas",
+          "descripcion": "Ampliación de la cobertura de la educación superior pública mediante financiamiento estatal robusto a universidades regionales, programas de becas focalizados en poblaciones rurales y étnicas, y articulación del SENA con las demandas del mercado laboral del siglo XXI y la economía del conocimiento."
+        },
+        {
+          "id": 3,
+          "vector": "Bilingüismo Universal y Pensamiento Computacional desde Temprana Edad",
+          "descripcion": "Masificación obligatoria del aprendizaje del inglés como lengua franca tecnológica y de la programación informática desde el ciclo escolar básico, dotando a cada estudiante de un 'equipaje digital básico' que incluya pensamiento crítico, resiliencia y competencias digitales como política de Estado prioritaria."
+        }
+      ]
+    },
+    "infraestructura": {
+      "titulo": "Conectividad Estratégica, Competitividad Logística y Desarrollo Rural",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Corredores Logísticos Multimodales para la Integración Nacional y Exportadora",
+          "descripcion": "Desarrollo de grandes corredores de conectividad que integren los modos férreo, fluvial y vial para reducir los altísimos costos logísticos que restan competitividad a las exportaciones colombianas, articulando las principales zonas productivas del interior del país con los puertos del Pacífico y el Atlántico."
+        },
+        {
+          "id": 2,
+          "vector": "Revolución de las Vías Terciarias: 20.000 Kilómetros para la Ruralidad",
+          "descripcion": "Pavimentación y mejora estructural de 20.000 km de vías terciarias como estrategia simultánea de desarrollo rural, seguridad nacional y reducción de pobreza campesina. La integración vial de regiones olvidadas facilita la presencia institucional del Estado y asfixia económicamente a los grupos armados que operan en el aislamiento geográfico."
+        },
+        {
+          "id": 3,
+          "vector": "Plan de Choque Jurídico-Fiscal y Transparencia Digital Participativa",
+          "descripcion": "Implementación urgente de medidas para eliminar la inseguridad jurídica, agilizar licencias ambientales y erradicar los carteles de la contratación pública, complementado con el 'Mapa Interactivo: Adelante Colombia', herramienta digital cívica que permite a comunidades proponer obras georreferenciadas de abajo hacia arriba."
+        }
+      ]
+    },
+    "tecnologia_e_ia": {
+      "titulo": "Preparando el 'Equipaje Digital' para el Siglo XXI",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Adaptación Laboral a la IA: Transición de Habilidades para el Trabajo del Futuro",
+          "descripcion": "Reconocimiento pragmático de que la IA transformará el mercado laboral, destruyendo empleos rutinarios y creando nuevas profesiones. El Estado asume la responsabilidad de adaptar el sistema educativo y la fuerza laboral mediante alfabetización digital estructural, bilingüismo, programación y pensamiento computacional como derechos ciudadanos universales."
+        },
+        {
+          "id": 2,
+          "vector": "Inversión del 1% del PIB en CTI y Cinco Centros Nacionales de Investigación Aplicada",
+          "descripcion": "Gran pacto intersectorial Estado-Academia-Empresa para elevar la inversión en Ciencia, Tecnología e Innovación al 1% del PIB antes de 2030, financiando cinco centros nacionales especializados en: Agroindustria, Manufactura Avanzada, Energía y Cambio Climático, Salud Integral y Bioeconomía, acelerando la transición de economía primaria a economía del conocimiento."
+        },
+        {
+          "id": 3,
+          "vector": "Ciberseguridad Democrática y Gobernanza Frente a la Desinformación con IA",
+          "descripcion": "Inversión en infraestructuras soberanas de ciberseguridad estatal y marcos regulatorios modernos para proteger la integridad del debate público, la privacidad de datos ciudadanos y la limpieza electoral frente a campañas de desinformación potenciadas por IA generativa, fundamentado en la experiencia directa de ataques digitales coordinados sufridos durante la campaña."
+        }
+      ]
+    }
+  }
+}

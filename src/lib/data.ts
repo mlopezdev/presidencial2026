@@ -1,3 +1,5 @@
+import murilloRaw from "../../public/data/murillo_propuestas.json";
+
 export type Spectrum = "izquierda" | "centro" | "derecha";
 
 export interface Candidate {
@@ -79,6 +81,18 @@ export type AxisKey = (typeof AXES)[number]["key"];
 interface Proposal { title: string; desc: string; }
 type CompareEntry = Record<AxisKey, Proposal[]>;
 
+const mapItems = (items: any[] | undefined) => (items || []).map((i) => ({ title: i.vector as string, desc: i.descripcion as string }));
+
+const murilloProposals: CompareEntry = {
+  Salud: mapItems(murilloRaw.areas_programaticas?.salud?.items),
+  Economía: [
+    ...mapItems(murilloRaw.areas_programaticas?.infraestructura?.items),
+    ...mapItems(murilloRaw.areas_programaticas?.tecnologia_e_ia?.items),
+  ],
+  Educación: mapItems(murilloRaw.areas_programaticas?.educacion?.items),
+  Seguridad: mapItems(murilloRaw.areas_programaticas?.seguridad?.items),
+};
+
 export const COMPARE_DATA: Record<string, CompareEntry> = {
   "Iván Cepeda": {
     Salud: [
@@ -144,23 +158,28 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
   },
   "Claudia López": {
     Salud: [
-      { title: "Rescate financiero urgente", desc: "Primer día: restablecer liquidez a clínicas y hospitales." },
-      { title: "Sistema mixto", desc: "Modelo público-privado-comunitario con precios estandarizados." },
-      { title: "Historia clínica única", desc: "Tecnología para mejorar atención y eficiencia del sistema." },
+      { title: "Sistema mixto integral", desc: "Mantener el aseguramiento público-privado, prohibiendo la integración vertical de EPS y clínicas para evitar conflictos de interés." },
+      { title: "Precios unificados y auditoría tecnológica", desc: "Tablas de precios por procedimiento y región con pago directo y control automatizado contra facturación fraudulenta." },
+      { title: "Droguerías de barrio y receta electrónica", desc: "Integrar farmacias comunitarias a la dispensación estatal con plataforma unificada de recetas para facilitar acceso a pacientes crónicos." },
+      { title: "Sistema Nacional de Cuidado", desc: "Escalar a nivel nacional las Manzanas del Cuidado para liberar tiempo de cuidado no remunerado y ampliar acceso de mujeres a educación y empleo." },
     ],
     Economía: [
-      { title: "Desarrollo regional", desc: "Inversión pública focalizada para duplicar productividad territorial." },
-      { title: "Reducción del IVA", desc: "Bajar del 19% al 15% como reactivación para clase media." },
-      { title: "Apoyo a microempresarios", desc: "Subsidio al pago del salario mínimo en microempresas." },
+      { title: "Red multimodal territorializada", desc: "Impulsar conectividad ferroviaria y fluvial con nodos logísticos por región para reducir costos y aumentar competitividad." },
+      { title: "600.000 subsidios VIS", desc: "Programa de vivienda con enfoque de ciudad de 15 minutos, priorizando hogares liderados por mujeres." },
+      { title: "Agua y saneamiento como prioridad", desc: "Inversión en acueductos, potabilización y alcantarillado en territorios marginados usando regalías con mayor control." },
+      { title: "Portal único empresarial", desc: "Simplificar trámites para empresas con interoperabilidad estatal y pagos digitales en tiempo real." },
     ],
     Educación: [
-      { title: "Un millón de becas", desc: "Plan de becas para educación superior con inserción laboral." },
-      { title: "Educación como seguridad", desc: "Becas, manzanas del cuidado y educación básica." },
+      { title: "Todos a la U", desc: "Un millón de becas posmedia articuladas con la demanda real del mercado laboral regional." },
+      { title: "Agencia Nacional de Educación Posmedia", desc: "Unificar universidades, formación técnica y fondos de emprendimiento para reducir barreras de acceso." },
+      { title: "Reforma curricular del SENA", desc: "Alinear formación técnica con planes de infraestructura, agroindustria e innovación de cada región." },
+      { title: "Educación inicial universal", desc: "Universalizar tres grados de preescolar e incorporar pensamiento crítico, bilingüismo, programación y salud mental." },
     ],
     Seguridad: [
-      { title: "Justicia implacable", desc: "40.000 nuevos miembros de Fuerza Pública; modernización." },
-      { title: "Finanzas del narcotráfico", desc: "Atacar el dinero, no solo la producción." },
-      { title: "Fiscalía Antimafia", desc: "Unidad especializada independiente contra crimen organizado." },
+      { title: "Reforma estructural a la justicia", desc: "Modelo de tres niveles: justicia antimafia, justicia ordinaria robusta y justicia restaurativa comunitaria." },
+      { title: "Gendarmería carcelaria", desc: "Reemplazar el INPEC por una fuerza especializada con enfoque anticorrupción y modernización tecnológica penitenciaria." },
+      { title: "Fortalecimiento de Fuerza Pública", desc: "Incorporar 40.000 nuevos integrantes con profesionalización y enfoque en derechos humanos." },
+      { title: "Política antidrogas e inteligencia", desc: "Priorizar persecución de lavado de activos y narcotráfico transnacional con cooperación internacional." },
     ],
   },
   "Roy Barreras": {
@@ -202,24 +221,7 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
       { title: "No al modelo Bukele", desc: "Rechaza políticas de mano dura importadas." },
     ],
   },
-  "Luis Gilberto Murillo": {
-    Salud: [
-      { title: "Salud como derecho", desc: "Garantizar acceso universal, especialmente en comunidades vulnerables." },
-      { title: "Atención étnica", desc: "Salud intercultural para comunidades indígenas y afrocolombianas." },
-    ],
-    Economía: [
-      { title: "Economía verde", desc: "Biodiversidad como activo económico para el desarrollo sostenible." },
-      { title: "Empleo regional", desc: "Fortalecer las economías locales y reducir las brechas territoriales." },
-    ],
-    Educación: [
-      { title: "Educación pertinente", desc: "Curricula que responden a las necesidades de cada región." },
-      { title: "Conectividad rural", desc: "Internet y tecnología para niños en zonas remotas." },
-    ],
-    Seguridad: [
-      { title: "Seguridad humana", desc: "Seguridad entendida como bienestar integral, no solo represión." },
-      { title: "Diálogo regional", desc: "Soluciones de paz negociadas con actores locales." },
-    ],
-  },
+  "Luis Gilberto Murillo": murilloProposals,
 };
 
 export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> = {
@@ -245,35 +247,51 @@ export const TIMELINES: Record<string, { y: string; t: string; d: string }[]> = 
     { y: "2010", t: "Elegido Representante a la Cámara", d: "Por Bogotá, bancada del Polo Democrático." },
     { y: "2014", t: "Senador de la República", d: "Inicia su trabajo por memoria histórica y paz." },
     { y: "2016", t: "Acuerdo de Paz de La Habana", d: "Participa activamente en el proceso." },
-    { y: "2025", t: "Candidato presidencial", d: "Anuncia su precandidatura por el Pacto Histórico." },
+    { y: "2026", t: "Candidato presidencial", d: "Anuncia su precandidatura por el Pacto Histórico." },
   ],
   "Abelardo de la Espriella": [
     { y: "1990", t: "Abogado penalista", d: "Inicia ejercicio profesional en Córdoba." },
     { y: "2005", t: "Firma de abogados de alto perfil", d: "Reconocimiento mediático nacional." },
     { y: "2020", t: "Figura pública polarizante", d: "Comentarista político frecuente." },
     { y: "2024", t: "Movimiento Defensores de la Patria", d: "Lanza su plataforma política." },
-    { y: "2025", t: "Candidato presidencial", d: "Oficializa campaña." },
+    { y: "2026", t: "Candidato presidencial", d: "Oficializa campaña." },
   ],
   "Paloma Valencia": [
     { y: "2002", t: "Abogada constitucionalista", d: "Ejercicio profesional y academia." },
     { y: "2014", t: "Senadora por Centro Democrático", d: "Primera curul en el Congreso." },
     { y: "2018", t: "Reelegida al Senado", d: "Liderazgo en comisiones clave." },
     { y: "2024", t: "Precandidata presidencial", d: "Anuncia aspiración." },
-    { y: "2025", t: "Candidata oficial", d: "Campaña por el Centro Democrático." },
+    { y: "2026", t: "Candidata oficial", d: "Campaña por el Centro Democrático." },
   ],
   "Claudia López": [
     { y: "2006", t: "Columnista y analista política", d: "Reconocida por trabajo anticorrupción." },
     { y: "2014", t: "Senadora por la Alianza Verde", d: "Primera curul en el Senado." },
     { y: "2019", t: "Alcaldesa de Bogotá", d: "Primera mujer electa alcaldesa de la capital." },
     { y: "2023", t: "Finaliza alcaldía", d: "Entrega mandato y anuncia proyecto nacional." },
-    { y: "2025", t: "Candidata presidencial", d: "Con Claudia Imparables." },
+    { y: "2026", t: "Candidata presidencial", d: "Con Claudia Imparables." },
+  ],
+  "Sergio Fajardo": [
+    { y: "2004", t: "Alcalde de Medellín", d: "Gobierno municipal centrado en educación, cultura y modernización urbana." },
+    { y: "2012", t: "Gobernador de Antioquia", d: "Impulsa políticas regionales en infraestructura, educación y competitividad." },
+    { y: "2018", t: "Candidato presidencial", d: "Se postula por la Coalición Colombia con énfasis en educación y gobernabilidad." },
+    { y: "2022", t: "Candidato presidencial", d: "Participa en procesos políticos nacionales y mantiene actividad pública." },
+    { y: "2026", t: "Candidato presidencial", d: "Anuncia su candidatura por Dignidad y Compromiso." },
   ],
   "Roy Barreras": [
     { y: "2002", t: "Representante a la Cámara", d: "Inicia carrera legislativa por el Valle." },
     { y: "2010", t: "Senador de la República", d: "Varios periodos consecutivos." },
     { y: "2016", t: "Negociador del Acuerdo de Paz", d: "Participa en el proceso de La Habana." },
     { y: "2022", t: "Presidente del Congreso", d: "Lidera el Senado en la coalición de gobierno." },
-    { y: "2025", t: "Candidato presidencial", d: "Lanza La Fuerza de la Paz." },
+    { y: "2026", t: "Candidato presidencial", d: "Lanza La Fuerza de la Paz." },
+  ],
+  "Luis Gilberto Murillo": [
+    { y: "1998-1999", t: "Gobernador del Chocó (primer periodo)", d: "Su primer periodo como gobernador del Chocó." },
+    { y: "2012", t: "Electo gobernador (2012-2015)", d: "Elegido para el periodo 2012-2015; su elección fue anulada y fue retirado del cargo por el Consejo de Estado en 2013." },
+    { y: "2016-2018", t: "Ministro de Ambiente y Desarrollo Sostenible", d: "Ministro de Ambiente y Desarrollo Sostenible durante el gobierno de Juan Manuel Santos (2016-2018)." },
+    { y: "2022", t: "Fórmula vicepresidencial", d: "Anunciado como la fórmula vicepresidencial de Sergio Fajardo el 17 de marzo de 2022." },
+    { y: "2022-2024", t: "Embajador en Estados Unidos", d: "Embajador de Colombia en Estados Unidos (2022-2024)." },
+    { y: "2024-2025", t: "Ministro de Relaciones Exteriores", d: "Ministro de Relaciones Exteriores (2024-2025)." },
+    { y: "2026", t: "Candidatura oficial", d: "Campaña en marcha." },
   ],
 };
 
@@ -282,7 +300,7 @@ export const DEFAULT_TIMELINE = [
   { y: "2014", t: "Ingreso a la vida política", d: "Primer cargo electo o de relevancia." },
   { y: "2020", t: "Consolidación", d: "Mayor visibilidad y proyección nacional." },
   { y: "2024", t: "Precandidatura", d: "Anuncio de aspiración presidencial." },
-  { y: "2025", t: "Candidatura oficial", d: "Campaña en marcha." },
+  { y: "2026", t: "Candidatura oficial", d: "Campaña en marcha." },
 ];
 
 export const HISTORIC_ELECTIONS = [

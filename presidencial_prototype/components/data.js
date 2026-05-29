@@ -134,6 +134,30 @@ window.COMPARE_DATA = {
       { title: "Paz profundizada", desc: "Profundizar la implementación del Acuerdo de Paz." },
     ],
   },
+    "Sergio Fajardo": {
+      Salud: [
+        { title: "Defensa del Sistema de Aseguramiento", desc: "Se rechaza la eliminación abrupta de las EPS; la reforma corrige fallas manteniendo la arquitectura de aseguramiento y fortaleciendo la capacidad reguladora y sancionatoria del Estado." },
+        { title: "Fortalecimiento de la Red Pública Hospitalaria", desc: "Inversión prioritaria en hospitales públicos de primer y segundo nivel en regiones periféricas históricamente desatendidas para garantizar acceso oportuno a servicios básicos." },
+        { title: "Independencia Biotecnológica y Telemedicina", desc: "Creación de un centro de salud integral para investigación de enfermedades tropicales y despliegue de sistemas predictivos de IA para salud preventiva." },
+      ],
+      Economía: [
+        { title: "Corredores Logísticos Multimodales", desc: "Desarrollo de corredores que integren modos férreo, fluvial y vial para reducir costos logísticos y articular zonas productivas con puertos." },
+        { title: "Revolución de las Vías Terciarias", desc: "Pavimentación y mejora estructural de 20.000 km de vías terciarias para desarrollo rural, seguridad y reducción de pobreza campesina." },
+        { title: "Plan de Choque Jurídico-Fiscal y Transparencia", desc: "Medidas para eliminar inseguridad jurídica, agilizar licencias y erradicar carteles de la contratación pública, junto a un mapa interactivo participativo." },
+      ],
+      Educación: [
+        { title: "Calidad Educativa y Formación Docente", desc: "Evaluación permanente de aprendizajes y formación rigurosa de maestros como núcleo de la política educativa." },
+        { title: "Acceso Universal a Educación Superior", desc: "Ampliación de cobertura pública mediante financiamiento a universidades regionales y programas de becas focalizados." },
+        { title: "Bilingüismo y Pensamiento Computacional", desc: "Masificación del aprendizaje del inglés y programación desde la básica para dotar a estudiantes de competencias digitales." },
+        { title: "Adaptación Laboral a la IA", desc: "Alfabetización digital, formación vocacional y reconversión para la transición hacia empleos del futuro." },
+        { title: "Inversión en CTI", desc: "Elevar la inversión en ciencia, tecnología e innovación al 1% del PIB y crear cinco centros nacionales de investigación aplicada." },
+      ],
+      Seguridad: [
+        { title: "Liderazgo Civil y Reconstrucción de la Fuerza Pública", desc: "El Presidente asumirá el rol de Comandante Supremo para revertir la desmoralización institucional y recuperar control territorial." },
+        { title: "Paz con Condiciones y Rechazo a Paz Total", desc: "Diálogos de paz sujetos a condiciones verificables: desactivación de economías ilícitas y desmantelamiento de redes criminales." },
+        { title: "Prevención Estructural: Entornos Protectores", desc: "Programa para 250.000 jóvenes vulnerables en 170 municipios y 10 ciudades, con educación, deporte y alternativas al reclutamiento criminal." },
+      ],
+    },
 };
 
 window.COMPARE_ORDER = ["Iván Cepeda", "Abelardo de la Espriella", "Paloma Valencia", "Claudia López", "Roy Barreras"];

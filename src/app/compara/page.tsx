@@ -176,6 +176,9 @@ function IdeologyMatrixView() {
   const toX = (econ: number) => pad + ((econ + 1) / 2) * (W - 2 * pad);
   const toY = (social: number) => pad + ((social + 1) / 2) * (H - 2 * pad);
 
+  const safeId = (name: string) =>
+    "p_" + name.replace(/\s+/g, "_").replace(/[^a-z0-9_]/gi, "").toLowerCase();
+
   const active = pinned || hovered;
   const activeCand = plotted.find((c) => c.name === active);
 
@@ -226,15 +229,32 @@ function IdeologyMatrixView() {
               <circle cx={toX(activeCand.econ)} cy={toY(activeCand.social)} r={24} fill="none" stroke={activeCand.color} strokeWidth="1.5" strokeDasharray="3 4" opacity="0.5" />
             </g>
           )}
+          {plotted.length > 0 && (
+            <defs>
+              {plotted.map((c) => {
+                const photo = getCandidatePhoto(c.name);
+                if (!photo) return null;
+                const id = safeId(c.name);
+                return (
+                  <pattern id={id} key={id} patternUnits="objectBoundingBox" width={1} height={1}>
+                    <image href={photo} width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                  </pattern>
+                );
+              })}
+            </defs>
+          )}
+
           {plotted.map((c) => {
             const cx = toX(c.econ), cy = toY(c.social);
             const isActive = active === c.name, dimmed = active && !isActive;
             const r = isActive ? 18 : 14;
+            const photo = getCandidatePhoto(c.name);
+            const pid = photo ? safeId(c.name) : null;
             return (
               <g key={c.name} onMouseEnter={() => setHovered(c.name)} onMouseLeave={() => setHovered(null)}
                 onClick={() => setPinned(pinned === c.name ? null : c.name)} style={{ cursor: "pointer" }} opacity={dimmed ? 0.35 : 1}>
                 <circle cx={cx} cy={cy} r={30} fill="transparent" />
-                <circle cx={cx} cy={cy} r={r} fill={c.color} stroke="#fff" strokeWidth={isActive ? 4 : 3}
+                <circle cx={cx} cy={cy} r={r} fill={photo && pid ? `url(#${pid})` : c.color} stroke="#fff" strokeWidth={isActive ? 4 : 3}
                   style={{ transition: "all 200ms cubic-bezier(0.2,0.8,0.2,1)" }} />
                 {isActive && pinned === c.name && <circle cx={cx} cy={cy} r={r+6} fill="none" stroke={c.color} strokeWidth="2" />}
               </g>
@@ -251,8 +271,8 @@ function IdeologyMatrixView() {
           if (top + 180 > maxY - 12) top = cursor.y - 180 - 18;
           return (
             <div style={{ position: "absolute", left, top, width: tooltipW, background: "#fff", borderRadius: 16, boxShadow: "0 24px 60px -20px rgba(13,30,45,0.3), 0 0 0 1px rgba(0,0,0,0.06)", padding: 18, pointerEvents: "none", zIndex: 10 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-                <Avatar name={activeCand.name} color={activeCand.color} size={44} />
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+                <Avatar name={activeCand.name} color={activeCand.color} size={44} photo={getCandidatePhoto(activeCand.name)} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 16, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.015em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activeCand.name}</div>
                   <div style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 2 }}>{activeCand.party}</div>
@@ -388,7 +408,7 @@ function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate
                     boxShadow: isActive ? "0 2px 8px rgba(0,0,0,0.06)" : "none",
                     transition: "all 140ms ease",
                   }}>
-                    <Avatar name={c.name} color={c.color} size={26} />
+                    <Avatar name={c.name} color={c.color} size={26} photo={getCandidatePhoto(c.name)} />
                     {c.name}
                     <span style={{ fontSize: 11, fontWeight: 700, color: ans === "yes" ? "#1F8F5C" : "#C8453C", marginLeft: 2 }}>
                       {ans === "yes" ? "SÍ" : "NO"}
@@ -404,7 +424,7 @@ function QuestionRow({ question, candidates, expanded, onToggle, activeCandidate
               if (!c || ans === "na") return null;
               return (
                 <div style={{ background: "#fff", borderRadius: 14, padding: "18px 20px", borderLeft: `4px solid ${ans === "yes" ? "#1F8F5C" : "#C8453C"}`, display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <Avatar name={c.name} color={c.color} size={48} />
+                  <Avatar name={c.name} color={c.color} size={48} photo={getCandidatePhoto(c.name)} />
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                       <div style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)" }}>{c.name}</div>
@@ -529,7 +549,7 @@ export default function ComparaPage() {
               <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Pregunta</div>
               {candidates.map((c) => (
                 <div key={c.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                  <Avatar name={c.name} color={c.color} size={40} />
+                  <Avatar name={c.name} color={c.color} size={40} photo={getCandidatePhoto(c.name)} />
                   <div style={{ fontSize: 11, fontWeight: 600, color: "var(--ink-2)", textAlign: "center", lineHeight: 1.15, maxWidth: 70, letterSpacing: "-0.01em" }}>
                     {c.name.split(" ").slice(-1)[0]}
                   </div>

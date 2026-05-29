@@ -1,0 +1,108 @@
+{
+  "candidato": "Luis Gilberto Murillo",
+  "formula_vicepresidencial": "Luz María Zapata",
+  "filosofia": "Sentido Común sin Ideologías",
+  "elecciones": "Colombia 2026",
+  "areas_programaticas": {
+    "seguridad": {
+      "titulo": "Seguridad Ciudadana y Justicia",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Reconocimiento del Abandono Estatal como Causa Estructural de la Violencia",
+          "descripcion": "La política de seguridad parte del diagnóstico de que el abandono histórico del Estado en regiones periféricas es la raíz del conflicto y las economías ilegales. La recuperación del control territorial no se concibe exclusivamente como una operación militar, sino como un proceso integral que combina presencia institucional con oportunidades reales de desarrollo para las comunidades locales afectadas."
+        },
+        {
+          "id": 2,
+          "vector": "Fortalecimiento de la Fuerza Pública e Inteligencia Estratégica del Estado",
+          "descripcion": "Se propone robustecer las capacidades operativas de la Fuerza Pública y los servicios de inteligencia del Estado como herramientas fundamentales para desarticular estructuras del crimen organizado, sin depender exclusivamente del enfrentamiento armado directo. El fortalecimiento institucional se orienta a recuperar territorios dominados por economías ilegales de manera sostenida."
+        },
+        {
+          "id": 3,
+          "vector": "Articulación entre el Sistema de Justicia y la Fuerza Pública para Reducir la Impunidad",
+          "descripcion": "Se plantea una mejora estructural en la coordinación operativa y jurídica entre los organismos de seguridad y el aparato judicial, con el objetivo de dar respuestas más contundentes y efectivas frente al crimen organizado. La reducción de los altos índices de impunidad se identifica como meta prioritaria para restaurar la legitimidad y la confianza ciudadana en las instituciones del Estado."
+        }
+      ]
+    },
+    "salud": {
+      "titulo": "Salud Pública y Bienestar Social",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Descentralización de la Salud y Fortalecimiento de la Autonomía Regional",
+          "descripcion": "En contraste con los enfoques centralistas, la política sanitaria propone que las regiones y municipios asuman un rol protagónico en la planificación y gestión de sus sistemas de salud. Se enfatiza el cumplimiento integral de los Programas de Desarrollo con Enfoque Territorial (PDET) y los pactos territoriales como instrumentos vinculantes para garantizar una inversión focalizada y pertinente en cada contexto local."
+        },
+        {
+          "id": 2,
+          "vector": "Enfoque Holístico: Salud Integrada con Agua, Vivienda y Educación",
+          "descripcion": "La propuesta rechaza la visión sectorializada de la salud pública y la integra de manera sistémica con el acceso al agua potable, la vivienda digna y la educación. Se reconoce que los determinantes sociales de la salud son interdependientes y que ninguna política sanitaria puede ser efectiva si los ciudadanos carecen de condiciones básicas de vida. La inversión estatal en salud se orientará desde esta perspectiva integral y multisectorial."
+        },
+        {
+          "id": 3,
+          "vector": "Inteligencia Artificial para Automatizar Servicios de Salud Preventiva",
+          "descripcion": "Se plantea la integración de herramientas de Inteligencia Artificial dentro de la administración pública del sector salud para automatizar procesos administrativos, optimizar la asignación de recursos y mejorar sustancialmente la prestación de servicios preventivos a los ciudadanos. La tecnología se concibe como un habilitador de eficiencia y equidad en el acceso a la salud, especialmente en territorios de difícil acceso geográfico."
+        }
+      ]
+    },
+    "educacion": {
+      "titulo": "Educación y Desarrollo del Talento",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Jornada Educativa Extendida y Plan de Salvamento Financiero del ICETEX",
+          "descripcion": "Se propone la implementación de la jornada educativa extendida para ampliar el tiempo de formación de los estudiantes y reducir su exposición a entornos de riesgo. Paralelamente, se diseñará un plan de alivio financiero para liberar de deudas a los usuarios del ICETEX, eliminando una de las principales barreras económicas que impiden el acceso y la permanencia de jóvenes vulnerables en la educación superior."
+        },
+        {
+          "id": 2,
+          "vector": "Conectividad Rural Universal como Herramienta de Equidad Educativa",
+          "descripcion": "Partiendo de la premisa de que 'lo que más se desperdicia en Colombia es el talento', se propone garantizar el acceso universal a internet en zonas rurales como condición indispensable para la equidad educativa en el siglo XXI. La conectividad se concibe no como un privilegio urbano sino como un derecho ciudadano esencial para eliminar los 'muros' sociales y económicos que bloquean el desarrollo integral de los jóvenes en las periferias del país."
+        },
+        {
+          "id": 3,
+          "vector": "Microcentros Municipales de Aprendizaje en Inteligencia Artificial",
+          "descripcion": "Se promueve la creación de microcentros de aprendizaje en Inteligencia Artificial distribuidos en los municipios del país para formar a las nuevas generaciones en las competencias digitales que exige el mercado laboral del siglo XXI. Estos centros buscan democratizar el acceso a la educación tecnológica de frontera, llevando la formación en IA a territorios que históricamente han sido excluidos de la economía del conocimiento."
+        }
+      ]
+    },
+    "infraestructura": {
+      "titulo": "Infraestructura y Descentralización Regional",
+      "items": [
+        {
+          "id": 1,
+          "vector": "'Acuerdos de País': Descentralización Administrativa y Fiscal",
+          "descripcion": "El corazón de la propuesta económica es un modelo de descentralización materializado en los 'Acuerdos de País', mecanismos que buscan transferir mayores capacidades de decisión y manejo de recursos a departamentos y municipios. Los territorios asumen un rol protagónico en la planeación y ejecución de sus propios proyectos, rompiendo la lógica centralista que históricamente ha concentrado el poder presupuestal en Bogotá y alejado las decisiones de las realidades locales."
+        },
+        {
+          "id": 2,
+          "vector": "Reactivación Inmediata de Proyectos de Infraestructura Suspendidos en las Regiones",
+          "descripcion": "Se prioriza la reactivación urgente de los proyectos de obra pública que se encuentran paralizados o con graves retrasos en las regiones del país, generando empleo inmediato y desbloqueando el potencial productivo de los territorios afectados. Esta medida de choque busca restablecer la confianza de los ciudadanos en la capacidad ejecutora del Estado y dinamizar las economías locales deprimidas por años de abandono y obras inconclusas."
+        },
+        {
+          "id": 3,
+          "vector": "Infraestructura Portuaria para Conectar el Pacífico con la Economía Global",
+          "descripcion": "Se propone el desarrollo estratégico de infraestructura portuaria para potenciar el comercio exterior y conectar zonas periféricas, con especial énfasis en el litoral Pacífico, con los mercados globales y los circuitos del turismo sostenible. Esta apuesta busca transformar la posición geográfica de Colombia en una ventaja competitiva real, integrando regiones históricamente marginadas a las cadenas de valor internacionales y reduciendo la brecha de desarrollo entre el centro y la periferia del país."
+        }
+      ]
+    },
+    "tecnologia_e_ia": {
+      "titulo": "Tecnología, Inteligencia Artificial y Lucha Anticorrupción",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Colombia 'PotencIA Digital': Masificación de las TIC y Cierre de la Brecha Digital",
+          "descripcion": "La meta es posicionar a Colombia como una potencia digital regional, masificando las Tecnologías de la Información y las Comunicaciones en todo el territorio nacional. El cierre de la brecha digital se concibe como un imperativo de justicia social y competitividad económica, garantizando que ciudadanos rurales y comunidades vulnerables accedan a las mismas oportunidades tecnológicas que las poblaciones urbanas, impulsando la productividad y la participación en la economía digital global."
+        },
+        {
+          "id": 2,
+          "vector": "Tecnología y Analítica de Datos para la Transparencia en Financiación de Campañas",
+          "descripcion": "Se propone utilizar herramientas tecnológicas avanzadas y analítica de datos para realizar un seguimiento riguroso y en tiempo real a la financiación de las campañas políticas, cerrando las puertas a la captura del Estado por intereses ilegales. Esta medida de reforma política anticorrupción busca ajustar el sistema democrático desde adentro, usando la tecnología como mecanismo de control ciudadano y transparencia institucional frente al dinero oscuro en la política."
+        },
+        {
+          "id": 3,
+          "vector": "Marco Regulatorio Ético para la Gobernanza de la Inteligencia Artificial en el Estado",
+          "descripcion": "Se plantea el establecimiento de un marco regulatorio claro que garantice el uso ético y responsable de la Inteligencia Artificial en el sector público, definiendo un modelo de gobernanza que facilite su integración en los procesos estatales para optimizar la toma de decisiones y la prestación de servicios al ciudadano. Este marco busca equilibrar la innovación tecnológica con salvaguardas que protejan los derechos fundamentales, la privacidad y la equidad en el acceso a los servicios del Estado."
+        }
+      ]
+    }
+  }
+}
