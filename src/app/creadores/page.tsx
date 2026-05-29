@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 const CREADORES = [
   { nombre: "Ilych Jhosue Esteban Blanco Mendoza" },
-  { nombre: "Miguel Andrés Granados Blanco" },
   { nombre: "Kerent Ximena Trujillo García" },
   { nombre: "Juan Diego Albarracín Melgarejo" },
+  { nombre: "Miguel Andrés Granados Blanco" },
 ];
 
 function initials(nombre: string) {
@@ -73,12 +73,13 @@ export default function CreadoresPage() {
             fontSize: "clamp(16px, 4vw, 19px)",
             color: "var(--ink-2)",
             lineHeight: 1.55,
-            maxWidth: 700,
+            maxWidth: 720,
           }}
         >
-          Cuatro estudiantes de la <strong style={{ color: "var(--ink)" }}>UPB Bucaramanga</strong>{" "}
-          que construyeron este proyecto como ejercicio de la clase de{" "}
-          <strong style={{ color: "var(--ink)" }}>Política Internacional y Transformación Digital</strong>.
+          Producto desarrollado por cuatro estudiantes en la cátedra{" "}
+          <strong style={{ color: "var(--ink)" }}>Política Global y Transformación Digital</strong> de la{" "}
+          <strong style={{ color: "var(--ink)" }}>Facultad de Ciencias Políticas y Gobierno</strong> de la{" "}
+          <strong style={{ color: "var(--ink)" }}>Universidad Pontificia Bolivariana</strong>.
           Apartidista, sin ánimo de lucro, abierto a quien lo quiera revisar.
         </p>
       </header>
@@ -177,6 +178,7 @@ export default function CreadoresPage() {
           borderRadius: 22,
           padding: "clamp(24px, 5vw, 36px)",
           boxShadow: "0 30px 60px -30px rgba(47,107,138,0.5)",
+          marginBottom: "clamp(16px, 3vw, 22px)",
         }}
       >
         <div
@@ -192,7 +194,7 @@ export default function CreadoresPage() {
             marginBottom: 14,
           }}
         >
-          Contexto académico
+          Cátedra
         </div>
         <h2
           style={{
@@ -204,7 +206,7 @@ export default function CreadoresPage() {
             lineHeight: 1.15,
           }}
         >
-          Política Internacional y Transformación Digital
+          Política Global y Transformación Digital
         </h2>
         <p
           style={{
@@ -215,9 +217,64 @@ export default function CreadoresPage() {
             maxWidth: 640,
           }}
         >
-          Una clase de la <strong>Universidad Pontificia Bolivariana — Seccional Bucaramanga</strong>{" "}
-          que cruza el pulso político con las herramientas digitales para entenderlo.
-          Este sitio es el producto final del semestre.
+          Cátedra de la <strong>Facultad de Ciencias Políticas y Gobierno</strong> de la{" "}
+          <strong>Universidad Pontificia Bolivariana</strong>, que cruza el pulso político con las
+          herramientas digitales para entenderlo. Este sitio es el producto final del semestre.
+        </p>
+      </section>
+
+      <section
+        style={{
+          background: "#fff",
+          border: "1px solid var(--line)",
+          borderRadius: 20,
+          padding: "clamp(20px, 4.5vw, 28px)",
+          boxShadow: "var(--shadow-sm)",
+        }}
+      >
+        <div
+          style={{
+            display: "inline-block",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "4px 10px",
+            borderRadius: 999,
+            background: "rgba(47,107,138,0.10)",
+            color: "var(--brand)",
+            marginBottom: 12,
+          }}
+        >
+          Investigación
+        </div>
+        <h3
+          style={{
+            margin: "0 0 8px",
+            fontFamily: "var(--font-plex-serif), Georgia, serif",
+            fontSize: "clamp(20px, 4.5vw, 26px)",
+            fontWeight: 600,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+            color: "var(--ink)",
+          }}
+        >
+          Producto vinculado a CIPJURIS
+        </h3>
+        <p
+          style={{
+            margin: 0,
+            fontSize: "clamp(14px, 3.5vw, 16px)",
+            lineHeight: 1.55,
+            color: "var(--ink-2)",
+            maxWidth: 700,
+          }}
+        >
+          Este desarrollo se vincula al grupo de investigación{" "}
+          <strong style={{ color: "var(--ink)" }}>CIPJURIS</strong> de la{" "}
+          <strong style={{ color: "var(--ink)" }}>Escuela de Derecho y Ciencias Políticas</strong>{" "}
+          de la Universidad Pontificia Bolivariana, como espacio académico de articulación entre
+          la docencia, la investigación y la apropiación social del conocimiento.
         </p>
       </section>
     </main>

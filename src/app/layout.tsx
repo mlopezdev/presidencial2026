@@ -40,13 +40,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             textAlign: "center",
           }}
         >
-          <p style={{ margin: "0 auto 22px", fontSize: 14, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 640 }}>
-            Proyecto creado en la clase de <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Política Internacional y Transformación Digital</strong> de la{" "}
-            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>UPB Bucaramanga</strong>.
+          <p style={{ margin: "0 auto 20px", fontSize: 14, color: "var(--ink-2)", lineHeight: 1.55, maxWidth: 720 }}>
+            Producto desarrollado en la cátedra{" "}
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Política Global y Transformación Digital</strong>{" "}
+            de la <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Facultad de Ciencias Políticas y Gobierno</strong> de la{" "}
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Universidad Pontificia Bolivariana</strong>.
           </p>
 
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 14 }}>
-            Creado por
+            Creado por estudiantes
           </div>
           <ul
             style={{
@@ -57,9 +59,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             {[
               "Ilych Jhosue Esteban Blanco Mendoza",
-              "Miguel Andrés Granados Blanco",
               "Kerent Ximena Trujillo García",
               "Juan Diego Albarracín Melgarejo",
+              "Miguel Andrés Granados Blanco",
             ].map((nombre) => (
               <li
                 key={nombre}
@@ -84,8 +86,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ))}
           </ul>
 
-          <p style={{ margin: "24px auto 0", fontSize: 12, color: "var(--ink-3)" }}>
-            © {new Date().getFullYear()} · UPB Bucaramanga ·{" "}
+          <p style={{ margin: "22px auto 0", fontSize: 13, color: "var(--ink-2)", lineHeight: 1.55, maxWidth: 720 }}>
+            Producto vinculado al grupo de investigación{" "}
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>CIPJURIS</strong> de la{" "}
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Escuela de Derecho y Ciencias Políticas</strong>.
+          </p>
+
+          <p style={{ margin: "18px auto 0", fontSize: 12, color: "var(--ink-3)" }}>
+            © {new Date().getFullYear()} · Universidad Pontificia Bolivariana ·{" "}
             <a href="/api" style={{ color: "var(--brand)", textDecoration: "underline", textUnderlineOffset: 2 }}>
               API pública
             </a>
