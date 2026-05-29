@@ -14,12 +14,30 @@ window.OTHER_CANDIDATES = [
   { name: "Mauricio Lizcano", gender: "M", vice: "Pedro de la Torre", viceGender: "M", party: "Firme con Lizcano", spectrum: "centro", color: "#6B8E23", lede: "Firme con Lizcano: resultados que se ven." },
   { name: "Roy Barreras", gender: "M", vice: "Martha Lucía Zamora", viceGender: "F", party: "La Fuerza de la Paz", spectrum: "centro", color: "#B3261E", lede: "La fuerza de la paz y el consenso." },
   { name: "Carlos Caicedo", gender: "M", vice: "Nelson Alarcón", viceGender: "M", party: "Fuerza Ciudadana", spectrum: "izquierda", color: "#C2410C", lede: "El cambio es con la gente." },
-  { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam", viceGender: "M", party: "La Abogada de Hierro", spectrum: "derecha", color: "#6B2D5C", lede: "Justicia para todos." },
-  { name: "Gustavo Matamoros", gender: "M", vice: "Mila María Paz", viceGender: "F", party: "Partido Ecologista", spectrum: "izquierda", color: "#2E7D32", lede: "Por nuestra tierra y nuestro futuro." },
+  { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam", viceGender: "M", party: "La Abogada de Hierro", spectrum: "centro", color: "#CA8A04", lede: "Justicia para todos." },
+  { name: "Gustavo Matamoros", gender: "M", vice: "Mila María Paz", viceGender: "F", party: "Partido Ecologista", spectrum: "derecha", color: "#2E7D32", lede: "Por nuestra tierra y nuestro futuro." },
   { name: "Clara López", gender: "F", vice: "María Consuelo del Río", viceGender: "F", party: "Esperanza Democrática", spectrum: "izquierda", color: "#722F37", lede: "Esperanza democrática para el pueblo." },
 ];
 
 window.ALL_CANDIDATES = [...window.TOP_CANDIDATES, ...window.OTHER_CANDIDATES];
+
+// Mapa de fotos (usa los archivos en public/candidates)
+window.CANDIDATE_PHOTOS = {
+  "Abelardo de la Espriella": "/candidates/Abelardo.png",
+  "Carlos Caicedo": "/candidates/Caicedo.png",
+  "Clara López": "/candidates/Clara Lopez.png",
+  "Claudia López": "/candidates/Clauida Lopez.png",
+  "Gustavo Matamoros": "/candidates/Matamoros.png",
+  "Iván Cepeda": "/candidates/cepeda.png",
+  "Miguel Uribe Londoño": "/candidates/Miguel Uribe.png",
+  "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
+  "Paloma Valencia": "/candidates/Paloma_Valencia.png",
+  "Roy Barreras": "/candidates/Roy_Barreras.png",
+  "Santiago Botero": "/candidates/Santiago_Botero.png",
+  "Sondra Macollins": "/candidates/Sondra.png",
+  "Sergio Fajardo": "/candidates/Fajaro-removebg-preview.png",
+  "Luis Gilberto Murillo": "/candidates/Luis_GIlberto_Murillo.png",
+};
 
 // ─── Comparativa por ejes ───
 window.AXES = [
@@ -229,7 +247,7 @@ window.IDEOLOGY_MATRIX = {
   "Mauricio Lizcano":         { econ:  0.20, social:  0.10 },
   "Roy Barreras":             { econ: -0.20, social: -0.30 },
   "Carlos Caicedo":           { econ: -0.55, social: -0.40 },
-  "Sondra Macollins":         { econ:  0.60, social:  0.75 },
-  "Gustavo Matamoros":        { econ: -0.50, social: -0.60 },
+  "Sondra Macollins":         { econ:  0.20, social:  0.10 },
+  "Gustavo Matamoros":        { econ:  0.45, social:  0.50 },
   "Clara López":              { econ: -0.65, social: -0.45 },
 };

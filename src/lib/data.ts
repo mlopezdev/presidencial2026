@@ -27,10 +27,10 @@ export const OTHER_CANDIDATES: Candidate[] = [
   { name: "Santiago Botero",  gender: "M", vice: "Carlos Fernando Cuevas",  viceGender: "M", party: "Romper el Sistema",           spectrum: "centro",    color: "#CA8A04", lede: "Es hora de romper el sistema." },
   { name: "Mauricio Lizcano", gender: "M", vice: "Pedro de la Torre",        viceGender: "M", party: "Firme con Lizcano",           spectrum: "centro",    color: "#A16207", lede: "Firme con Lizcano: resultados que se ven." },
   { name: "Roy Barreras",     gender: "M", vice: "Martha Lucía Zamora",      viceGender: "F", party: "La Fuerza de la Paz",         spectrum: "centro",    color: "#F59E0B", lede: "La fuerza de la paz y el consenso." },
-  { name: "Carlos Caicedo",   gender: "M", vice: "Nelson Alarcón",           viceGender: "M", party: "Fuerza Ciudadana",            spectrum: "izquierda", color: "#E74C3C", lede: "El cambio es con la gente.", withdrawn: true },
-  { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam",           viceGender: "M", party: "La Abogada de Hierro",        spectrum: "derecha",   color: "#3B82F6", lede: "Justicia para todos." },
-  { name: "Gustavo Matamoros",gender: "M", vice: "Mila María Paz",           viceGender: "F", party: "Partido Ecologista",          spectrum: "izquierda", color: "#A93226", lede: "Por nuestra tierra y nuestro futuro." },
-  { name: "Clara López",      gender: "F", vice: "María Consuelo del Río",   viceGender: "F", party: "Esperanza Democrática",       spectrum: "izquierda", color: "#922B21", lede: "Esperanza democrática para el pueblo.", withdrawn: true },
+  { name: "Carlos Caicedo",   gender: "M", vice: "Nelson Alarcón",           viceGender: "M", party: "Fuerza Ciudadana",            spectrum: "izquierda", color: "#E74C3C", lede: "El cambio es con la gente." },
+  { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam",           viceGender: "M", party: "La Abogada de Hierro",        spectrum: "centro",    color: "#CA8A04", lede: "Justicia para todos." },
+  { name: "Gustavo Matamoros",gender: "M", vice: "Mila María Paz",           viceGender: "F", party: "Partido Ecologista",          spectrum: "derecha",   color: "#A93226", lede: "Por nuestra tierra y nuestro futuro." },
+  { name: "Clara López",      gender: "F", vice: "María Consuelo del Río",   viceGender: "F", party: "Esperanza Democrática",       spectrum: "izquierda", color: "#922B21", lede: "Esperanza democrática para el pueblo." },
 ];
 
 export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDATES];
@@ -211,6 +211,29 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
       { title: "Paz profundizada", desc: "Profundizar la implementación del Acuerdo de Paz." },
     ],
   },
+  "Sondra Macollins": {
+    Salud: [
+      { title: "Salud Digital con IA", desc: "Incorporar telemedicina avanzada con inteligencia artificial para triaje y consultas primarias, optimizando la atención en zonas rurales remotas." },
+      { title: "Dignificación del personal médico", desc: "Mejorar las condiciones laborales y salariales de médicos, enfermeras y especialistas en todo el país." },
+      { title: "Reforma penal contra la impunidad en salud", desc: "Reglas claras y estrictas para desmantelar estructuras criminales que afectan el sistema de salud y reducir la impunidad." },
+    ],
+    Economía: [
+      { title: "Monetización de la Amazonía", desc: "Medir científicamente el oxígeno y captura de carbono de la selva amazónica para emitir y vender bonos de carbono en mercados globales, proyectando un recaudo significativo hacia 2030." },
+      { title: "Revolución Agroindustrial", desc: "Cultivar 5 millones de hectáreas de oleaginosas perennes para la industria global de aceites vegetales, generando empleo formal en el campo." },
+      { title: "Brecha Salarial Cero", desc: "Políticas de incentivos para garantizar un 50% de representación femenina en cargos directivos (públicos y privados) y equidad remunerativa." },
+      { title: "Empleabilidad Juvenil", desc: "Programas de choque para insertar a jóvenes sin empleo ni estudio en la economía digital, el arte y el desarrollo tecnológico." },
+    ],
+    Educación: [
+      { title: "Economía digital para jóvenes", desc: "Formación intensiva en tecnología, programación e innovación para jóvenes excluidos del mercado laboral." },
+      { title: "Guardián Digital ciudadano", desc: "Plataforma de fiscalización donde cualquier colombiano pueda monitorear la ejecución del presupuesto educativo nacional y local." },
+      { title: "Anticorrupción en el PAE", desc: "Implementar blockchain para rastrear en tiempo real los recursos del Programa de Alimentación Escolar y garantizar su correcta ejecución." },
+    ],
+    Seguridad: [
+      { title: "Sistema C5 de Seguridad Ciudadana", desc: "Integrar tecnológicamente el 100% de las cámaras del país en un nodo interconectado con la Policía Nacional, la Fiscalía y las Fuerzas Militares." },
+      { title: "IA Predictiva", desc: "Transición de un modelo policial reactivo a uno preventivo mediante algoritmos de análisis de datos criminales, basado en casos de éxito del sudeste asiático." },
+      { title: "Reforma penal contra la impunidad", desc: "Establecer reglas ágiles y estrictas para el desmantelamiento de estructuras criminales y la reducción definitiva de la impunidad." },
+    ],
+  },
   "Sergio Fajardo": {
     Salud: [
       { title: "Sistema mixto eficiente", desc: "Preservar lo que funciona, corregir lo que falla en el sistema actual." },
@@ -284,8 +307,8 @@ export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> =
   "Mauricio Lizcano":         { econ:  0.32, social:  0.05 },
   "Roy Barreras":             { econ: -0.20, social: -0.30 },
   "Carlos Caicedo":           { econ: -0.55, social: -0.40 },
-  "Sondra Macollins":         { econ:  0.60, social:  0.75 },
-  "Gustavo Matamoros":        { econ: -0.50, social: -0.60 },
+  "Sondra Macollins":         { econ:  0.20, social:  0.10 },
+  "Gustavo Matamoros":        { econ:  0.45, social:  0.50 },
   "Clara López":              { econ: -0.65, social: -0.45 },
 };
 
@@ -332,6 +355,14 @@ export const TIMELINES: Record<string, { y: string; t: string; d: string }[]> = 
     { y: "2016", t: "Negociador del Acuerdo de Paz", d: "Participa en el proceso de La Habana." },
     { y: "2022", t: "Presidente del Congreso", d: "Lidera el Senado en la coalición de gobierno." },
     { y: "2025", t: "Candidato presidencial", d: "Lanza La Fuerza de la Paz." },
+  ],
+  "Sondra Macollins": [
+    { y: "1996", t: "Abogada litigante independiente", d: "Inicia casi 30 años de ejercicio en derecho penal, extradición, lavado de activos e investigaciones económicas a nivel nacional e internacional." },
+    { y: "2005", t: "Fundadora de LEYFY (EE.UU.)", d: "Crea la organización LEYFY en Estados Unidos, dedicada a la consultoría jurídica y defensa de comunidades hispanas y migrantes." },
+    { y: "2008", t: "Defensora de víctimas de DMG", d: "Representa legalmente a los afectados por la captadora ilegal DMG (David Murcia Guzmán), liderando reclamaciones de activos ante los tribunales colombianos." },
+    { y: "2022", t: "Candidata a la Cámara (exterior)", d: "Participa como candidata oficial a la Cámara de Representantes por la circunscripción internacional de colombianos en el exterior." },
+    { y: "2025", t: "Más de 1.100.000 firmas", d: "Lidera una recolección masiva de firmas ciudadanas a nivel nacional, logrando validar más de 1.100.000 respaldos ante la Registraduría para avalar su candidatura independiente." },
+    { y: "2026", t: "Candidata presidencial", d: "Inscribe candidatura oficial a la Presidencia por el Grupo Significativo de Ciudadanos 'Partido Digital Colombia Soy Yo', con su plan Colombia 5.0." },
   ],
   "Mauricio Lizcano": [
     { y: "—", t: "Formación académica", d: "Abogado con maestría en Administración Pública (MPA) de Harvard y MBA del MIT." },
@@ -444,6 +475,25 @@ export const DOFA_DATA: Record<string, DofaEntry> = {
     amenazas: [
       "Unificación y reagrupación estratégica de los sectores de derecha en segunda vuelta bajo discursos de 'mano dura'.",
       "Alta exposición a elaboradas campañas de guerra sucia y desinformación impulsadas por Inteligencia Artificial (deepfakes).",
+    ],
+  },
+  "Sondra Macollins": {
+    fortalezas: [
+      "Casi 30 años de trayectoria como abogada litigante en derecho penal, extradición y lavado de activos le otorgan autoridad técnica y credibilidad en temas de justicia y seguridad.",
+      "Liderazgo independiente demostrado: más de 1.100.000 firmas validadas ante la Registraduría sin respaldo de maquinaria política tradicional.",
+      "Propuesta tecnológica diferenciadora (Colombia 5.0) que conecta con el electorado joven y la necesidad de modernización del Estado.",
+    ],
+    oportunidades: [
+      "Profundo agotamiento ciudadano frente a la clase política tradicional, que favorece candidaturas independientes con perfil técnico-jurídico.",
+      "La agenda digital y de transparencia (blockchain, IA, Guardián Digital) responde a una demanda real de los colombianos por combatir la corrupción.",
+    ],
+    debilidades: [
+      "Ausencia de maquinaria política y estructura territorial consolidada, lo que dificulta la movilización del voto en regiones apartadas.",
+      "Primera candidatura presidencial, lo que implica menor reconocimiento nacional frente a figuras con mayor exposición mediática.",
+    ],
+    amenazas: [
+      "La tendencia del electorado colombiano hacia el 'voto útil' puede drenar su caudal hacia candidatos con mayor opción de segunda vuelta.",
+      "Riesgo de invisibilización en medios masivos frente a candidatos con mayor financiación y estructura partidista.",
     ],
   },
   "Mauricio Lizcano": {

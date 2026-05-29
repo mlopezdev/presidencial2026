@@ -9,8 +9,29 @@ function initials(name) {
     .toUpperCase();
 }
 
-function Avatar({ name, color, size = 56 }) {
+function Avatar({ name, color, size = 56, photo }) {
   const s = `${size}px`;
+  const img = photo || (window.CANDIDATE_PHOTOS && window.CANDIDATE_PHOTOS[name]);
+  if (img) {
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          width: s,
+          height: s,
+          borderRadius: "50%",
+          overflow: "hidden",
+          flex: "0 0 auto",
+          position: "relative",
+          boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.10)",
+          background: color || "#E8EEF3",
+        }}
+      >
+        <img src={img} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
+      </div>
+    );
+  }
+
   return (
     <div
       aria-hidden="true"
