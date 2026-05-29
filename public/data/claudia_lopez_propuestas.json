@@ -1,0 +1,108 @@
+{
+  "candidata": "Claudia López",
+  "formula_vicepresidencial": "Leonardo Huerta",
+  "programa": "Una Nueva Historia",
+  "elecciones": "Colombia 2026",
+  "areas_programaticas": {
+    "seguridad": {
+      "titulo": "Seguridad Ciudadana, Justicia y Gobernabilidad Territorial",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Reforma Estructural a la Justicia: Modelo Asimétrico de Tres Niveles",
+          "descripcion": "Reestructuración del sistema judicial en tres estratos diferenciados: (1) Justicia Antimafia con mínimas garantías procesales, Fiscalía especializada y aislamiento penitenciario indefinido para grandes capos; (2) Justicia Ordinaria con sanciones drásticas y medida de aseguramiento para delitos con armas; (3) Justicia Restaurativa comunitaria con policías locales no armadas letalmente en las principales ciudades."
+        },
+        {
+          "id": 2,
+          "vector": "Liquidación del INPEC y Creación de una Gendarmería Carcelaria",
+          "descripcion": "Transformación absoluta del Instituto Nacional Penitenciario y Carcelario por una Gendarmería especializada con protocolo de cero corrupción. Modernización tecnológica penitenciaria mediante inhibidores de señal, biometría de comportamiento e inteligencia analítica de datos para aislar comunicacionalmente a los cabecillas del crimen organizado que operan desde las cárceles."
+        },
+        {
+          "id": 3,
+          "vector": "Fortalecimiento Institucional, Política de Drogas y Cooperación Internacional",
+          "descripcion": "Incorporación de 40.000 nuevos miembros a la Fuerza Pública con énfasis en profesionalización y derechos humanos. Liderazgo regional para la desclasificación internacional del cannabis y la coca, redirigiendo la fuerza del Estado hacia la persecución del lavado de activos y el narcotráfico transnacional, con cooperación técnica OTAN y OTCA para ciberdefensa y vigilancia satelital."
+        }
+      ]
+    },
+    "salud": {
+      "titulo": "Salud Pública y Sistema Nacional de Cuidado",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Sistema Mixto e Integral: Prohibición de Integración Vertical y Precios Unificados",
+          "descripcion": "Conservación del modelo de aseguramiento público-privado, eliminando la práctica por la cual las EPS son dueñas de las clínicas a las que remiten sus pacientes. Implementación de tablas de precios unificadas por procedimiento y región, con auditorías tecnológicas automatizadas que garanticen el pago directo a prestadores y cierren las brechas históricas de facturación fraudulenta."
+        },
+        {
+          "id": 2,
+          "vector": "Descentralización Logística mediante Droguerías de Barrio y Receta Electrónica",
+          "descripcion": "Integración formal de las farmacias comunitarias a la red de dispensación de medicamentos del Estado, eliminando los desplazamientos y filas interminables para pacientes crónicos y adultos mayores. Requiere como prerrequisito la implementación de una plataforma unificada de información y recetas electrónicas encriptadas, dinamizando además la economía local de los barrios."
+        },
+        {
+          "id": 3,
+          "vector": "Sistema Nacional de Cuidado: Escalamiento de las Manzanas del Cuidado",
+          "descripcion": "Elevación a política de Estado del Sistema de Cuidado, adaptando el modelo exitoso de las 'Manzanas del Cuidado' de Bogotá a escala nacional. Libera a millones de mujeres que dedican en promedio siete horas diarias al trabajo doméstico no remunerado, permitiéndoles acceder a educación formal, empleo y autonomía económica, rompiendo ciclos intergeneracionales de pobreza y violencia de género."
+        }
+      ]
+    },
+    "educacion": {
+      "titulo": "Educación, Movilidad Social y Productividad Económica",
+      "items": [
+        {
+          "id": 1,
+          "vector": "'Todos a la U': Programa Nacional de Un Millón de Becas Posmedia",
+          "descripcion": "Adaptación a escala nacional del programa bogotano 'Jóvenes a la U', comprometiendo un millón de becas vinculadas estructuralmente a la demanda real del mercado laboral. Prioriza trayectorias en tecnología, desarrollo de software, biotecnología, transición energética y economía del cuidado, articulando la oferta académica con los clústeres productivos regionales para garantizar empleo formal y evitar la frustración profesional."
+        },
+        {
+          "id": 2,
+          "vector": "Agencia Nacional de Educación Posmedia y Reforma Curricular del SENA",
+          "descripcion": "Creación de un nuevo ente rector que unifique universidades, instituciones técnicas y fondos de emprendimiento, eliminando la dispersión burocrática que excluye a jóvenes de escasos recursos. El SENA experimentará una transformación curricular profunda para alinearse milimétricamente con los planes de infraestructura, agroindustria e innovación de cada región específica del país."
+        },
+        {
+          "id": 3,
+          "vector": "Educación Inicial Universal y Competencias del Siglo XXI",
+          "descripcion": "Universalización de los tres grados de preescolar para cerrar brechas cognitivas desde la primera infancia. Renovación curricular en educación básica y media incorporando pensamiento crítico, bilingüismo funcional, programación y un componente permanente de educación socioemocional y salud mental para mitigar la ansiedad, depresión y ciberacoso generados por la hiperconectividad juvenil."
+        }
+      ]
+    },
+    "infraestructura": {
+      "titulo": "Infraestructura Multimodal, Hábitat y Desarrollo Regional Logístico",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Red Multimodal Territorializada: Tren, Ríos y Nodos Logísticos por Región",
+          "descripcion": "Reactivación agresiva del sistema ferroviario y la conectividad fluvial con vocaciones económicas específicas por macro-región: la región Cundiboyacense como nodo logístico interior (Tren del Norte, Regiotram), el Caribe como plataforma portuaria de exportación, los Llanos como despensa agroindustrial, y el Pacífico con plan de choque en agua, saneamiento y electrificación rural."
+        },
+        {
+          "id": 2,
+          "vector": "600.000 Subsidios VIS bajo el Modelo de 'Ciudad de los 15 Minutos'",
+          "descripcion": "Inyección anticíclica de capital mediante 600.000 subsidios de Vivienda de Interés Social, priorizando mujeres cabeza de hogar que pagan arriendos informales. Cada desarrollo habitacional deberá garantizar desde su planeación acceso a colegios, transporte masivo y Manzanas del Cuidado, bajo el enfoque de ciudad de proximidad que previene la creación de dormitorios urbanos marginados."
+        },
+        {
+          "id": 3,
+          "vector": "Agua Potable y Saneamiento como Derechos Humanos en Territorios Marginados",
+          "descripcion": "Elevación del acceso al agua a derecho humano inalienable, financiado mediante la redirección de recursos del Sistema General de Regalías hacia plantas potabilizadoras, acueductos veredales y alcantarillados en el Pacífico, La Guajira y la ribera del Magdalena, eliminando la intermediación de clanes políticos locales que históricamente han desfalcado estos fondos."
+        }
+      ]
+    },
+    "tecnologia_e_ia": {
+      "titulo": "Tecnología, Inteligencia Artificial y Soberanía Digital del Estado",
+      "items": [
+        {
+          "id": 1,
+          "vector": "Doctrina de IA Sociotécnica Latinoamericana y Soberanía Algorítmica",
+          "descripcion": "Rechazo a la visión catastrofista de la IA y a la adopción acrítica de tecnología del Norte Global. Colombia debe producir modelos de IA propios auditados, adaptados a sus contextos de desigualdad, diversidad étnica y realidades lingüísticas locales, o exigir marcos de gobernanza regulatoria que garanticen transparencia en los sistemas foráneos para evitar automatizar sesgos históricos contra poblaciones vulnerables."
+        },
+        {
+          "id": 2,
+          "vector": "Historia Clínica Única Digital e IA Preventiva para Combatir la Corrupción en Salud",
+          "descripcion": "Implementación definitiva de la Historia Clínica Única Digital como arquitectura nacional de datos de salud interoperable. Sobre esta base, algoritmos predictivos anticiparán riesgos de enfermedades crónicas en poblaciones, optimizarán la asignación de citas con especialistas y auditarán en milisegundos las facturas de clínicas y hospitales, detectando cobros fraudulentos y cerrando las brechas históricas de desfalco al sistema de salud."
+        },
+        {
+          "id": 3,
+          "vector": "Votación Digital Ciudadana, Interoperabilidad Estatal y Democracia Directa",
+          "descripcion": "Disrupción del clientelismo legislativo mediante plataformas digitales certificadas que permiten a los ciudadanos votar directamente los portafolios de proyectos de inversión regional viabilizados por Planeación Nacional. Complementado con un Portal Único Empresarial de trámites en un clic, adopción masiva de pagos digitales en tiempo real (tipo Bre-B) y alfabetización ciudadana en pensamiento crítico computacional para neutralizar la desinformación con IA generativa."
+        }
+      ]
+    }
+  }
+}
