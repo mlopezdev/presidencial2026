@@ -25,10 +25,8 @@ export const OTHER_CANDIDATES: Candidate[] = [
   { name: "Santiago Botero",  gender: "M", vice: "Carlos Fernando Cuevas",  viceGender: "M", party: "Romper el Sistema",           spectrum: "centro",    color: "#CA8A04", lede: "Es hora de romper el sistema." },
   { name: "Mauricio Lizcano", gender: "M", vice: "Pedro de la Torre",        viceGender: "M", party: "Firme con Lizcano",           spectrum: "centro",    color: "#A16207", lede: "Firme con Lizcano: resultados que se ven." },
   { name: "Roy Barreras",     gender: "M", vice: "Martha Lucía Zamora",      viceGender: "F", party: "La Fuerza de la Paz",         spectrum: "centro",    color: "#F59E0B", lede: "La fuerza de la paz y el consenso." },
-  { name: "Carlos Caicedo",   gender: "M", vice: "Nelson Alarcón",           viceGender: "M", party: "Fuerza Ciudadana",            spectrum: "izquierda", color: "#E74C3C", lede: "El cambio es con la gente." },
   { name: "Sondra Macollins", gender: "F", vice: "Leonardo Karam",           viceGender: "M", party: "La Abogada de Hierro",        spectrum: "derecha",   color: "#3B82F6", lede: "Justicia para todos." },
-  { name: "Gustavo Matamoros",gender: "M", vice: "Mila María Paz",           viceGender: "F", party: "Partido Ecologista",          spectrum: "izquierda", color: "#A93226", lede: "Por nuestra tierra y nuestro futuro." },
-  { name: "Clara López",      gender: "F", vice: "María Consuelo del Río",   viceGender: "F", party: "Esperanza Democrática",       spectrum: "izquierda", color: "#922B21", lede: "Esperanza democrática para el pueblo." },
+  { name: "Gustavo Matamoros",gender: "M", vice: "Mila María Paz",           viceGender: "F", party: "Partido Ecologista",          spectrum: "derecha",   color: "#2E4BA8", lede: "Por nuestra tierra y nuestro futuro." },
 ];
 
 export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDATES];
@@ -36,8 +34,6 @@ export const ALL_CANDIDATES: Candidate[] = [...TOP_CANDIDATES, ...OTHER_CANDIDAT
 // Mapa de fotos disponibles en /public/candidates
 export const CANDIDATE_PHOTOS: Record<string, string> = {
   "Abelardo de la Espriella": "/candidates/Abelardo.png",
-  "Carlos Caicedo": "/candidates/Caicedo.png",
-  "Clara López": "/candidates/Clara Lopez.png",
   "Claudia López": "/candidates/Clauida Lopez.png",
   "Gustavo Matamoros": "/candidates/Matamoros.png",
   "Iván Cepeda": "/candidates/cepeda.png",
@@ -249,6 +245,20 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
       { title: "Reforma a la justicia contra la impunidad", desc: "Agilizar procesos y lograr condenas efectivas para evitar la excarcelación exprés en casos de flagrancia." },
     ],
   },
+  "Sondra Macollins": {
+    Salud: [
+      { title: "Información por confirmar", desc: "Las propuestas oficiales en este eje están en proceso de consolidación. Se actualizarán cuando estén verificadas." },
+    ],
+    Economía: [
+      { title: "Información por confirmar", desc: "Las propuestas oficiales en este eje están en proceso de consolidación. Se actualizarán cuando estén verificadas." },
+    ],
+    Educación: [
+      { title: "Información por confirmar", desc: "Las propuestas oficiales en este eje están en proceso de consolidación. Se actualizarán cuando estén verificadas." },
+    ],
+    Seguridad: [
+      { title: "Justicia para todos", desc: "Énfasis en seguridad ciudadana y modernización del sistema de justicia, en línea con su perfil profesional. Propuestas detalladas por publicar." },
+    ],
+  },
 };
 
 export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> = {
@@ -261,10 +271,8 @@ export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> =
   "Santiago Botero":          { econ:  0.25, social:  0.00 },
   "Mauricio Lizcano":         { econ:  0.32, social:  0.05 },
   "Roy Barreras":             { econ: -0.20, social: -0.30 },
-  "Carlos Caicedo":           { econ: -0.55, social: -0.40 },
   "Sondra Macollins":         { econ:  0.60, social:  0.75 },
-  "Gustavo Matamoros":        { econ: -0.50, social: -0.60 },
-  "Clara López":              { econ: -0.65, social: -0.45 },
+  "Gustavo Matamoros":        { econ:  0.40, social:  0.45 },
 };
 
 export const TIMELINES: Record<string, { y: string; t: string; d: string }[]> = {
