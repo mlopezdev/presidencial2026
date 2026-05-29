@@ -1,8 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EL_NATIONAL, EL_COLOR, EL_SPECTRUM, EL_YEARS, type ElectionYear } from "@/lib/elections-data";
 import { ALL_CANDIDATES } from "@/lib/data";
+import MapaDepto from "@/components/MapaDepto";
+import PanelMunicipios from "@/components/PanelMunicipios";
+import MapaCalidad from "@/components/MapaCalidad";
+import MapaSwing from "@/components/MapaSwing";
+import MapaConcentracion from "@/components/MapaConcentracion";
+import MapaGenero from "@/components/MapaGenero";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const pct = (n: number, d = 1) => `${n.toFixed(d)}%`;
 const fmt = (n: number) => n.toLocaleString("es-CO");
@@ -13,8 +20,8 @@ function ElSectionHeader({ kicker, title, dek }: { kicker: string; title: string
   return (
     <div style={{ marginBottom: 28, maxWidth: 820 }}>
       <div style={{ fontSize: 12, fontWeight: 700, color: "#B3261E", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{kicker}</div>
-      <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, 'Times New Roman', serif", fontSize: 38, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>{title}</h2>
-      {dek && <p style={{ margin: 0, fontSize: 17, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 720 }}>{dek}</p>}
+      <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, 'Times New Roman', serif", fontSize: "clamp(26px, 6vw, 38px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", margin: "0 0 10px", lineHeight: 1.1 }}>{title}</h2>
+      {dek && <p style={{ margin: 0, fontSize: "clamp(15px, 3.5vw, 17px)", color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 720 }}>{dek}</p>}
     </div>
   );
 }
@@ -22,8 +29,9 @@ function ElSectionHeader({ kicker, title, dek }: { kicker: string; title: string
 // ─── Hero con selector de año ───
 function ElHero({ year, setYear }: { year: number; setYear: (y: number) => void }) {
   const h = EL_NATIONAL[year];
+  const isMobile = useIsMobile();
   return (
-    <header style={{ borderBottom: "1px solid var(--ink)", paddingBottom: 48, marginBottom: 48 }}>
+    <header style={{ borderBottom: "1px solid var(--ink)", paddingBottom: isMobile ? 32 : 48, marginBottom: isMobile ? 32 : 48 }}>
       <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 18 }}>
         ELECCIONES PRESIDENCIALES · COLOMBIA · 2010 – 2022
       </div>
@@ -37,18 +45,19 @@ function ElHero({ year, setYear }: { year: number; setYear: (y: number) => void 
       </p>
 
       {/* Year tabs */}
-      <div style={{ display: "flex", gap: 4, marginTop: 32, borderBottom: "1px solid rgba(0,0,0,0.1)", paddingBottom: 0 }}>
+      <div style={{ display: "flex", gap: 4, marginTop: isMobile ? 24 : 32, borderBottom: "1px solid rgba(0,0,0,0.1)", paddingBottom: 0,
+        overflowX: isMobile ? "auto" : "visible", marginLeft: isMobile ? -16 : 0, marginRight: isMobile ? -16 : 0, paddingLeft: isMobile ? 16 : 0, paddingRight: isMobile ? 16 : 0, WebkitOverflowScrolling: "touch" }}>
         {EL_YEARS.map((y) => {
           const active = y === year;
           return (
             <button key={y} type="button" onClick={() => setYear(y)} style={{
-              fontFamily: "inherit", cursor: "pointer", padding: "14px 22px", border: 0,
+              fontFamily: "inherit", cursor: "pointer", padding: isMobile ? "12px 18px" : "14px 22px", border: 0,
               borderBottom: active ? "3px solid var(--ink)" : "3px solid transparent", marginBottom: -1,
               background: "transparent", color: active ? "var(--ink)" : "var(--ink-3)",
               display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2,
-              transition: "color 160ms ease",
+              transition: "color 160ms ease", flexShrink: 0,
             }}>
-              <span style={{ fontSize: 22, fontWeight: active ? 700 : 500, letterSpacing: "-0.02em", fontFamily: "var(--font-plex-serif), Georgia, serif" }}>{y}</span>
+              <span style={{ fontSize: isMobile ? 19 : 22, fontWeight: active ? 700 : 500, letterSpacing: "-0.02em", fontFamily: "var(--font-plex-serif), Georgia, serif" }}>{y}</span>
               <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: active ? "var(--ink-2)" : "var(--ink-3)" }}>
                 {EL_NATIONAL[y].winner.split(" ").slice(-1)[0]}
               </span>
@@ -57,7 +66,7 @@ function ElHero({ year, setYear }: { year: number; setYear: (y: number) => void 
         })}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 48, marginTop: 36, alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.4fr 1fr", gap: isMobile ? 28 : 48, marginTop: isMobile ? 28 : 36, alignItems: "start" }}>
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#B3261E", marginBottom: 10 }}>{year} · La historia</div>
           <h2 style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 34, fontWeight: 600, lineHeight: 1.15, letterSpacing: "-0.015em", margin: "0 0 14px", color: "var(--ink)" }}>{h.headline}</h2>
@@ -84,6 +93,7 @@ function ElHero({ year, setYear }: { year: number; setYear: (y: number) => void 
 // ─── Barras de resultados ───
 function ElRoundBars({ year }: { year: number }) {
   const [round, setRound] = useState<"r1" | "r2">("r1");
+  const isMobile = useIsMobile();
   const n = EL_NATIONAL[year];
   const data = round === "r1" ? n.r1 : n.r2;
   const max = Math.max(...data.map((d) => d.pct));
@@ -106,6 +116,23 @@ function ElRoundBars({ year }: { year: number }) {
         {data.map((d, i) => {
           const w = (d.pct / max) * 100;
           const color = EL_COLOR[d.name] || "#6B7280";
+          if (isMobile) {
+            return (
+              <div key={d.name} style={{ display: "grid", gap: 6 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.01em" }}>{d.name}</span>
+                    {i === 0 && <span style={{ color: "#1F8F5C", marginLeft: 6, fontWeight: 700, fontSize: 10, textTransform: "uppercase" }}>· Ganador</span>}
+                  </div>
+                  <span style={{ fontSize: 12, color: "var(--ink-3)", fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>{fmt(d.votes)}</span>
+                </div>
+                <div style={{ position: "relative", height: 30, background: "#F7F8FA", borderRadius: 3 }}>
+                  <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${w}%`, background: color, borderRadius: 3, transition: "width 700ms cubic-bezier(0.2,0.8,0.2,1)" }} />
+                  <div style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", fontSize: 13, fontWeight: 600, color: w > 24 ? "#fff" : "var(--ink)" }}>{pct(d.pct)}</div>
+                </div>
+              </div>
+            );
+          }
           return (
             <div key={d.name} style={{ display: "grid", gridTemplateColumns: "220px 1fr 120px", gap: 16, alignItems: "center" }}>
               <div>
@@ -131,6 +158,7 @@ function ElRoundBars({ year }: { year: number }) {
 // ─── Gráfico de tendencia por espectro ───
 function ElTrendChart() {
   const [metric, setMetric] = useState<"r1" | "r2" | "abst">("r1");
+  const isMobile = useIsMobile();
 
   const series: Record<string, { year: number; val: number }[]> = { izquierda: [], centro: [], derecha: [] };
   const abstSeries: { year: number; val: number }[] = [];
@@ -156,20 +184,20 @@ function ElTrendChart() {
     : { izquierda: SPECTRUM_CLR.izquierda, centro: SPECTRUM_CLR.centro, derecha: SPECTRUM_CLR.derecha };
 
   return (
-    <section style={{ marginBottom: 80 }}>
+    <section style={{ marginBottom: isMobile ? 56 : 80 }}>
       <ElSectionHeader kicker="Tendencia" title="El péndulo ideológico" dek="Suma de porcentajes de los candidatos por espectro en cada elección." />
-      <div style={{ display: "flex", gap: 4, marginBottom: 24, padding: 4, background: "#F2F4F7", borderRadius: 10, width: "fit-content" }}>
-        {[{ k: "r1", l: "Por espectro · 1ra vuelta" }, { k: "r2", l: "Por espectro · 2da vuelta" }, { k: "abst", l: "Abstención" }].map((o) => (
+      <div style={{ display: "flex", gap: 4, marginBottom: 24, padding: 4, background: "#F2F4F7", borderRadius: 10, width: "fit-content", maxWidth: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+        {[{ k: "r1", l: isMobile ? "1ra vuelta" : "Por espectro · 1ra vuelta" }, { k: "r2", l: isMobile ? "2da vuelta" : "Por espectro · 2da vuelta" }, { k: "abst", l: "Abstención" }].map((o) => (
           <button key={o.k} type="button" onClick={() => setMetric(o.k as "r1" | "r2" | "abst")} style={{
             fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer",
-            padding: "7px 14px", border: 0, borderRadius: 7,
+            padding: "7px 14px", border: 0, borderRadius: 7, whiteSpace: "nowrap", flexShrink: 0,
             background: metric === o.k ? "#fff" : "transparent",
             color: metric === o.k ? "var(--ink)" : "var(--ink-2)",
             boxShadow: metric === o.k ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
           }}>{o.l}</button>
         ))}
       </div>
-      <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 24 }}>
+      <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: isMobile ? 14 : 24 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto" }}>
           {[0, 20, 40, 60, 80].filter((v) => v <= maxVal).map((v) => (
             <g key={v}>
@@ -214,10 +242,11 @@ function ElTrendChart() {
 // ─── Abstención ───
 function ElAbstention() {
   const data = EL_YEARS.map((y) => ({ year: y, abst: EL_NATIONAL[y].abstencion, turn: EL_NATIONAL[y].turnout }));
+  const isMobile = useIsMobile();
   return (
-    <section style={{ marginBottom: 80 }}>
+    <section style={{ marginBottom: isMobile ? 56 : 80 }}>
       <ElSectionHeader kicker="La otra mitad" title="La abstención, constante" dek="Casi la mitad del censo electoral no vota en ninguna elección presidencial." />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16 }}>
         {data.map((d) => (
           <div key={d.year} style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 16, padding: 24, position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${d.abst}%`, background: "repeating-linear-gradient(45deg, rgba(179,38,30,0.05) 0 8px, rgba(179,38,30,0.1) 8px 16px)" }} />
@@ -239,14 +268,15 @@ function ElAbstention() {
 // ─── Resultados en segunda vuelta ───
 function SecondRoundResults({ year }: { year: number }) {
   const n = EL_NATIONAL[year];
+  const isMobile = useIsMobile();
   if (!n.r2 || n.r2.length < 2) return null;
   const [a, b] = n.r2;
   const aColor = EL_COLOR[a.name] || "#6B7280";
   const bColor = EL_COLOR[b.name] || "#6B7280";
   return (
-    <section style={{ marginBottom: 80 }}>
+    <section style={{ marginBottom: isMobile ? 56 : 80 }}>
       <ElSectionHeader kicker="Segunda vuelta" title={`El duelo final ${year}`} dek="Resultado del balotaje presidencial." />
-      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 24, alignItems: "center" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr auto 1fr", gap: isMobile ? 12 : 24, alignItems: "center" }}>
         <div style={{ background: "#fff", border: "1px solid var(--line)", borderRadius: 20, padding: "28px 32px", textAlign: "center" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: aColor, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>Ganador</div>
           <div style={{ fontFamily: "var(--font-plex-serif), Georgia, serif", fontSize: 28, fontWeight: 600, color: "var(--ink)", marginBottom: 12, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{a.name}</div>
@@ -272,12 +302,13 @@ function SecondRoundResults({ year }: { year: number }) {
 function ContiendaPanel() {
   const spectrumColors: Record<string, string> = { izquierda: "#C0392B", centro: "#D97706", derecha: "#1E40AF" };
   const specs = ["izquierda", "centro", "derecha"] as const;
+  const isMobile = useIsMobile();
   const total = ALL_CANDIDATES.length;
   const femaleCount = ALL_CANDIDATES.filter((c) => c.gender === "F").length;
   const spectrumCount = ALL_CANDIDATES.reduce((acc, c) => { acc[c.spectrum] = (acc[c.spectrum] || 0) + 1; return acc; }, {} as Record<string, number>);
 
   return (
-    <section style={{ background: "linear-gradient(180deg, #F5F7FA 0%, #FBFBFD 100%)", border: "1px solid var(--line)", borderRadius: 28, padding: 28, marginBottom: 56 }}>
+    <section style={{ background: "linear-gradient(180deg, #F5F7FA 0%, #FBFBFD 100%)", border: "1px solid var(--line)", borderRadius: isMobile ? 18 : 28, padding: isMobile ? 18 : 28, marginBottom: isMobile ? 40 : 56 }}>
       <div style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 14 }}>
         <span style={{ fontSize: 12, fontWeight: 600, color: "var(--brand)", background: "rgba(47,107,138,0.1)", padding: "5px 11px", borderRadius: 999, letterSpacing: "0.05em", textTransform: "uppercase" }}>◆ Radiografía 2026</span>
       </div>
@@ -324,13 +355,36 @@ function ContiendaPanel() {
 
 export default function HistorialPage() {
   const [year, setYear] = useState(2022);
+  const [muniDrill, setMuniDrill] = useState<{ codDep: number; name: string; round: "r1" | "r2" } | null>(null);
+  const isMobile = useIsMobile();
+
+  useEffect(() => { setMuniDrill(null); }, [year]);
 
   return (
-    <main style={{ maxWidth: 1200, margin: "0 auto", padding: "56px 32px 120px" }}>
+    <main style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "32px 16px 80px" : "56px 32px 120px" }}>
       <ContiendaPanel />
       <ElHero year={year} setYear={setYear} />
       <ElRoundBars year={year} />
       <SecondRoundResults year={year} />
+      {(year === 2018 || year === 2022) && (
+        <MapaDepto
+          year={year}
+          selectedCodDep={muniDrill?.codDep ?? null}
+          onSelect={year === 2022 ? (codDep, name, round) => setMuniDrill({ codDep, name, round }) : undefined}
+        />
+      )}
+      {year === 2022 && muniDrill && (
+        <PanelMunicipios
+          round={muniDrill.round}
+          codDep={muniDrill.codDep}
+          deptoName={muniDrill.name}
+          onClose={() => setMuniDrill(null)}
+        />
+      )}
+      {year === 2022 && <MapaCalidad />}
+      {year === 2022 && <MapaSwing />}
+      {year === 2022 && <MapaConcentracion />}
+      {year === 2022 && <MapaGenero />}
       <ElTrendChart />
       <ElAbstention />
       <footer style={{ marginTop: 80, paddingTop: 32, borderTop: "1px solid rgba(0,0,0,0.12)", fontSize: 13, color: "var(--ink-3)", lineHeight: 1.6 }}>

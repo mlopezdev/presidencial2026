@@ -6,13 +6,14 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ALL_CANDIDATES, TOP_CANDIDATES, AXES, COMPARE_DATA,
-  TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX, getCandidatePhoto,
+  TIMELINES, DEFAULT_TIMELINE, IDEOLOGY_MATRIX, getCandidatePhoto, DOFA_DATA,
   type Candidate, type Spectrum,
 } from "@/lib/data";
 import { TEMAS, getPosicion, type Posicion } from "@/lib/posiciones-data";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { Chevron } from "@/components/ui/Chevron";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 // ─── helpers ───
 const SPECTRUM_CLR: Record<Spectrum, string> = { izquierda: "#C0392B", centro: "#D97706", derecha: "#1E40AF" };
@@ -48,6 +49,8 @@ function SpectrumExplorer({ onPick, onPickAll }: {
   onPickAll: () => void;
 }) {
   const [hovered, setHovered] = useState<Spectrum | null>(null);
+  const isMobile = useIsMobile();
+  const avatarSize = isMobile ? 26 : 36;
 
   // Posicionar candidatos en el eje económico (-1 a +1)
   const plotted = useMemo(() => ALL_CANDIDATES.map((c) => {
@@ -58,26 +61,48 @@ function SpectrumExplorer({ onPick, onPickAll }: {
   // Convertir -1..+1 a porcentaje 5%..95%
   const toX = (econ: number) => `${5 + ((econ + 1) / 2) * 90}%`;
 
+  // Espectro basado en el eje económico del Diagrama de Nolan
   const spectrumCards = [
-    { key: "izquierda" as Spectrum, label: "Izquierda", desc: "Transformación social, Estado fuerte, paz negociada" },
-    { key: "centro" as Spectrum, label: "Centro", desc: "Reformismo moderado, coaliciones, pragmatismo" },
-    { key: "derecha" as Spectrum, label: "Derecha", desc: "Libre mercado, seguridad, inversión privada" },
+    {
+      key: "izquierda" as Spectrum,
+      label: "Izquierda",
+      sub: "Progresista + Estado",
+      desc: "Mayor intervención estatal en la economía combinada con agenda social progresista: redistribución, servicios públicos, regulación laboral y derechos civiles amplios.",
+    },
+    {
+      key: "centro" as Spectrum,
+      label: "Centro",
+      sub: "Moderado · Zona de transición",
+      desc: "Equilibrio entre regulación estatal y libre mercado, sin adoptar extremos en la agenda cultural. Apuesta por reformas graduales y coaliciones amplias.",
+    },
+    {
+      key: "derecha" as Spectrum,
+      label: "Derecha",
+      sub: "Conservador + Mercado",
+      desc: "Libre mercado, propiedad privada y menor intervención del Estado, bajo un marco social que prioriza valores tradicionales, seguridad y orden público.",
+    },
   ];
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
       {/* Header */}
-      <div style={{ marginBottom: 40 }}>
-        <p style={{ margin: "0 0 6px", fontSize: 15, fontWeight: 600, color: "var(--brand)" }}>
+      <div style={{ marginBottom: isMobile ? 28 : 40 }}>
+        <p style={{ margin: "0 0 6px", fontSize: isMobile ? 13 : 15, fontWeight: 600, color: "var(--brand)" }}>
           Candidatos · Presidencia 2026
         </p>
-        <h1 style={{ margin: "0 0 12px", fontSize: "clamp(32px,4vw,48px)", fontWeight: 600,
+        <h1 style={{ margin: "0 0 10px", fontSize: "clamp(28px,7vw,48px)", fontWeight: 600,
           letterSpacing: "-0.03em", color: "var(--ink)", lineHeight: 1.05,
           fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
-          ¿Por dónde empezamos?
+          El péndulo ideológico
         </h1>
-        <p style={{ margin: 0, fontSize: 18, color: "var(--ink-2)", lineHeight: 1.5, maxWidth: 600 }}>
-          Elige un espectro para filtrar candidatos, o explora los {ALL_CANDIDATES.length} directamente.
+        <p style={{ margin: "0 0 14px", fontSize: isMobile ? 15 : 17, color: "var(--ink-2)", lineHeight: 1.55, maxWidth: 680 }}>
+          El espectro político va más allá de izquierda y derecha. Cada candidato se posiciona
+          según su visión <strong style={{ color: "var(--ink)" }}>económica</strong> (¿más Estado o más mercado?) y su agenda
+          <strong style={{ color: "var(--ink)" }}> sociocultural</strong> (¿conservadora o progresista?).
+          La barra muestra su posición en el eje económico.
+        </p>
+        <p style={{ margin: 0, fontSize: isMobile ? 13 : 15, color: "var(--ink-3)" }}>
+          Elige un espectro para filtrar, o explora los {ALL_CANDIDATES.length} candidatos directamente.
         </p>
       </div>
 
@@ -85,8 +110,8 @@ function SpectrumExplorer({ onPick, onPickAll }: {
       <div style={{ position: "relative", marginBottom: 40 }}>
         <div style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em",
           color: "var(--ink-3)", marginBottom: 16, display: "flex", justifyContent: "space-between" }}>
-          <span>← Intervención del Estado</span>
-          <span>Libre mercado →</span>
+          <span>← Mayor intervención del Estado</span>
+          <span>Mayor libre mercado →</span>
         </div>
 
         {/* Track degradado */}
@@ -97,7 +122,7 @@ function SpectrumExplorer({ onPick, onPickAll }: {
         }} />
 
         {/* Avatar bubbles posicionadas */}
-        <div style={{ position: "absolute", top: 24, left: 0, right: 0, height: 72 }}>
+        <div style={{ position: "absolute", top: 24, left: 0, right: 0, height: avatarSize * 2 }}>
           {plotted.map((c) => (
             <div key={c.name} title={c.name} style={{
               position: "absolute", left: toX(c.econ), transform: "translateX(-50%)",
@@ -106,14 +131,14 @@ function SpectrumExplorer({ onPick, onPickAll }: {
             }}
               onClick={() => onPick(c.spectrum)}
             >
-              <Avatar name={c.name} color={c.color} size={36} photo={getCandidatePhoto(c.name)} />
+              <Avatar name={c.name} color={c.color} size={avatarSize} photo={getCandidatePhoto(c.name)} />
             </div>
           ))}
         </div>
       </div>
 
       {/* Tres tarjetas de espectro */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 10 : 14, marginBottom: isMobile ? 18 : 24 }}>
         {spectrumCards.map((s) => {
           const group = ALL_CANDIDATES.filter((c) => c.spectrum === s.key);
           const isHov = hovered === s.key;
@@ -125,25 +150,28 @@ function SpectrumExplorer({ onPick, onPickAll }: {
               style={{
                 fontFamily: "inherit", textAlign: "left", cursor: "pointer",
                 border: `1.5px solid ${isHov ? SPECTRUM_CLR[s.key] : SPECTRUM_CLR[s.key] + "30"}`,
-                borderRadius: 22, background: isHov ? SPECTRUM_BG[s.key] : "#fff",
-                padding: "24px 22px", transition: "all 180ms ease", color: "var(--ink)",
+                borderRadius: 18, background: isHov ? SPECTRUM_BG[s.key] : "#fff",
+                padding: isMobile ? "18px 16px" : "24px 22px", transition: "all 180ms ease", color: "var(--ink)",
                 boxShadow: isHov ? `0 16px 40px -16px ${SPECTRUM_CLR[s.key]}35` : "var(--shadow-sm)",
                 transform: isHov ? "translateY(-3px)" : "translateY(0)",
               }}
             >
               {/* Conteo grande */}
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
-                <div style={{ fontSize: 48, fontWeight: 700, color: SPECTRUM_CLR[s.key], lineHeight: 1,
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: isMobile ? 10 : 16 }}>
+                <div style={{ fontSize: isMobile ? 36 : 48, fontWeight: 700, color: SPECTRUM_CLR[s.key], lineHeight: 1,
                   letterSpacing: "-0.04em", fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
                   {group.length}
                 </div>
-                <div style={{ width: 12, height: 12, borderRadius: "50%", background: SPECTRUM_CLR[s.key], marginTop: 8 }} />
+                <div style={{ width: 10, height: 10, borderRadius: "50%", background: SPECTRUM_CLR[s.key], marginTop: 6 }} />
               </div>
 
-              <div style={{ fontSize: 20, fontWeight: 700, color: SPECTRUM_CLR[s.key], marginBottom: 6, letterSpacing: "-0.015em" }}>
+              <div style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, color: SPECTRUM_CLR[s.key], marginBottom: 2, letterSpacing: "-0.015em" }}>
                 {s.label}
               </div>
-              <div style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.4, marginBottom: 18 }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: SPECTRUM_CLR[s.key] + "BB", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
+                {s.sub}
+              </div>
+              <div style={{ fontSize: isMobile ? 13 : 13, color: "var(--ink-3)", lineHeight: 1.5, marginBottom: isMobile ? 12 : 18 }}>
                 {s.desc}
               </div>
 
@@ -179,23 +207,24 @@ function SpectrumExplorer({ onPick, onPickAll }: {
         style={{
           fontFamily: "inherit", width: "100%", cursor: "pointer",
           border: "1px solid var(--line)", borderRadius: 16, background: "#fff",
-          padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: isMobile ? "14px 16px" : "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between",
           color: "var(--ink)", transition: "all 160ms ease", boxShadow: "var(--shadow-sm)",
+          gap: 10,
         }}
         onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--brand)"; (e.currentTarget as HTMLElement).style.background = "rgba(47,107,138,0.03)"; }}
         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; (e.currentTarget as HTMLElement).style.background = "#fff"; }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div style={{ display: "flex" }}>
-            {ALL_CANDIDATES.slice(0, 7).map((c, i) => (
+        <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 14, minWidth: 0 }}>
+          <div style={{ display: "flex", flexShrink: 0 }}>
+            {ALL_CANDIDATES.slice(0, isMobile ? 4 : 7).map((c, i) => (
               <div key={c.name} style={{ marginLeft: i > 0 ? -10 : 0, boxShadow: "0 0 0 2px #fff", borderRadius: "50%", position: "relative", zIndex: 7 - i }}>
-                <Avatar name={c.name} color={c.color} size={32} photo={getCandidatePhoto(c.name)} />
+                <Avatar name={c.name} color={c.color} size={isMobile ? 26 : 32} photo={getCandidatePhoto(c.name)} />
               </div>
             ))}
           </div>
-          <div>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)" }}>Ver los {ALL_CANDIDATES.length} candidatos</div>
-            <div style={{ fontSize: 14, color: "var(--ink-3)" }}>Sin filtro de espectro</div>
+          <div style={{ minWidth: 0, textAlign: "left" }}>
+            <div style={{ fontSize: isMobile ? 14 : 16, fontWeight: 600, color: "var(--ink)" }}>Ver los {ALL_CANDIDATES.length} candidatos</div>
+            <div style={{ fontSize: isMobile ? 12 : 14, color: "var(--ink-3)" }}>Sin filtro de espectro</div>
           </div>
         </div>
         <Chevron dir="right" size={18} />
@@ -213,6 +242,7 @@ type SortMode = "default" | "alpha" | "punteros";
 function CandidateBrowser({ spectrum, onBack, onPick }: {
   spectrum: Spectrum | null; onBack: () => void; onPick: (c: Candidate) => void;
 }) {
+  const isMobile = useIsMobile();
   const [search, setSearch] = useState("");
   const [view, setView] = useState<ViewMode>("grid");
   const [sort, setSort] = useState<SortMode>("default");
@@ -244,7 +274,7 @@ function CandidateBrowser({ spectrum, onBack, onPick }: {
         </button>
 
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h2 style={{ margin: 0, fontSize: 28, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
+          <h2 style={{ margin: 0, fontSize: isMobile ? 22 : 28, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
             fontFamily: "var(--font-plex-serif), Georgia, serif", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             Candidatos
             {activeFilter && (
@@ -260,9 +290,9 @@ function CandidateBrowser({ spectrum, onBack, onPick }: {
       </div>
 
       {/* Controles */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
+      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 10, marginBottom: 20, flexWrap: "wrap", alignItems: isMobile ? "stretch" : "center" }}>
         {/* Búsqueda */}
-        <div style={{ position: "relative", flex: "1 1 240px", minWidth: 200 }}>
+        <div style={{ position: "relative", flex: isMobile ? "1 1 100%" : "1 1 240px", minWidth: 0, width: isMobile ? "100%" : undefined }}>
           <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 16, color: "var(--ink-3)", pointerEvents: "none" }}>
             🔍
           </span>
@@ -288,7 +318,7 @@ function CandidateBrowser({ spectrum, onBack, onPick }: {
         </div>
 
         {/* Chips de espectro */}
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", flex: "0 1 auto" }}>
           {(["izquierda","centro","derecha"] as Spectrum[]).map((s) => {
             const active = activeFilter === s;
             return (
@@ -315,14 +345,14 @@ function CandidateBrowser({ spectrum, onBack, onPick }: {
         <select value={sort} onChange={(e) => setSort(e.target.value as SortMode)}
           style={{ fontFamily: "inherit", fontSize: 14, padding: "9px 14px", borderRadius: 999,
             border: "1px solid var(--line)", background: "#fff", color: "var(--ink)", cursor: "pointer",
-            outline: "none" }}>
+            outline: "none", flex: isMobile ? 1 : "0 1 auto", minWidth: 0 }}>
           <option value="default">Por espectro</option>
           <option value="punteros">Punteros primero</option>
           <option value="alpha">Alfabético</option>
         </select>
 
         {/* View toggle */}
-        <div style={{ display: "flex", border: "1px solid var(--line)", borderRadius: 10, overflow: "hidden", background: "#fff", flexShrink: 0 }}>
+        <div style={{ display: "flex", border: "1px solid var(--line)", borderRadius: 10, overflow: "hidden", background: "#fff", flexShrink: 0, alignSelf: isMobile ? "flex-start" : undefined }}>
           {(["grid","list"] as ViewMode[]).map((v) => (
             <button key={v} type="button" onClick={() => setView(v)}
               style={{ border: 0, cursor: "pointer", padding: "8px 14px", fontSize: 16,
@@ -349,7 +379,7 @@ function CandidateBrowser({ spectrum, onBack, onPick }: {
 
       {/* Grid */}
       {view === "grid" && filtered.length > 0 && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fill, minmax(200px, 1fr))", gap: isMobile ? 10 : 14 }}>
           {filtered.map((c, i) => (
             <CandidateGridCard key={c.name} candidate={c} index={i} onPick={onPick} />
           ))}
@@ -456,6 +486,7 @@ function CandidateGridCard({ candidate: c, index, onPick }: { candidate: Candida
 // Fila en modo lista
 function CandidateListRow({ candidate: c, index, onPick }: { candidate: Candidate; index: number; onPick: (c: Candidate) => void }) {
   const isPuntero = TOP_CANDIDATES.some((t) => t.name === c.name);
+  const isMobile = useIsMobile();
   return (
     <motion.button
       type="button"
@@ -465,9 +496,9 @@ function CandidateListRow({ candidate: c, index, onPick }: { candidate: Candidat
       transition={{ duration: 0.24, delay: index * 0.03 }}
       style={{
         fontFamily: "inherit", textAlign: "left", cursor: "pointer",
-        border: "1px solid var(--line)", borderRadius: 16,
-        background: "#fff", padding: "14px 18px",
-        display: "flex", alignItems: "center", gap: 16, color: "var(--ink)",
+        border: "1px solid var(--line)", borderRadius: 14,
+        background: "#fff", padding: isMobile ? "12px 14px" : "14px 18px",
+        display: "flex", alignItems: "center", gap: isMobile ? 10 : 16, color: "var(--ink)",
         transition: "all 160ms ease",
       }}
       onHoverStart={(e, info) => {
@@ -482,11 +513,11 @@ function CandidateListRow({ candidate: c, index, onPick }: { candidate: Candidat
       {/* Left spectrum stripe */}
       <div style={{ width: 4, alignSelf: "stretch", borderRadius: 2, background: SPECTRUM_CLR[c.spectrum], flexShrink: 0 }} />
 
-      <Avatar name={c.name} color={c.color} size={44} photo={getCandidatePhoto(c.name)} />
+      <Avatar name={c.name} color={c.color} size={isMobile ? 38 : 44} photo={getCandidatePhoto(c.name)} />
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.015em" }}>{c.name}</span>
+          <span style={{ fontSize: isMobile ? 14 : 16, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.015em" }}>{c.name}</span>
           {isPuntero && (
             <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
               background: "rgba(47,107,138,0.1)", color: "var(--brand)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
@@ -494,18 +525,22 @@ function CandidateListRow({ candidate: c, index, onPick }: { candidate: Candidat
             </span>
           )}
         </div>
-        <div style={{ fontSize: 13, color: "var(--ink-3)", marginBottom: 4 }}>{c.party}</div>
-        <div style={{ fontSize: 13, color: "var(--ink-2)", fontStyle: "italic", lineHeight: 1.3,
-          overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>
-          "{c.lede}"
-        </div>
+        <div style={{ fontSize: isMobile ? 12 : 13, color: "var(--ink-3)", marginBottom: isMobile ? 0 : 4 }}>{c.party}</div>
+        {!isMobile && (
+          <div style={{ fontSize: 13, color: "var(--ink-2)", fontStyle: "italic", lineHeight: 1.3,
+            overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>
+            "{c.lede}"
+          </div>
+        )}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-        <span style={{ fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 999,
-          background: SPECTRUM_BG[c.spectrum], color: SPECTRUM_CLR[c.spectrum] }}>
-          {capitalize(c.spectrum)}
-        </span>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+        {!isMobile && (
+          <span style={{ fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 999,
+            background: SPECTRUM_BG[c.spectrum], color: SPECTRUM_CLR[c.spectrum] }}>
+            {capitalize(c.spectrum)}
+          </span>
+        )}
         <Chevron dir="right" size={16} />
       </div>
     </motion.button>
@@ -521,6 +556,7 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
   onBack: () => void;
   onPickOther: (c: Candidate) => void;
 }) {
+  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("resumen");
   const tabBarRef = useRef<HTMLDivElement>(null);
   const [tabSticky, setTabSticky] = useState(false);
@@ -551,13 +587,14 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
 
   const hasTrayectoria = Boolean(TIMELINES[candidate.name]);
   const hasPropuestas = Boolean(compare && Object.values(compare).some((arr) => arr.length > 0));
+  const hasDofa = Boolean(DOFA_DATA[candidate.name]);
 
   const tabs = [
     { key: "resumen",    label: "Resumen" },
     ...(hasTrayectoria ? [{ key: "trayectoria", label: "Trayectoria" }] : []),
     ...(hasPropuestas  ? [{ key: "propuestas",  label: "Propuestas" }] : []),
     { key: "posiciones", label: "Posiciones" },
-    // Similitudes y Plan/DOFA ocultos
+    ...(hasDofa        ? [{ key: "dofa",         label: "DOFA" }] : []),
   ];
 
   return (
@@ -568,28 +605,29 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
       transition={{ duration: 0.32 }}
     >
       {/* Nav bar superior: atrás + prev/next */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, gap: 12 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, gap: 8 }}>
         <button type="button" onClick={onBack} style={{
-          display: "inline-flex", alignItems: "center", gap: 8,
-          fontFamily: "inherit", fontSize: 15, fontWeight: 500, cursor: "pointer",
+          display: "inline-flex", alignItems: "center", gap: 6,
+          fontFamily: "inherit", fontSize: isMobile ? 13 : 15, fontWeight: 500, cursor: "pointer",
           border: "1px solid var(--line)", background: "#fff", borderRadius: 999,
-          padding: "8px 16px 8px 12px", color: "var(--ink)", transition: "all 160ms ease",
+          padding: isMobile ? "7px 12px 7px 10px" : "8px 16px 8px 12px", color: "var(--ink)", transition: "all 160ms ease",
+          flexShrink: 0,
         }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--brand)"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; }}
         >
-          <Chevron dir="left" size={16} /> Candidatos
+          <Chevron dir="left" size={14} /> Candidatos
         </button>
 
         {/* Contador + prev/next */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           {prevCandidate && (
             <button type="button" onClick={() => { onPickOther(prevCandidate); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              title={prevCandidate.name}
+              title={prevCandidate.name} aria-label={`Anterior: ${prevCandidate.name}`}
               style={{
                 border: "1px solid var(--line)", background: "#fff", borderRadius: 999,
-                padding: "7px 12px", cursor: "pointer",
-                display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink)",
+                padding: isMobile ? "5px 8px" : "7px 12px", cursor: "pointer",
+                display: "inline-flex", alignItems: "center", gap: isMobile ? 4 : 8, color: "var(--ink)",
                 transition: "all 140ms ease", fontFamily: "inherit", fontSize: 14, fontWeight: 500,
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = prevCandidate.color; (e.currentTarget as HTMLElement).style.background = `${prevCandidate.color}0A`; }}
@@ -597,31 +635,30 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
             >
               <Chevron dir="left" size={14} />
               <div style={{ boxShadow: `0 0 0 2px ${prevCandidate.color}`, borderRadius: "50%" }}>
-                <Avatar name={prevCandidate.name} color={prevCandidate.color} size={22} photo={getCandidatePhoto(prevCandidate.name)} />
+                <Avatar name={prevCandidate.name} color={prevCandidate.color} size={isMobile ? 18 : 22} photo={getCandidatePhoto(prevCandidate.name)} />
               </div>
-              <span style={{ display: "none" }}>prev</span>
             </button>
           )}
 
-          <span style={{ fontSize: 13, color: "var(--ink-3)", fontWeight: 500, whiteSpace: "nowrap",
-            background: "#F2F4F7", padding: "6px 12px", borderRadius: 999 }}>
+          <span style={{ fontSize: isMobile ? 11 : 13, color: "var(--ink-3)", fontWeight: 500, whiteSpace: "nowrap",
+            background: "#F2F4F7", padding: isMobile ? "5px 8px" : "6px 12px", borderRadius: 999 }}>
             {currentIdx + 1} / {allVisible.length}
           </span>
 
           {nextCandidate && (
             <button type="button" onClick={() => { onPickOther(nextCandidate); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              title={nextCandidate.name}
+              title={nextCandidate.name} aria-label={`Siguiente: ${nextCandidate.name}`}
               style={{
                 border: "1px solid var(--line)", background: "#fff", borderRadius: 999,
-                padding: "7px 12px", cursor: "pointer",
-                display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink)",
+                padding: isMobile ? "5px 8px" : "7px 12px", cursor: "pointer",
+                display: "inline-flex", alignItems: "center", gap: isMobile ? 4 : 8, color: "var(--ink)",
                 transition: "all 140ms ease", fontFamily: "inherit", fontSize: 14, fontWeight: 500,
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = nextCandidate.color; (e.currentTarget as HTMLElement).style.background = `${nextCandidate.color}0A`; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; (e.currentTarget as HTMLElement).style.background = "#fff"; }}
             >
               <div style={{ boxShadow: `0 0 0 2px ${nextCandidate.color}`, borderRadius: "50%" }}>
-                <Avatar name={nextCandidate.name} color={nextCandidate.color} size={22} photo={getCandidatePhoto(nextCandidate.name)} />
+                <Avatar name={nextCandidate.name} color={nextCandidate.color} size={isMobile ? 18 : 22} photo={getCandidatePhoto(nextCandidate.name)} />
               </div>
               <Chevron dir="right" size={14} />
             </button>
@@ -629,22 +666,24 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
         </div>
       </div>
 
-      <article style={{ background: "#fff", borderRadius: 24, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)", position: "relative" }}>
-        {/* Cover band — overflow:hidden solo aquí para no bloquear el avatar que se superpone */}
-        <div style={{ height: 160, background: `linear-gradient(135deg, ${candidate.color} 0%, ${candidate.color}88 100%)`, position: "relative", zIndex: 0, borderRadius: "24px 24px 0 0", overflow: "hidden" }}>
+      <article style={{ background: "#fff", borderRadius: isMobile ? 18 : 24, border: "1px solid var(--line)", boxShadow: "var(--shadow-sm)", position: "relative", overflow: "hidden" }}>
+        {/* Cover band */}
+        <div style={{ height: isMobile ? 110 : 160, background: `linear-gradient(135deg, ${candidate.color} 0%, ${candidate.color}88 100%)`, position: "relative", zIndex: 0, overflow: "hidden" }}>
           {/* Party badge */}
           <span style={{
-            position: "absolute", right: 20, top: 16,
-            fontSize: 12, fontWeight: 600, padding: "6px 12px", borderRadius: 999,
+            position: "absolute", right: isMobile ? 12 : 20, top: isMobile ? 12 : 16,
+            fontSize: isMobile ? 11 : 12, fontWeight: 600, padding: isMobile ? "5px 10px" : "6px 12px", borderRadius: 999,
             background: "rgba(255,255,255,0.18)", color: "#fff",
             border: "1px solid rgba(255,255,255,0.3)", backdropFilter: "blur(10px)",
+            maxWidth: isMobile ? "55%" : undefined,
+            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
           }}>
             {candidate.party}
           </span>
           {/* Spectrum badge */}
           <span style={{
-            position: "absolute", left: 20, bottom: 16,
-            fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 999,
+            position: "absolute", left: isMobile ? 12 : 20, top: isMobile ? 12 : 16,
+            fontSize: isMobile ? 10 : 11, fontWeight: 700, padding: "4px 10px", borderRadius: 999,
             background: "rgba(0,0,0,0.25)", color: "#fff",
             backdropFilter: "blur(8px)", letterSpacing: "0.06em", textTransform: "uppercase",
           }}>
@@ -652,28 +691,36 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           </span>
         </div>
 
-        {/* Header overlap — z-index alto para estar siempre sobre el cover */}
-        <div style={{ padding: "0 32px", display: "flex", alignItems: "flex-end", gap: 20, marginTop: -60, position: "relative", zIndex: 10 }}>
-          <div style={{ boxShadow: "0 0 0 5px #fff, 0 0 0 6px rgba(0,0,0,0.06)", borderRadius: "50%", flexShrink: 0 }}>
-            <Avatar name={candidate.name} color={candidate.color} size={120} photo={getCandidatePhoto(candidate.name)} />
+        {/* Header overlap */}
+        <div style={{
+          padding: isMobile ? "0 18px" : "0 32px",
+          display: "flex", alignItems: "flex-start",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? 12 : 20,
+          marginTop: isMobile ? -42 : -60,
+          position: "relative", zIndex: 10,
+        }}>
+          <div style={{ boxShadow: "0 0 0 4px #fff, 0 0 0 5px rgba(0,0,0,0.06)", borderRadius: "50%", flexShrink: 0 }}>
+            <Avatar name={candidate.name} color={candidate.color} size={isMobile ? 84 : 120} photo={getCandidatePhoto(candidate.name)} />
           </div>
-          <div style={{ flex: 1, minWidth: 0, paddingBottom: 16 }}>
-            <h2 style={{ margin: 0, fontSize: "clamp(24px,3vw,34px)", fontWeight: 600, letterSpacing: "-0.025em",
+          <div style={{ flex: 1, minWidth: 0, paddingTop: isMobile ? 0 : 60, paddingBottom: isMobile ? 0 : 16 }}>
+            <h2 style={{ margin: 0, fontSize: "clamp(22px,5vw,34px)", fontWeight: 600, letterSpacing: "-0.025em",
               color: "var(--ink)", lineHeight: 1.1, fontFamily: "var(--font-plex-serif), Georgia, serif" }}>
               {candidate.name}
             </h2>
-            <p style={{ margin: "6px 0 0", fontSize: 16, color: "var(--ink-2)" }}>
+            <p style={{ margin: "4px 0 0", fontSize: isMobile ? 14 : 16, color: "var(--ink-2)" }}>
               Fórmula: <strong style={{ color: "var(--ink)", fontWeight: 600 }}>{candidate.vice}</strong>
             </p>
           </div>
           {/* CTA Comparar */}
-          <div style={{ paddingBottom: 16, flexShrink: 0 }}>
-            <Link href="/compara">
+          <div style={{ paddingTop: isMobile ? 0 : 76, paddingBottom: isMobile ? 0 : 16, flexShrink: 0, width: isMobile ? "100%" : "auto" }}>
+            <Link href="/compara" style={{ display: "block", width: isMobile ? "100%" : "auto" }}>
               <button type="button" style={{
-                fontFamily: "inherit", fontSize: 14, fontWeight: 600, cursor: "pointer",
-                padding: "10px 18px", borderRadius: 999, border: `1px solid ${candidate.color}40`,
+                fontFamily: "inherit", fontSize: isMobile ? 13 : 14, fontWeight: 600, cursor: "pointer",
+                padding: isMobile ? "9px 14px" : "10px 18px", borderRadius: 999, border: `1px solid ${candidate.color}40`,
                 background: `${candidate.color}0D`, color: candidate.color,
-                display: "inline-flex", alignItems: "center", gap: 6, transition: "all 160ms ease",
+                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, transition: "all 160ms ease",
+                width: isMobile ? "100%" : "auto",
               }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = `${candidate.color}20`; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = `${candidate.color}0D`; }}
@@ -685,20 +732,20 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
         </div>
 
         {/* Bio + stats */}
-        <div style={{ padding: "16px 32px 0" }}>
-          <p style={{ margin: "0 0 16px", fontSize: 17, color: "var(--ink-2)", lineHeight: 1.55,
+        <div style={{ padding: isMobile ? "14px 18px 0" : "16px 32px 0" }}>
+          <p style={{ margin: isMobile ? "0 0 12px" : "0 0 16px", fontSize: isMobile ? 15 : 17, color: "var(--ink-2)", lineHeight: 1.55,
             maxWidth: 720, fontStyle: "italic" }}>
             "{candidate.lede}"
           </p>
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingBottom: 4 }}>
+          <div style={{ display: "flex", gap: isMobile ? 14 : 24, flexWrap: "wrap", paddingBottom: 4 }}>
             {[
               { k: "Propuestas", v: proposalCount > 0 ? proposalCount : "—" },
               { k: "Ejes cubiertos", v: axesCount },
               { k: "Espectro", v: capitalize(candidate.spectrum) },
             ].map((s) => (
               <div key={s.k} style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                <span style={{ fontSize: 20, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.01em" }}>{s.v}</span>
-                <span style={{ fontSize: 14, color: "var(--ink-3)" }}>{s.k}</span>
+                <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, color: "var(--ink)", letterSpacing: "-0.01em" }}>{s.v}</span>
+                <span style={{ fontSize: isMobile ? 12 : 14, color: "var(--ink-3)" }}>{s.k}</span>
               </div>
             ))}
           </div>
@@ -712,12 +759,13 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           )}
           <nav style={{
             display: "flex", borderBottom: "1px solid var(--line)",
-            marginTop: 16, padding: "0 16px", overflowX: "auto",
+            marginTop: 16, padding: isMobile ? "0 8px" : "0 16px",
+            overflowX: "auto", WebkitOverflowScrolling: "touch",
             ...(tabSticky ? {
-              position: "fixed", top: 72, left: 0, right: 0,
+              position: "fixed", top: isMobile ? 64 : 72, left: 0, right: 0,
               background: "rgba(255,255,255,0.9)", backdropFilter: "blur(16px)",
               boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
-              zIndex: 40, paddingLeft: 32,
+              zIndex: 40, paddingLeft: isMobile ? 16 : 32,
               borderBottom: "1px solid rgba(0,0,0,0.08)",
             } : {}),
           }}>
@@ -727,14 +775,14 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
                 if (tabSticky) contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
                 style={{
-                  fontFamily: "inherit", fontSize: 15, fontWeight: activeTab === t.key ? 600 : 500,
-                  padding: "16px 18px", border: 0, cursor: "pointer", background: "transparent",
+                  fontFamily: "inherit", fontSize: isMobile ? 14 : 15, fontWeight: activeTab === t.key ? 600 : 500,
+                  padding: isMobile ? "13px 14px" : "16px 18px", border: 0, cursor: "pointer", background: "transparent",
                   color: activeTab === t.key ? "var(--ink)" : "var(--ink-2)", whiteSpace: "nowrap",
                   position: "relative", transition: "color 160ms ease",
                 }}>
                 {t.label}
                 {activeTab === t.key && (
-                  <span style={{ position: "absolute", left: 12, right: 12, bottom: -1, height: 3,
+                  <span style={{ position: "absolute", left: 10, right: 10, bottom: -1, height: 3,
                     background: candidate.color, borderRadius: 999 }} />
                 )}
               </button>
@@ -742,60 +790,69 @@ function ProfileStep({ candidate, allVisible, onBack, onPickOther }: {
           </nav>
         </div>
 
-        <div ref={contentRef} style={{ padding: "32px 36px" }}>
+        <div ref={contentRef} style={{ padding: isMobile ? "20px 18px" : "32px 36px" }}>
           <AnimatePresence mode="wait">
             <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-              <ProfileTabContent tab={activeTab} candidate={candidate} compare={compare} onPickOther={onPickOther} />
+              <ProfileTabContent tab={activeTab} candidate={candidate} compare={compare} onPickOther={onPickOther} dofa={DOFA_DATA[candidate.name]} />
             </motion.div>
           </AnimatePresence>
         </div>
 
         {/* Bottom nav entre candidatos */}
-        <div style={{ borderTop: "1px solid var(--line)", padding: "20px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-          <div style={{ flex: 1 }}>
+        <div style={{
+          borderTop: "1px solid var(--line)",
+          padding: isMobile ? "14px 16px" : "20px 32px",
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          gap: isMobile ? 8 : 12,
+        }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
             {prevCandidate && (
               <button type="button" onClick={() => { onPickOther(prevCandidate); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                 style={{
                   fontFamily: "inherit", cursor: "pointer", border: "1px solid var(--line)",
-                  background: "#fff", borderRadius: 14, padding: "12px 16px",
-                  display: "inline-flex", alignItems: "center", gap: 12,
+                  background: "#fff", borderRadius: 12,
+                  padding: isMobile ? "8px 10px" : "12px 16px",
+                  display: "inline-flex", alignItems: "center", gap: isMobile ? 6 : 12,
                   color: "var(--ink)", transition: "all 160ms ease",
-                  textAlign: "left",
+                  textAlign: "left", maxWidth: "100%",
                 }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = prevCandidate.color; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; }}
               >
-                <Chevron dir="left" size={16} />
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>Anterior</div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>{prevCandidate.name}</div>
+                <Chevron dir="left" size={isMobile ? 14 : 16} />
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: isMobile ? 9 : 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>Anterior</div>
+                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 600, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: isMobile ? 110 : "none" }}>{prevCandidate.name}</div>
                 </div>
               </button>
             )}
           </div>
 
-          <span style={{ fontSize: 13, color: "var(--ink-3)", fontWeight: 500 }}>
-            {currentIdx + 1} / {allVisible.length}
-          </span>
+          {!isMobile && (
+            <span style={{ fontSize: 13, color: "var(--ink-3)", fontWeight: 500 }}>
+              {currentIdx + 1} / {allVisible.length}
+            </span>
+          )}
 
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", minWidth: 0 }}>
             {nextCandidate && (
               <button type="button" onClick={() => { onPickOther(nextCandidate); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                 style={{
                   fontFamily: "inherit", cursor: "pointer", border: "1px solid var(--line)",
-                  background: "#fff", borderRadius: 14, padding: "12px 16px",
-                  display: "inline-flex", alignItems: "center", gap: 12,
+                  background: "#fff", borderRadius: 12,
+                  padding: isMobile ? "8px 10px" : "12px 16px",
+                  display: "inline-flex", alignItems: "center", gap: isMobile ? 6 : 12,
                   color: "var(--ink)", transition: "all 160ms ease",
-                  textAlign: "right",
+                  textAlign: "right", maxWidth: "100%",
                 }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = nextCandidate.color; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--line)"; }}
               >
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>Siguiente</div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>{nextCandidate.name}</div>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: isMobile ? 9 : 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>Siguiente</div>
+                  <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 600, color: "var(--ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: isMobile ? 110 : "none" }}>{nextCandidate.name}</div>
                 </div>
-                <Chevron dir="right" size={16} />
+                <Chevron dir="right" size={isMobile ? 14 : 16} />
               </button>
             )}
           </div>
@@ -812,7 +869,9 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
   tab: string; candidate: Candidate;
   compare: (typeof COMPARE_DATA)[string] | undefined;
   onPickOther: (c: Candidate) => void;
+  dofa?: (typeof DOFA_DATA)[string];
 }) {
+  const isMobile = useIsMobile();
   if (tab === "resumen") return (
     <div style={{ maxWidth: 760 }}>
       <h3 style={{ margin: "0 0 6px", fontSize: 26, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
@@ -821,7 +880,7 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
       <p style={{ margin: "0 0 24px", fontSize: 19, lineHeight: 1.6, color: "var(--ink-2)" }}>
         {candidate.lede} Este perfil reúne su trayectoria, propuestas por eje, posiciones frente a temas importantes y similitudes con otros candidatos para ayudarte a decidir.
       </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 10 : 14 }}>
         {[
           { k: "Partido", v: candidate.party },
           { k: "Fórmula vice", v: candidate.vice },
@@ -883,7 +942,7 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
                   <h4 style={{ margin: 0, fontSize: 19, fontWeight: 600, color: "var(--ink)", letterSpacing: "-0.02em" }}>{a.key}</h4>
                   <span style={{ fontSize: 13, color: "var(--ink-3)" }}>{items.length} propuestas</span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }}>
                   {items.map((p) => (
                     <div key={p.title} style={{ background: "#F7F8FA", borderRadius: 14, padding: "16px 18px",
                       borderLeft: `3px solid ${candidate.color}50` }}>
@@ -919,23 +978,23 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
             const meta = POSICION_META[pos];
             return (
               <div key={tema.id} style={{
-                display: "flex", alignItems: "center", gap: 14,
-                background: "#FAFBFC", borderRadius: 14, padding: "14px 18px",
+                display: "flex", alignItems: "center", gap: isMobile ? 8 : 14,
+                background: "#FAFBFC", borderRadius: 12, padding: isMobile ? "12px 14px" : "14px 18px",
                 border: "1px solid rgba(0,0,0,0.05)",
               }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", width: 20, textAlign: "right", flexShrink: 0 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", width: 18, textAlign: "right", flexShrink: 0 }}>
                   {tema.numero}
                 </span>
-                <p style={{ flex: 1, margin: 0, fontSize: 15, color: "var(--ink)", lineHeight: 1.4 }}>
+                <p style={{ flex: 1, margin: 0, fontSize: isMobile ? 13 : 15, color: "var(--ink)", lineHeight: 1.4 }}>
                   {tema.pregunta}
                 </p>
                 <div style={{
-                  flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 6,
-                  padding: "6px 12px", borderRadius: 999,
+                  flexShrink: 0, display: "inline-flex", alignItems: "center", gap: isMobile ? 4 : 6,
+                  padding: isMobile ? "4px 8px" : "6px 12px", borderRadius: 999,
                   background: meta.bg, border: `1px solid ${meta.color}30`,
                 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: meta.color }}>{meta.icon}</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: meta.color, whiteSpace: "nowrap" }}>{meta.label}</span>
+                  <span style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: meta.color }}>{meta.icon}</span>
+                  <span style={{ fontSize: isMobile ? 12 : 13, fontWeight: 600, color: meta.color, whiteSpace: "nowrap" }}>{meta.label}</span>
                 </div>
               </div>
             );
@@ -944,6 +1003,46 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
         <p style={{ marginTop: 16, fontSize: 13, color: "var(--ink-3)", lineHeight: 1.5 }}>
           Fuente: declaraciones públicas, planes de gobierno y votaciones legislativas. "Sin pronunciarse" indica que no hay posición pública registrada.
         </p>
+      </div>
+    );
+  }
+
+  if (tab === "dofa") {
+    const dofa = DOFA_DATA[candidate.name];
+    if (!dofa) return <p style={{ color: "var(--ink-2)", fontSize: 18 }}>Contenido en construcción.</p>;
+
+    const cuadrantes = [
+      { key: "fortalezas",   label: "Fortalezas",    icon: "↑", color: "#1F8F5C", bg: "rgba(31,143,92,0.06)",   border: "rgba(31,143,92,0.18)",  items: dofa.fortalezas },
+      { key: "oportunidades",label: "Oportunidades", icon: "◎", color: "#2F6B8A", bg: "rgba(47,107,138,0.06)",  border: "rgba(47,107,138,0.18)", items: dofa.oportunidades },
+      { key: "debilidades",  label: "Debilidades",   icon: "↓", color: "#C8453C", bg: "rgba(200,69,60,0.06)",   border: "rgba(200,69,60,0.18)",  items: dofa.debilidades },
+      { key: "amenazas",     label: "Amenazas",      icon: "⚠", color: "#D97706", bg: "rgba(217,119,6,0.06)",   border: "rgba(217,119,6,0.18)",  items: dofa.amenazas },
+    ];
+
+    return (
+      <div style={{ maxWidth: 820 }}>
+        <h3 style={{ margin: "0 0 6px", fontSize: 26, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
+          fontFamily: "var(--font-plex-serif), Georgia, serif" }}>Análisis DOFA</h3>
+        <p style={{ margin: "0 0 24px", fontSize: 15, color: "var(--ink-3)" }}>
+          Fortalezas, Oportunidades, Debilidades y Amenazas del candidato.
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 12 : 16 }}>
+          {cuadrantes.map((q) => (
+            <div key={q.key} style={{ background: q.bg, border: `1px solid ${q.border}`, borderRadius: 18, padding: "20px 22px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ fontSize: 18, fontWeight: 800, color: q.color, lineHeight: 1 }}>{q.icon}</span>
+                <h4 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: q.color, letterSpacing: "-0.01em" }}>{q.label}</h4>
+              </div>
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {q.items.map((item, i) => (
+                  <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: q.color, flexShrink: 0, marginTop: 7 }} />
+                    <span style={{ fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -1012,7 +1111,7 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
       <h3 style={{ margin: "0 0 6px", fontSize: 26, fontWeight: 600, letterSpacing: "-0.025em", color: "var(--ink)",
         fontFamily: "var(--font-plex-serif), Georgia, serif" }}>Plan de gobierno y DOFA</h3>
       <p style={{ margin: "0 0 24px", fontSize: 15, color: "var(--ink-3)" }}>Documentos oficiales y análisis estratégico.</p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14, marginBottom: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 10 : 14, marginBottom: 24 }}>
         {[
           { t: "Plan de gobierno", d: "Documento programático completo del candidato.", cta: "Abrir documento" },
           { t: "Análisis DOFA", d: "Debilidades, oportunidades, fortalezas y amenazas.", cta: "Ver análisis" },
@@ -1037,6 +1136,7 @@ function ProfileTabContent({ tab, candidate, compare, onPickOther }: {
 type Step = "explorer" | "browser" | "profile";
 
 function CandidatosContent() {
+  const isMobile = useIsMobile();
   const searchParams = useSearchParams();
   const preselectedName = searchParams.get("name");
   const preselected = preselectedName ? ALL_CANDIDATES.find((c) => c.name === preselectedName) ?? null : null;
@@ -1078,7 +1178,7 @@ function CandidatosContent() {
   };
 
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "48px 32px 96px" }}>
+    <main style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "32px 16px 64px" : "48px 32px 96px" }}>
       <AnimatePresence mode="wait">
         {step === "explorer" && (
           <motion.div key="explorer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>

@@ -1,5 +1,3 @@
-import murilloRaw from "../../public/data/murillo_propuestas.json";
-
 export type Spectrum = "izquierda" | "centro" | "derecha";
 
 export interface Candidate {
@@ -21,7 +19,6 @@ export const TOP_CANDIDATES: Candidate[] = [
   { name: "Claudia López",           gender: "F", vice: "Leonardo Huerta",         viceGender: "M", party: "Con Claudia Imparables",  spectrum: "centro",    color: "#D97706", lede: "Con Claudia, imparables." },
   { name: "Sergio Fajardo",          gender: "M", vice: "Edna Bonilla",            viceGender: "F", party: "Dignidad y Compromiso",   spectrum: "centro",    color: "#B45309", lede: "Diferentes sin ser enemigos." },
   { name: "Miguel Uribe Londoño",    gender: "M", vice: "Luisa Fernanda Villegas", viceGender: "F", party: "Partido Demócrata",       spectrum: "derecha",   color: "#1E40AF", lede: "Trabajando por una sola Colombia." },
-  { name: "Luis Gilberto Murillo",   gender: "M", vice: "Luz María Zapata",        viceGender: "F", party: "Luis Gilberto Soy Yo",    spectrum: "centro",    color: "#92400E", lede: "No soy el candidato de ningún político." },
 ];
 
 export const OTHER_CANDIDATES: Candidate[] = [
@@ -45,7 +42,6 @@ export const CANDIDATE_PHOTOS: Record<string, string> = {
   "Gustavo Matamoros": "/candidates/Matamoros.png",
   "Iván Cepeda": "/candidates/cepeda.png",
   "Miguel Uribe Londoño": "/candidates/Miguel Uribe.png",
-  "Luis Gilberto Murillo": "/candidates/Luis_GIlberto_Murillo.png",
   "Mauricio Lizcano": "/candidates/Oscar_MAuricio_Lizcano.png",
   "Paloma Valencia": "/candidates/Paloma_Valencia.png",
   "Roy Barreras": "/candidates/Roy_Barreras.png",
@@ -81,37 +77,51 @@ export type AxisKey = (typeof AXES)[number]["key"];
 interface Proposal { title: string; desc: string; }
 type CompareEntry = Record<AxisKey, Proposal[]>;
 
-const mapItems = (items: any[] | undefined) => (items || []).map((i) => ({ title: i.vector as string, desc: i.descripcion as string }));
-
-const murilloProposals: CompareEntry = {
-  Salud: mapItems(murilloRaw.areas_programaticas?.salud?.items),
-  Economía: [
-    ...mapItems(murilloRaw.areas_programaticas?.infraestructura?.items),
-    ...mapItems(murilloRaw.areas_programaticas?.tecnologia_e_ia?.items),
-  ],
-  Educación: mapItems(murilloRaw.areas_programaticas?.educacion?.items),
-  Seguridad: mapItems(murilloRaw.areas_programaticas?.seguridad?.items),
-};
-
 export const COMPARE_DATA: Record<string, CompareEntry> = {
   "Iván Cepeda": {
     Salud: [
-      { title: "Reforma al sistema de salud", desc: "Sistema mixto. Reforma urgente sin esperar, pues la inacción afecta vidas." },
-      { title: "Continuidad sanitaria", desc: "Profundizar las reformas sociales del gobierno Petro en salud." },
+      { title: "Salud sin intermediación financiera privada", desc: "Consolidar un modelo enfocado en la prevención comunitaria, eliminando la intermediación financiera privada." },
+      { title: "Salud mental en el ámbito educativo", desc: "Rutas de Alertas Tempranas y atención psicosocial obligatoria para jóvenes en colegios y universidades." },
+      { title: "Integración de la medicina tradicional", desc: "Incorporar el Sistema Indígena de Salud (SISPI) y prácticas de medicina tradicional al esquema territorial." },
     ],
     Economía: [
-      { title: "Capitalismo productivo", desc: "Orientar empresas hacia la producción sin restringir al sector privado." },
-      { title: "Austeridad del gasto", desc: "Reducción del sueldo presidencial y del gabinete, hacia bienestar social." },
-      { title: "Reforma agraria", desc: "Territorios rurales prósperos integrados a mercados urbanos." },
+      { title: "Fondo Nacional por el Derecho al Agua", desc: "Priorizar acueductos comunitarios y saneamiento básico en el campo colombiano." },
+      { title: "30.000 km de vías terciarias", desc: "Plan Nacional de Vías Terciarias ejecutado directamente por las Juntas de Acción Comunal." },
+      { title: "Comunidades Energéticas", desc: "Financiar infraestructura solar y eólica local y prohibir expresamente el fracking." },
+      { title: "IA para transparencia en contratación", desc: "Modernizar portales estatales con cruce de bases de datos para emitir alertas tempranas de corrupción." },
     ],
     Educación: [
-      { title: "Revolución educativa", desc: "Transformación profunda del sistema educativo como eje democrático." },
-      { title: "Movilidad social", desc: "La educación como clave para superar pobreza y marginalización." },
+      { title: "Subsidios integrales contra la deserción", desc: "Apoyos económicos de transporte, alimentación y sostenimiento para estudiantes de sectores vulnerables." },
+      { title: "Métricas de calidad académica", desc: "Estándares estrictos de evaluación para todos los grados y niveles del sistema educativo." },
+      { title: "Educación pública + primer empleo", desc: "Fortalecer la educación pública incluyente e integrar el programa 'Estado Joven' para inserción laboral juvenil." },
     ],
     Seguridad: [
-      { title: "Paz como eje central", desc: "El cambio surge de las conciencias, no de la violencia." },
-      { title: "Continuar la Paz Total", desc: "Profundizar los procesos de paz con grupos armados." },
-      { title: "Territorios libres", desc: "Zonas rurales sin narcotráfico ni minería ilegal." },
+      { title: "Seguridad Humana estructural", desc: "Abordar el desempleo y la pobreza territorial como mecanismo de prevención del delito." },
+      { title: "Paz condicionada al respeto civil", desc: "Continuar diálogos de paz solo si se respeta irrestrictamente a la población civil y se aplica justicia restaurativa." },
+      { title: "Macrocorrupción como amenaza de seguridad", desc: "Elevar la lucha contra la macrocorrupción a asunto de seguridad nacional, persiguiendo sus finanzas criminales." },
+    ],
+  },
+  "Miguel Uribe Londoño": {
+    Salud: [
+      { title: "Pago inmediato de deuda con hospitales", desc: "Saldar la billonaria deuda acumulada del Estado con clínicas y hospitales para normalizar la entrega de medicamentos." },
+      { title: "Sistema mixto sin estatización", desc: "Defender el modelo mixto rechazando la estatización absoluta para evitar corrupción y politiquería con los recursos médicos." },
+      { title: "Dignificación del personal médico", desc: "Mejorar las condiciones laborales y salariales de médicos, enfermeras y especialistas en todo el país." },
+    ],
+    Economía: [
+      { title: "Plan de choque vial para el campo", desc: "Mejorar y pavimentar al menos el 24% de las vías terciarias para abaratar costos agrícolas y conectar regiones." },
+      { title: "Bonos Verdes y Azules", desc: "Emitir bonos para atraer capital privado internacional y cofinanciar obras de infraestructura de alto impacto social." },
+      { title: "Reactivación de hidrocarburos y minería", desc: "Reactivar la exploración para financiar obras públicas y la transición energética sin nuevos impuestos." },
+      { title: "Muralla Digital 4.0", desc: "IA para rastrear y auditar la contratación estatal y eliminar la corrupción burocrática." },
+    ],
+    Educación: [
+      { title: "Protección contra el adoctrinamiento", desc: "Blindar escuelas y colegios públicos priorizando una educación basada en principios y valores éticos." },
+      { title: "Pensum alineado con el sector privado", desc: "Ajustar técnicamente los planes de estudio a las demandas reales del empresariado para garantizar inserción laboral rápida." },
+      { title: "Oportunidades para grupos vulnerables", desc: "Políticas focalizadas en formación para mujeres, jóvenes y adultos mayores vulnerables." },
+    ],
+    Seguridad: [
+      { title: "Restauración de la Seguridad Democrática", desc: "Eliminar concesiones políticas a grupos armados y ordenar el uso de la fuerza legítima del Estado." },
+      { title: "Reforma penal contra la impunidad", desc: "Garantizar que los criminales cumplan condenas completas, acabando con la excarcelación exprés." },
+      { title: "Prohibición del consumo de drogas en espacios públicos", desc: "Desarticular las rentas del microtráfico y proteger a las familias del entorno del consumo." },
     ],
   },
   "Abelardo de la Espriella": {
@@ -158,28 +168,23 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
   },
   "Claudia López": {
     Salud: [
-      { title: "Sistema mixto integral", desc: "Mantener el aseguramiento público-privado, prohibiendo la integración vertical de EPS y clínicas para evitar conflictos de interés." },
-      { title: "Precios unificados y auditoría tecnológica", desc: "Tablas de precios por procedimiento y región con pago directo y control automatizado contra facturación fraudulenta." },
-      { title: "Droguerías de barrio y receta electrónica", desc: "Integrar farmacias comunitarias a la dispensación estatal con plataforma unificada de recetas para facilitar acceso a pacientes crónicos." },
-      { title: "Sistema Nacional de Cuidado", desc: "Escalar a nivel nacional las Manzanas del Cuidado para liberar tiempo de cuidado no remunerado y ampliar acceso de mujeres a educación y empleo." },
+      { title: "Rescate financiero urgente", desc: "Primer día: restablecer liquidez a clínicas y hospitales." },
+      { title: "Sistema mixto", desc: "Modelo público-privado-comunitario con precios estandarizados." },
+      { title: "Historia clínica única", desc: "Tecnología para mejorar atención y eficiencia del sistema." },
     ],
     Economía: [
-      { title: "Red multimodal territorializada", desc: "Impulsar conectividad ferroviaria y fluvial con nodos logísticos por región para reducir costos y aumentar competitividad." },
-      { title: "600.000 subsidios VIS", desc: "Programa de vivienda con enfoque de ciudad de 15 minutos, priorizando hogares liderados por mujeres." },
-      { title: "Agua y saneamiento como prioridad", desc: "Inversión en acueductos, potabilización y alcantarillado en territorios marginados usando regalías con mayor control." },
-      { title: "Portal único empresarial", desc: "Simplificar trámites para empresas con interoperabilidad estatal y pagos digitales en tiempo real." },
+      { title: "Desarrollo regional", desc: "Inversión pública focalizada para duplicar productividad territorial." },
+      { title: "Reducción del IVA", desc: "Bajar del 19% al 15% como reactivación para clase media." },
+      { title: "Apoyo a microempresarios", desc: "Subsidio al pago del salario mínimo en microempresas." },
     ],
     Educación: [
-      { title: "Todos a la U", desc: "Un millón de becas posmedia articuladas con la demanda real del mercado laboral regional." },
-      { title: "Agencia Nacional de Educación Posmedia", desc: "Unificar universidades, formación técnica y fondos de emprendimiento para reducir barreras de acceso." },
-      { title: "Reforma curricular del SENA", desc: "Alinear formación técnica con planes de infraestructura, agroindustria e innovación de cada región." },
-      { title: "Educación inicial universal", desc: "Universalizar tres grados de preescolar e incorporar pensamiento crítico, bilingüismo, programación y salud mental." },
+      { title: "Un millón de becas", desc: "Plan de becas para educación superior con inserción laboral." },
+      { title: "Educación como seguridad", desc: "Becas, manzanas del cuidado y educación básica." },
     ],
     Seguridad: [
-      { title: "Reforma estructural a la justicia", desc: "Modelo de tres niveles: justicia antimafia, justicia ordinaria robusta y justicia restaurativa comunitaria." },
-      { title: "Gendarmería carcelaria", desc: "Reemplazar el INPEC por una fuerza especializada con enfoque anticorrupción y modernización tecnológica penitenciaria." },
-      { title: "Fortalecimiento de Fuerza Pública", desc: "Incorporar 40.000 nuevos integrantes con profesionalización y enfoque en derechos humanos." },
-      { title: "Política antidrogas e inteligencia", desc: "Priorizar persecución de lavado de activos y narcotráfico transnacional con cooperación internacional." },
+      { title: "Justicia implacable", desc: "40.000 nuevos miembros de Fuerza Pública; modernización." },
+      { title: "Finanzas del narcotráfico", desc: "Atacar el dinero, no solo la producción." },
+      { title: "Fiscalía Antimafia", desc: "Unidad especializada independiente contra crimen organizado." },
     ],
   },
   "Roy Barreras": {
@@ -221,7 +226,29 @@ export const COMPARE_DATA: Record<string, CompareEntry> = {
       { title: "No al modelo Bukele", desc: "Rechaza políticas de mano dura importadas." },
     ],
   },
-  "Luis Gilberto Murillo": murilloProposals,
+  "Mauricio Lizcano": {
+    Salud: [
+      { title: "Giro directo a hospitales", desc: "Recursos del Estado directamente a hospitales y clínicas, sin intermediación financiera de las EPS." },
+      { title: "EPS solo como administradoras logísticas", desc: "Retirar a las EPS la intermediación financiera y el manejo de la UPC; transformarlas en administradoras de referencia médica." },
+      { title: "Telemedicina e IA para destrabar el sistema", desc: "Uso de telemedicina e IA para asignar citas, declarar emergencias logísticas y resolver cuellos de botella en medicamentos." },
+    ],
+    Economía: [
+      { title: "Recorte burocrático de 40-45 billones", desc: "Eliminar gasto burocrático del Estado para generar caja y confianza inversionista, sin nuevas reformas tributarias." },
+      { title: "'Estartazo' económico: crecer al 6-7%", desc: "Meta de crecimiento del PIB transformando a Colombia en productor de tecnología e innovación." },
+      { title: "Reactivación con 'Mi Casa Ya'", desc: "Inyección de recursos al programa de vivienda para dinamizar 37 industrias derivadas de la construcción." },
+      { title: "Data Centers y soberanía digital", desc: "Atraer inversión para construir Data Centers nacionales y reducir dependencia de monopolios tecnológicos extranjeros." },
+    ],
+    Educación: [
+      { title: "Creadores, no consumidores de tecnología", desc: "Transición del modelo educativo para formar en programación, IA y ciberseguridad desde las aulas." },
+      { title: "750.000 nuevos cupos de educación superior", desc: "Distribuidos equitativamente entre el SENA, universidades públicas y privadas." },
+      { title: "Reforma anticorrupción al PAE", desc: "Garantizar alimentación escolar los 365 días del año eliminando la corrupción en el programa." },
+    ],
+    Seguridad: [
+      { title: "10 millones de cámaras con IA", desc: "Choque tecnológico con reconocimiento facial y georreferenciación obligatoria en el transporte público." },
+      { title: "Fin de la 'Paz Total' como incentivo", desc: "Devolver a la Fuerza Pública la ofensiva operativa, las garantías jurídicas y la moral institucional." },
+      { title: "Reforma a la justicia contra la impunidad", desc: "Agilizar procesos y lograr condenas efectivas para evitar la excarcelación exprés en casos de flagrancia." },
+    ],
+  },
 };
 
 export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> = {
@@ -231,9 +258,8 @@ export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> =
   "Claudia López":            { econ:  0.10, social: -0.55 },
   "Sergio Fajardo":           { econ:  0.05, social: -0.15 },
   "Miguel Uribe Londoño":     { econ:  0.65, social:  0.65 },
-  "Luis Gilberto Murillo":    { econ: -0.05, social: -0.25 },
   "Santiago Botero":          { econ:  0.25, social:  0.00 },
-  "Mauricio Lizcano":         { econ:  0.20, social:  0.10 },
+  "Mauricio Lizcano":         { econ:  0.32, social:  0.05 },
   "Roy Barreras":             { econ: -0.20, social: -0.30 },
   "Carlos Caicedo":           { econ: -0.55, social: -0.40 },
   "Sondra Macollins":         { econ:  0.60, social:  0.75 },
@@ -243,55 +269,56 @@ export const IDEOLOGY_MATRIX: Record<string, { econ: number; social: number }> =
 
 export const TIMELINES: Record<string, { y: string; t: string; d: string }[]> = {
   "Iván Cepeda": [
-    { y: "1994", t: "Cofundador de MOVICE", d: "Movimiento Nacional de Víctimas de Crímenes de Estado." },
-    { y: "2010", t: "Elegido Representante a la Cámara", d: "Por Bogotá, bancada del Polo Democrático." },
-    { y: "2014", t: "Senador de la República", d: "Inicia su trabajo por memoria histórica y paz." },
-    { y: "2016", t: "Acuerdo de Paz de La Habana", d: "Participa activamente en el proceso." },
-    { y: "2026", t: "Candidato presidencial", d: "Anuncia su precandidatura por el Pacto Histórico." },
+    { y: "—",    t: "Formación académica", d: "Filósofo y especialista en Derecho Internacional Humanitario. Histórico defensor de derechos humanos en Colombia." },
+    { y: "1994", t: "Cofundador de MOVICE", d: "Co-funda el Movimiento Nacional de Víctimas de Crímenes de Estado." },
+    { y: "2010", t: "Representante a la Cámara", d: "Elegido por Bogotá; inicia su labor legislativa en defensa de víctimas y memoria histórica." },
+    { y: "2014", t: "Senador de la República", d: "Ocupa curul en el Senado y profundiza su trabajo en derechos humanos y paz." },
+    { y: "2016", t: "Facilitador del Acuerdo de Paz", d: "Rol clave en el proceso de paz de La Habana que culminó en el Acuerdo de 2016." },
+    { y: "oct. 2025", t: "Candidato oficial del Pacto Histórico", d: "Gana la consulta interna del Pacto Histórico y se consolida como candidato presidencial para 2026, en alianza con sectores de la Alianza Verde." },
+  ],
+  "Miguel Uribe Londoño": [
+    { y: "—",    t: "Formación académica", d: "Economista, abogado y empresario antioqueño con amplia trayectoria en el sector privado." },
+    { y: "1979", t: "Secretario Económico de la Presidencia", d: "Cargo en la alta administración pública (1979–1982)." },
+    { y: "1990", t: "Senador de la República", d: "Ocupa curul en el Senado (1990–1991)." },
+    { y: "2025", t: "Asume las banderas de su hijo", d: "Tras el asesinato del senador Miguel Uribe Turbay, decide continuar su legado político." },
+    { y: "2025", t: "Expulsado del Centro Democrático", d: "Tras ser excluido del proceso interno del partido, inscribe su candidatura presidencial para 2026 avalado por el Partido Demócrata Colombiano junto a Luisa Fernanda Villegas." },
   ],
   "Abelardo de la Espriella": [
     { y: "1990", t: "Abogado penalista", d: "Inicia ejercicio profesional en Córdoba." },
     { y: "2005", t: "Firma de abogados de alto perfil", d: "Reconocimiento mediático nacional." },
     { y: "2020", t: "Figura pública polarizante", d: "Comentarista político frecuente." },
     { y: "2024", t: "Movimiento Defensores de la Patria", d: "Lanza su plataforma política." },
-    { y: "2026", t: "Candidato presidencial", d: "Oficializa campaña." },
+    { y: "2025", t: "Candidato presidencial", d: "Oficializa campaña." },
   ],
   "Paloma Valencia": [
     { y: "2002", t: "Abogada constitucionalista", d: "Ejercicio profesional y academia." },
     { y: "2014", t: "Senadora por Centro Democrático", d: "Primera curul en el Congreso." },
     { y: "2018", t: "Reelegida al Senado", d: "Liderazgo en comisiones clave." },
     { y: "2024", t: "Precandidata presidencial", d: "Anuncia aspiración." },
-    { y: "2026", t: "Candidata oficial", d: "Campaña por el Centro Democrático." },
+    { y: "2025", t: "Candidata oficial", d: "Campaña por el Centro Democrático." },
   ],
   "Claudia López": [
     { y: "2006", t: "Columnista y analista política", d: "Reconocida por trabajo anticorrupción." },
     { y: "2014", t: "Senadora por la Alianza Verde", d: "Primera curul en el Senado." },
     { y: "2019", t: "Alcaldesa de Bogotá", d: "Primera mujer electa alcaldesa de la capital." },
     { y: "2023", t: "Finaliza alcaldía", d: "Entrega mandato y anuncia proyecto nacional." },
-    { y: "2026", t: "Candidata presidencial", d: "Con Claudia Imparables." },
-  ],
-  "Sergio Fajardo": [
-    { y: "2004", t: "Alcalde de Medellín", d: "Gobierno municipal centrado en educación, cultura y modernización urbana." },
-    { y: "2012", t: "Gobernador de Antioquia", d: "Impulsa políticas regionales en infraestructura, educación y competitividad." },
-    { y: "2018", t: "Candidato presidencial", d: "Se postula por la Coalición Colombia con énfasis en educación y gobernabilidad." },
-    { y: "2022", t: "Candidato presidencial", d: "Participa en procesos políticos nacionales y mantiene actividad pública." },
-    { y: "2026", t: "Candidato presidencial", d: "Anuncia su candidatura por Dignidad y Compromiso." },
+    { y: "2025", t: "Candidata presidencial", d: "Con Claudia Imparables." },
   ],
   "Roy Barreras": [
     { y: "2002", t: "Representante a la Cámara", d: "Inicia carrera legislativa por el Valle." },
     { y: "2010", t: "Senador de la República", d: "Varios periodos consecutivos." },
     { y: "2016", t: "Negociador del Acuerdo de Paz", d: "Participa en el proceso de La Habana." },
     { y: "2022", t: "Presidente del Congreso", d: "Lidera el Senado en la coalición de gobierno." },
-    { y: "2026", t: "Candidato presidencial", d: "Lanza La Fuerza de la Paz." },
+    { y: "2025", t: "Candidato presidencial", d: "Lanza La Fuerza de la Paz." },
   ],
-  "Luis Gilberto Murillo": [
-    { y: "1998-1999", t: "Gobernador del Chocó (primer periodo)", d: "Su primer periodo como gobernador del Chocó." },
-    { y: "2012", t: "Electo gobernador (2012-2015)", d: "Elegido para el periodo 2012-2015; su elección fue anulada y fue retirado del cargo por el Consejo de Estado en 2013." },
-    { y: "2016-2018", t: "Ministro de Ambiente y Desarrollo Sostenible", d: "Ministro de Ambiente y Desarrollo Sostenible durante el gobierno de Juan Manuel Santos (2016-2018)." },
-    { y: "2022", t: "Fórmula vicepresidencial", d: "Anunciado como la fórmula vicepresidencial de Sergio Fajardo el 17 de marzo de 2022." },
-    { y: "2022-2024", t: "Embajador en Estados Unidos", d: "Embajador de Colombia en Estados Unidos (2022-2024)." },
-    { y: "2024-2025", t: "Ministro de Relaciones Exteriores", d: "Ministro de Relaciones Exteriores (2024-2025)." },
-    { y: "2026", t: "Candidatura oficial", d: "Campaña en marcha." },
+  "Mauricio Lizcano": [
+    { y: "—", t: "Formación académica", d: "Abogado con maestría en Administración Pública (MPA) de Harvard y MBA del MIT." },
+    { y: "—", t: "Representante a la Cámara", d: "Inicia su carrera legislativa como congresista." },
+    { y: "—", t: "Senador de la República", d: "Varios periodos en el Senado." },
+    { y: "2016", t: "Presidente del Congreso", d: "Elegido Presidente del Senado, máxima autoridad del poder legislativo (2016–2017)." },
+    { y: "2022", t: "Director del DAPRE", d: "Jefe del Departamento Administrativo de la Presidencia bajo el gobierno Petro (2022–2023)." },
+    { y: "2023", t: "Ministro TIC", d: "Impulsa el despliegue de redes 5G, capacitación digital masiva y digitalización del Estado (2023–2025)." },
+    { y: "2025", t: "Candidato presidencial", d: "Renuncia en enero de 2025 y lanza la 'Revolución del Sentido Común', avalado por firmas, el partido ASI y la coalición F.A.M.I.L.I.A." },
   ],
 };
 
@@ -300,7 +327,7 @@ export const DEFAULT_TIMELINE = [
   { y: "2014", t: "Ingreso a la vida política", d: "Primer cargo electo o de relevancia." },
   { y: "2020", t: "Consolidación", d: "Mayor visibilidad y proyección nacional." },
   { y: "2024", t: "Precandidatura", d: "Anuncio de aspiración presidencial." },
-  { y: "2026", t: "Candidatura oficial", d: "Campaña en marcha." },
+  { y: "2025", t: "Candidatura oficial", d: "Campaña en marcha." },
 ];
 
 export const HISTORIC_ELECTIONS = [
@@ -350,3 +377,70 @@ export const HISTORIC_ELECTIONS = [
     ],
   },
 ];
+
+export interface DofaEntry {
+  fortalezas: string[];
+  oportunidades: string[];
+  debilidades: string[];
+  amenazas: string[];
+}
+
+export const DOFA_DATA: Record<string, DofaEntry> = {
+  "Miguel Uribe Londoño": {
+    fortalezas: [
+      "Fuerte conexión emocional, empatía y respeto ciudadano derivados de su tragedia personal y su resiliencia.",
+      "Sólida experiencia mixta: conocimiento de primera mano en la creación de empleo privado y experiencia en la alta administración pública.",
+      "Su ruptura con el expresidente Uribe le otorga independencia frente al establecimiento tradicional de la derecha.",
+    ],
+    oportunidades: [
+      "Capitalizar el miedo y la frustración ciudadana ante el deterioro de la seguridad pública y el estancamiento económico del país.",
+      "Atraer a un sector del empresariado y de votantes de derecha que buscan una figura de autoridad moral distinta a los líderes partidistas habituales.",
+    ],
+    debilidades: [
+      "Su avanzada edad y el largo tiempo que permaneció alejado de la primera línea electoral antes de reemplazar a su hijo.",
+      "Ausencia del respaldo de una maquinaria política nacional poderosa, dependiendo de un partido minoritario y emergente.",
+    ],
+    amenazas: [
+      "La profunda fragmentación de la derecha, donde compite contra figuras mediáticas que dividen su base natural de votantes.",
+      "El riesgo de invisibilización mediática durante la contienda, evidenciado en sus recursos legales para no ser excluido de los debates televisados.",
+    ],
+  },
+  "Iván Cepeda": {
+    fortalezas: [
+      "Indiscutible autoridad moral y liderazgo entre víctimas, defensores de derechos humanos, sindicatos y sectores campesinos.",
+      "Sólido respaldo orgánico de la coalición de gobierno y aliados de centro-izquierda.",
+      "Gran capacidad argumentativa y experiencia política y técnica probada en procesos de paz.",
+    ],
+    oportunidades: [
+      "Capitalizar la necesidad histórica de desarrollo agrario para movilizar masivamente el voto rural.",
+      "Enarbolar la bandera anticorrupción institucional para captar el voto de opinión inconforme con la política tradicional.",
+    ],
+    debilidades: [
+      "Hereda naturalmente el desgaste institucional, las críticas y la polarización del gobierno de Gustavo Petro.",
+      "Su figura genera un alto nivel de rechazo ('antivoto') en el sector corporativo, gremial y en la derecha política.",
+    ],
+    amenazas: [
+      "Unificación y reagrupación estratégica de los sectores de derecha en segunda vuelta bajo discursos de 'mano dura'.",
+      "Alta exposición a elaboradas campañas de guerra sucia y desinformación impulsadas por Inteligencia Artificial (deepfakes).",
+    ],
+  },
+  "Mauricio Lizcano": {
+    fortalezas: [
+      "Amplio conocimiento de la filigrana del Estado (experiencia legislativa y ejecutiva).",
+      "Resultados tangibles recientes como exministro TIC (despliegue de tecnología 5G y capacitación digital masiva).",
+      "Dominio experto de temas de vanguardia global (IA, economía digital, ciberseguridad).",
+    ],
+    oportunidades: [
+      "Profundo agotamiento del electorado frente a los discursos de odio y la polarización extrema.",
+      "La necesidad urgente de modernización y reactivación económica del país a través de la industria tecnológica.",
+    ],
+    debilidades: [
+      "Desconfianza y estigma en sectores empresariales y de derecha por su participación en la primera mitad del gobierno de Gustavo Petro.",
+      "No cuenta con el respaldo de una maquinaria política nacional unificada y tradicional.",
+    ],
+    amenazas: [
+      "La tendencia histórica del electorado colombiano hacia el 'voto útil' (votar con miedo hacia los extremos), que debilita a los candidatos de centro.",
+      "El complejo panorama de déficit fiscal que podría limitar la financiación de grandes proyectos de infraestructura.",
+    ],
+  },
+};
