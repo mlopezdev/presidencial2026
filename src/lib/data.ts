@@ -57,8 +57,13 @@ const CANDIDATE_PHOTOS_NORMALIZED = Object.fromEntries(
   Object.entries(CANDIDATE_PHOTOS).map(([name, path]) => [normalizeCandidateName(name), path]),
 );
 
+// Cache-buster: incrementar cada vez que se actualicen los archivos PNG
+// de /public/candidates/ para forzar al navegador/CDN a recargar.
+export const CANDIDATE_PHOTO_VERSION = "2";
+
 export function getCandidatePhoto(name: string): string | undefined {
-  return CANDIDATE_PHOTOS[name] ?? CANDIDATE_PHOTOS_NORMALIZED[normalizeCandidateName(name)];
+  const p = CANDIDATE_PHOTOS[name] ?? CANDIDATE_PHOTOS_NORMALIZED[normalizeCandidateName(name)];
+  return p ? `${p}?v=${CANDIDATE_PHOTO_VERSION}` : undefined;
 }
 
 export const AXES = [
